@@ -15,10 +15,31 @@ class BarangJadiController extends Controller
     }
 
     public function save(Request $request){
+
+        $file = $request->file('file_barang');
+        $path = $file->store('barang', 'public');
+
+        $data = $request->_data;
+        $data = json_decode($data);
+       
+        $fk_brj = $data->{'fk_brj'};
+        $fn_brj = $data->{'fn_brj'};
+        $result_jenis = $data->{'result_jenis'};
+        $fpartno = $data->{'fpartno'};
+        $fbrt_bruto = $data->{'fbrt_bruto'};
+        $fbrt_neto = $data->{'fbrt_neto'};
+        $fdimensi = $data->{'fdimensi'};
+
         $barangjadi = new BarangJadi();
 
-        $barangjadi->fn_brj = $request->fn_brj;
-        $barangjadi->fk_brj = $request->fk_brj;
+        $barangjadi->fn_brj = $fn_brj;
+        $barangjadi->fk_brj = $fk_brj;
+        $barangjadi->fk_jns_brj = $result_jenis;
+        $barangjadi->fpartno = $fpartno;
+        $barangjadi->fbrt_bruto = $fbrt_bruto;
+        $barangjadi->fbrt_neto = $fbrt_neto;
+        $barangjadi->fdimensi = $fdimensi;
+        $barangjadi->fgambar = $path;
         
         return $barangjadi->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
