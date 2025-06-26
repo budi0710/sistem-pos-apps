@@ -471,5 +471,4 @@ const $app =   new Vue({
         }
       });
     </script>
-                    
 @endsection
