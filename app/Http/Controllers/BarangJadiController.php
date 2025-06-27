@@ -18,7 +18,7 @@ class BarangJadiController extends Controller
 
         $file = $request->file('file_barang');
         $path = $file->store('barang', 'public');
-        exit($path);
+       
         $data = $request->_data;
         $data = json_decode($data);
        
