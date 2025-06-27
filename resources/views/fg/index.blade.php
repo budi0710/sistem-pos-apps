@@ -178,7 +178,9 @@
                             <td>@{{ data.fk_jns_brj }}</td>
                             <td>@{{ data.fbrt_bruto }}</td>
                             <td>@{{ data.fbrt_neto }}</td>
-                            <td>@{{ data.fgambar }}</td>
+                            <td>
+                                <img :src="viewFoto(data.fgambar)" alt="" width="100" height="100" srcset="">
+                            </td>
                             <td>
                                 <button @click="detaildata(data)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editModalNow(data)" class="btn btn-primary btn-sm">Edit</button>
@@ -236,6 +238,9 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            viewFoto: function(data){
+                return './storage/'+data
+            },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -364,14 +369,7 @@ const $app =   new Vue({
                         return;
                     }
                     this.foto_barang = URL.createObjectURL(files[0])
-                },
-            viewFoto: function(foto) {
-                    if (foto === 'no-image.png') {
-                        return '/' + foto
-                    } else {
-                        return '/storage/barang/' + foto
-                    }
-                },    
+                },   
             loadDataJenisBRJ: function() {
                     const $this = this;
                     axios.post("/load-data-jenis-brj", {
@@ -411,6 +409,7 @@ const $app =   new Vue({
                         var obj = JSON.parse($response)
                         if (obj.result) {
                             alert("Data berhasil ditambahkan")
+                            $this.loadData()
                         }
                     });
  
