@@ -65,7 +65,7 @@
                     <div class="col-sm-9">
                         <div class="avatar">
                             <div class="w-24 rounded-full">
-                                <img :src="foto_barang" />
+                                <img :src="foto_barang" width="100" height="100"/>
                             </div>
                             </div>
                                 <input  @keyup.enter="saveData" type="file" id="file_barang" name="file_barang" @change="changeImage($event)"
@@ -178,7 +178,9 @@
                             <td>@{{ data.fk_jns_brj }}</td>
                             <td>@{{ data.fbrt_bruto }}</td>
                             <td>@{{ data.fbrt_neto }}</td>
-                            <td>@{{ data.fgambar }}</td>
+                            <td>
+                                <img :src="viewFoto(data.fgambar)" alt="" width="100" height="100" srcset="">
+                            </td>
                             <td>
                                 <button @click="detaildata(data)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editModalNow(data)" class="btn btn-primary btn-sm">Edit</button>
@@ -215,7 +217,7 @@ const $app =   new Vue({
                 fk_jenis_edit : null,
                 fdimensi : null,
                 fgambar : null,
-                foto_barang: './storage/todo/no-image.png',
+                foto_barang: './no-image.png',
                 file_barang: null,
                 fk_brj_edit : null,
                 fn_brj_edit : null,
@@ -236,6 +238,9 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            viewFoto: function(data){
+                return './storage/'+data
+            },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -364,14 +369,7 @@ const $app =   new Vue({
                         return;
                     }
                     this.foto_barang = URL.createObjectURL(files[0])
-                },
-            viewFoto: function(foto) {
-                    if (foto === 'no-image.png') {
-                        return '/storage/todo/' + foto
-                    } else {
-                        return '/storage/barang/' + foto
-                    }
-                },    
+                },   
             loadDataJenisBRJ: function() {
                     const $this = this;
                     axios.post("/load-data-jenis-brj", {
@@ -396,12 +394,13 @@ const $app =   new Vue({
                         url: '/save-brj',
                         // String
                         data: {
-                            nama: this.nama,
-                            id_satuan: this.result_satuan,
-                            id_jenis: this.result_jenis,
-                            harga: resultFormatAngka(this.harga),
-                            stock: this.stock,
-                            id_otomatis: this.id_otomatis
+                            fk_brj : this.fk_brj,
+                            fn_brj : this.fn_brj,
+                            result_jenis : this.result_jenis,
+                            fpartno : this.fpartno,
+                            fbrt_bruto : this.fbrt_bruto,
+                            fbrt_neto : this.fbrt_neto,
+                            fdimensi : this.fdimensi
                         },
                         // String
                         token: _TOKEN_
@@ -409,15 +408,8 @@ const $app =   new Vue({
                         $this.loading = false;
                         var obj = JSON.parse($response)
                         if (obj.result) {
-                            alert("Berhasil Add Data")
-                            $this.loadData();
-                            $this.harga = null;
-                            $this.stock = null;
-                            $this.nama = null;
-                            $this.result_satuan = null;
-                            $this.result_jenis = null;
-                            $this.foto_barang = 'storage/todo/no-image.png'
-                            $this.id_otomatis = generateNewId($this.id_otomatis);
+                            alert("Data berhasil ditambahkan")
+                            $this.loadData()
                         }
                     });
  
