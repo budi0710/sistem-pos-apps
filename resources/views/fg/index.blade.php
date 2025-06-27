@@ -389,7 +389,6 @@ const $app =   new Vue({
             save: function() {
                    
                     const $this = this;
-                      const $this = this;
                     _upload = new Upload({
                         // Array
                         el: ['file_barang'],
