@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('radius');
+            $table->string('name_company');
+            $table->string('logo');
             $table->timestamps();
         });
     }
