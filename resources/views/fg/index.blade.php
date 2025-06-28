@@ -66,6 +66,7 @@
                         <div class="avatar">
                             <div class="w-24 rounded-full">
                                 <img :src="foto_barang" width="100" height="100"/>
+                                {{-- untuk gambar masukan lebar dan tinggi ya supaya gambar tidak terllu besar --}}
                             </div>
                             </div>
                                 <input  @keyup.enter="saveData" type="file" id="file_barang" name="file_barang" @change="changeImage($event)"
@@ -139,7 +140,7 @@
                     <div class="col-sm-9">
                         <div class="avatar">
                             <div class="w-24 rounded-full">
-                                <img :src="foto_barang_edit" />
+                                <img :src="foto_barang_edit" width="100" height="100" />
                             </div>
                             </div>
                                 <input  @keyup.enter="saveData" type="file" id="file_barang_edit" name="file_barang_edit" @change="changeImageEdit($event)"
@@ -227,7 +228,7 @@ const $app =   new Vue({
                 fbrt_bruto_edit : null,
                 fk_jenis_edit : null,
                 fdimensi_edit : null,
-                foto_barang_edit: null,
+                foto_barang_edit: './no-image.png',
                 file_barang_edit: null,
                 alert: false,
                 data_jenis_brj : null,
@@ -290,30 +291,36 @@ const $app =   new Vue({
                    // alert(data.fk_jns_brj)
                 },
             updateData: function(){
-                    if (this.id_edit) {
-                        const $this = this;
-                         axios.post("/update-brj", {
-                            _token: _TOKEN_,
-                            fn_brj_edit: this.fn_brj_edit,
-                            fn_brj_edit: this.fn_brj_edit,
-                            fpartno_edit: this.fpartno_edit,
-                            result_jenis_edit: this.result_jenis_edit,
-                            fbrt_neto_edit: this.fbrt_neto_edit,
-                            fbrt_bruto_edit: this.fbrt_bruto_edit,
-                            fdimensi_edit: this.fdimensi_edit,
-                            id : this.id_edit
-                        })
-                        .then(function(response) {
-                            if (response.data) {
-                                $this.loading = false;
-                                $this.loadData();
-                                alert("Update data sukses")
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
-                    }
+                     const $this = this;
+                    _upload = new Upload({
+                        // Array
+                        //el merupakan element 
+                        //file_barang dari input file pada modal
+                        el: ['file_barang_edit'],
+                        // String
+                        //url alamat route ya
+                        url: '/update-brj',
+                        // String
+                        data: {
+                            id_edit : this.id_edit,
+                            fk_brj_edit : this.fk_brj_edit,
+                            fn_brj_edit : this.fn_brj_edit,
+                            result_jenis_edit : this.result_jenis_edit,
+                            fpartno_edit : this.fpartno_edit,
+                            fbrt_bruto_edit : this.fbrt_bruto_edit,
+                            fbrt_neto_edit : this.fbrt_neto_edit,
+                            fdimensi_edit : this.fdimensi_edit
+                        },
+                        // String
+                        token: _TOKEN_
+                    }).start(($response) => {
+                        $this.loading = false;
+                        var obj = JSON.parse($response)
+                        if (obj.result) {
+                            alert("Data berhasil ditambahkan")
+                            $this.loadData()
+                        }
+                    });
               },
             searchData: function() {
                     if (this.search == null) {
@@ -389,8 +396,11 @@ const $app =   new Vue({
                     const $this = this;
                     _upload = new Upload({
                         // Array
+                        //el merupakan element 
+                        //file_barang dari input file pada modal
                         el: ['file_barang'],
                         // String
+                        //url alamat route ya
                         url: '/save-brj',
                         // String
                         data: {

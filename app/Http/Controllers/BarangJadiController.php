@@ -45,8 +45,6 @@ class BarangJadiController extends Controller
     }
 
     public function update(Request $request){
-        $file = $request->file('file_barang');
-        $path = $file->store('barang', 'public');
 
         $data = $request->_data;
         $data = json_decode($data);
@@ -54,12 +52,31 @@ class BarangJadiController extends Controller
         $id_edit = $data->{'id_edit'};
         $barangjadi = BarangJadi::find($id_edit);
 
-        $barangjadi->fn_brj = $request->fn_brj_edit;
-        $barangjadi->fk_jns_brj = $request->result_jenis_edit;
-        $barangjadi->fpartno = $request->fpartno_edit;
-        $barangjadi->fbrt_neto = $request->fbrt_neto_edit;
-        $barangjadi->fbrt_bruto = $request->fbrt_bruto_edit;
-        $barangjadi->fdimensi = $request->fdimensi_edit;
+        $file = $request->file('file_barang_edit');
+        $path = $file->store('barang', 'public');
+
+
+        $data = $request->_data;
+        $data = json_decode($data);
+
+        $fk_brj = $data->{'fk_brj_edit'};
+        $fn_brj = $data->{'fn_brj_edit'};
+        $result_jenis = $data->{'result_jenis_edit'};
+        $fpartno = $data->{'fpartno_edit'};
+        $fbrt_bruto = $data->{'fbrt_bruto_edit'};
+        $fbrt_neto = $data->{'fbrt_neto_edit'};
+        $fdimensi = $data->{'fdimensi_edit'};
+       
+        $id_edit = $data->{'id_edit'};
+        $barangjadi = BarangJadi::find($id_edit);
+
+        $barangjadi->fn_brj = $fn_brj;
+        $barangjadi->fk_jns_brj = $result_jenis;
+        $barangjadi->fpartno = $fpartno;
+        $barangjadi->fbrt_neto = $fbrt_neto;
+        $barangjadi->fbrt_bruto = $fbrt_bruto;
+        $barangjadi->fdimensi = $fdimensi;
+        $barangjadi->fgambar = $path;
 
         return $barangjadi->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
