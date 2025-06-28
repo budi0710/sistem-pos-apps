@@ -45,7 +45,14 @@ class BarangJadiController extends Controller
     }
 
     public function update(Request $request){
-        $barangjadi = BarangJadi::find($request->id);
+        $file = $request->file('file_barang');
+        $path = $file->store('barang', 'public');
+
+        $data = $request->_data;
+        $data = json_decode($data);
+       
+        $id_edit = $data->{'id_edit'};
+        $barangjadi = BarangJadi::find($id_edit);
 
         $barangjadi->fn_brj = $request->fn_brj_edit;
         $barangjadi->fk_jns_brj = $request->result_jenis_edit;
