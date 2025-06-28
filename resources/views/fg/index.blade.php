@@ -32,7 +32,7 @@
                     <div class="col-sm-9">
                         <select id="result_jenis" v-model="result_jenis" class="form-select">
                             <option selected>Choose...</option>
-                            <option v-for="data in data_jenis_brj" :value="data.id">@{{ data.fn_jns_brj }}</option>
+                            <option v-for="data in data_jenis_brj" :value="data.fk_jns_brj">@{{ data.fn_jns_brj }}</option>
                         </select>
                     </div>
                 </div>
@@ -392,7 +392,6 @@ const $app =   new Vue({
                         });
                 },
             save: function() {
-                   
                     const $this = this;
                     _upload = new Upload({
                         // Array

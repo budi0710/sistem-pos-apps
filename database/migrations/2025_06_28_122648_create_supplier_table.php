@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('supplier', function (Blueprint $table) {
             $table->id();
+            $table->char('kode_sup', 3)->unique();
+            $table->string('nama_sup', 100);
+            $table->string('notelp_sup', 15);
+            $table->string('alamat_sups', 100);
+            $table->string('email_sup', 50);
+            $table->string('PPN_sup', 1);
+            $table->string('NPWP_sup', 20);
+            $table->string('PPH23_sup', 1);
+            $table->string('CP_sup', 50);
             $table->timestamps();
         });
     }
