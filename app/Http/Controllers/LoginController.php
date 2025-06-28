@@ -9,12 +9,34 @@ use Session;
 
 class LoginController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
-        if (Auth::check()) {
-            return redirect('layouts.home');
+        $email = $request->email;
+        $password = $request->password;
+        
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $users = User::where('email', $email)
+                           // ->orWhere('username',$email)
+                            ->where('password',md5($password))->count();
+       
+        
+
+        if ($users){
+            
+            $data = User::where('email', $email)->where('password',md5($password))->first();
+
+            $role = $data['role'];
+
+            $role = '';
+            
+            session(['user' => $role]);
+            return response()->json(['result'=>true,'message'=>"Email or password is true"]);
         }else{
-            return view('login');
+            return response()->json(['result'=>false,'message'=>"Email or password is incorrect"]);
         }
     }
 
