@@ -4,7 +4,7 @@
 <div class="container-fluid mt-3">
         <div class="row">
             <!-- Katalog Produk -->
-            <div class="col-md-8">
+            <div class="col-md-7">
             <div class="card text-left">
             <div class="card-body">
                 <div class="row mb-3">
@@ -102,9 +102,9 @@
                             <div class="text-primary">Rp 28.000</div>
                         </div>
                     </div>
-                    
                     <!-- Tambah produk lain seperti di atas -->
                 </div>
+                <br>
                 <div class="mt-3 d-flex justify-content-center">
                     <nav>
                         <ul class="pagination pagination-sm">
@@ -119,7 +119,7 @@
             </div>
 
             <!-- Keranjang / Panel kanan -->
-            <div class="col-md-4 right-panel">
+            <div class="col-md-5 right-panel">
                 <h5>🛒 Umum</h5>
                 <div class="border-bottom pb-2 mb-2">
                     <div class="d-flex justify-content-between">
@@ -172,7 +172,7 @@
                         <span>Total</span>
                         <span>Rp 58.830</span>
                     </div>
-                    <button class="btn btn-primary w-100 mt-3">Bayar Rp 58.830</button>
+                    <button class="btn btn-primary w-100 mt-3">Proses PO Rp 58.830</button>
                 </div>
             </div>
         </div>
