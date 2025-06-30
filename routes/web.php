@@ -174,7 +174,7 @@ Route::get('/md5',function(){
     return md5('123456');
 });
 
-Route::get('/po-customer', function () {
+Route::get('/po_customer', function () {
     return view('po_customer.index');
 });
 
