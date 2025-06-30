@@ -1,7 +1,6 @@
 @extends('layouts.index')
 @section('title','Jenis Barang Jadi')
 @section('main')
-<h2>Halaman Jenis Barang Jadi </h2>
 <div id="app" class="app-wrapper">
             <div class="input-group mb-3">
             <button class="btn btn-outline-secondary" type="button" id="button-addon1" data-bs-toggle="modal" data-bs-target="#my_modal_add">Tambah Data</button>

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('h_poc', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_poc', 7)->unique();
+            $table->string('fno_poc_cus', 50);
+            $table->char('kode_cus', 3);
+            $table->date('ftgl_poc');
+            $table->char('PPN_cus', 1);
+            $table->text('description');
             $table->timestamps();
         });
     }

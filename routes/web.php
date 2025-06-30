@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\JenisBrjController;
@@ -67,6 +69,13 @@ Route::get('/brg', function () {
     return view('brg.index');
 });
 
+Route::post('/load-brg',[BarangController::class, 'load']);
+Route::post('/load-data-brg',[BarangController::class, 'loadData']);
+Route::post('/save-brg',[BarangController::class, 'save']);
+Route::post('/delete-brg',[BarangController::class, 'delete']);
+Route::post('/update-brg',[BarangController::class, 'update']);
+Route::post('/search-brg',[BarangController::class, 'search']);
+
 Route::get('/fg', function () {
     return view('fg.index');
 });
@@ -115,9 +124,23 @@ Route::get('/supplier', function () {
     return view('supplier.index');
 });
 
+Route::post('/load-sup',[SupplierController::class, 'load']);
+Route::post('/load-data-sup',[SupplierController::class, 'loadData']);
+Route::post('/save-sup',[CustSupplierControlleromerController::class, 'save']);
+Route::post('/delete-sup',[SupplierController::class, 'delete']);
+Route::post('/update-sup',[SupplierController::class, 'update']);
+Route::post('/search-sup',[SupplierController::class, 'search']);
+
 Route::get('/customer', function () {
     return view('customer.index');
 });
+
+Route::post('/load-cus',[CustomerController::class, 'load']);
+Route::post('/load-data-cus',[CustomerController::class, 'loadData']);
+Route::post('/save-cus',[CustomerController::class, 'save']);
+Route::post('/delete-cus',[CustomerController::class, 'delete']);
+Route::post('/update-cus',[CustomerController::class, 'update']);
+Route::post('/search-cus',[CustomerController::class, 'search']);
 
 Route::get('/brk', function () {
     return view('brk.index');
