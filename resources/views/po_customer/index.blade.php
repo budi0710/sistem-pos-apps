@@ -75,14 +75,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in jeniss" class="align-middle">
+                        <tr v-for="data in h_pocs" class="align-middle">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.fk_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
+                            <td>@{{ data.fno_poc }}</td>
+                            <td>@{{ data.fno_poc_cus }}</td>
+                            <td>@{{ data.ftgl_poc }}</td>
+                            <td>@{{ data.nama_cus }}</td>
+                            <td>@{{ data.PPN_cus }}</td>
+                            <td>@{{ data.description }}</td>
                             <td>
                                 <button @click="printPage(data.fno_poc)" class="btn btn-primary btn-sm">Print</button>
                                 <button @click="detailData(data.fno_poc)" class="btn btn-primary btn-sm">Details</button>
@@ -110,7 +110,7 @@ const _TOKEN_ = '<?= csrf_token() ?>';
 const $app =   new Vue({
         el : "#app",
         data: {
-                jeniss : null,
+                h_pocs : null,
                 fk_jenis : null,
                 fk_jenis_edit : null,
                 alert: false,
@@ -150,13 +150,13 @@ const $app =   new Vue({
                 },
             loadData : function(){
               const $this = this;
-                    axios.post("/load-jenis-brj", {
+                    axios.post("/load-hpo-customer", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.jeniss = response.data.data;
+                                $this.h_pocs = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })

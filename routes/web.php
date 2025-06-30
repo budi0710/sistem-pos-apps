@@ -187,3 +187,13 @@ Route::post('/save-poc-customer',[H_poc_Controller::class, 'save']);
 Route::post('/generate-id-poc-customer',[H_poc_Controller::class,'generateNo']);
 Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
 Route::post('/save-poc-customer',[H_poc_Controller::class,'saveData']);
+Route::post('/load-hpo-customer',[H_poc_Controller::class, 'load']);
+
+
+Route::get('/Kirim', function () {
+    return view('Kirim.index');
+});
+
+Route::get('/add_kirim',function(){
+        return view('Kirim/add_kirim');
+});

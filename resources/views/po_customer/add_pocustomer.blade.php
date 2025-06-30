@@ -120,7 +120,7 @@
 
             <!-- Keranjang / Panel kanan -->
             <div class="col-md-5 right-panel">
-                <h5>🛒 Umum</h5>
+                <h5>🛒 Detail PO Customer</h5>
                 <div class="border-bottom pb-2 mb-2">
                     <div class="d-flex justify-content-between">
                         <div>

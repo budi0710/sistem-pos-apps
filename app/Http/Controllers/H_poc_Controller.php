@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\H_poc;
+use App\Models\L_H_POC;
 use App\Models\T_poc;
 use Illuminate\Http\Request;
 
@@ -84,7 +85,7 @@ class H_poc_Controller extends Controller
      */
     public function load()
     {
-        return H_poc::paginate(10);
+        return L_H_POC::paginate(10);
     }
 
     private function getLast3($angka){
