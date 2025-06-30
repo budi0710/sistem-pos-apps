@@ -136,7 +136,7 @@ Route::get('/supplier', function () {
 
 Route::post('/load-sup',[SupplierController::class, 'load']);
 Route::post('/load-data-sup',[SupplierController::class, 'loadData']);
-Route::post('/save-sup',[CustSupplierControlleromerController::class, 'save']);
+Route::post('/save-sup',[CustomerController::class, 'save']);
 Route::post('/delete-sup',[SupplierController::class, 'delete']);
 Route::post('/update-sup',[SupplierController::class, 'update']);
 Route::post('/search-sup',[SupplierController::class, 'search']);
@@ -182,8 +182,8 @@ Route::get('/add-pocustomer',function(){
         return view('po_customer/add_pocustomer');
 });
 
-    Route::post('/delete-poc-customer',[H_poc_Controller::class, 'delete']);
-    Route::post('/save-poc-customer',[H_poc_Controller::class, 'save']);
-    Route::post('/generate-id-poc-customer',[H_poc_Controller::class,'generateNo']);
-    Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
-    Route::post('/save-poc-customer',[H_poc_Controller::class,'saveData']);
+Route::post('/delete-poc-customer',[H_poc_Controller::class, 'delete']);
+Route::post('/save-poc-customer',[H_poc_Controller::class, 'save']);
+Route::post('/generate-id-poc-customer',[H_poc_Controller::class,'generateNo']);
+Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
+Route::post('/save-poc-customer',[H_poc_Controller::class,'saveData']);
