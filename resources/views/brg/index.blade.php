@@ -54,7 +54,7 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Descripsi</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" ref="description" v-model="description" id="description_edit"  rows="3"></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -138,7 +138,7 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Descripsi</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" ref="description_edit" v-model="description_edit" id="description_edit" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -240,6 +240,7 @@ const $app =   new Vue({
                 saldo_awal : null,
                 result_jenis : null,
                 result_satuan : null,
+                description : null,
                 foto_barang : './no-image.png',
                 file_barang : null,
                 kode_bg_edit : null,
@@ -251,6 +252,7 @@ const $app =   new Vue({
                 fk_jenis_edit : null,
                 harga_edit : null,
                 fberat_netto_edit : null,
+                description_edit : null,
                 fgambar_edit : null,
                 saldo_awal_edit : null,
                 result_jenis_edit : null,
@@ -309,12 +311,13 @@ const $app =   new Vue({
             editModalNow: function(data) {
                     modal_edit.show();
                     $app.id_edit = data.id;
-                    $app.fk_brj_edit = data.fk_brj;
-                    $app.fn_brj_edit = data.fn_brj;
-                    $app.fpartno_edit = data.fpartno;
-                    $app.result_jenis_edit = data.fk_jns_brj;
+                    $app.kode_bg_edit = data.kode_bg;
+                    $app.partname_edit = data.partname;
+                    $app.partno_edit = data.partno;
+                    $app.result_satuan_edit = data.fk_sat;
+                    $app.result_jenis_edit = data.fk_jenis;
                     $app.fberat_netto_edit = data.fberat_netto;
-                    $app.fbrt_bruto_edit = data.fbrt_bruto;
+                    $app.description_edit = data.description;
                     $app.saldo_awal_edit = data.saldo_awal;
                    // alert(data.fk_jns_brj)
                 },
@@ -327,16 +330,17 @@ const $app =   new Vue({
                         el: ['file_barang_edit'],
                         // String
                         //url alamat route ya
-                        url: '/update-brj',
+                        url: '/update-brg',
                         // String
                         data: {
                             id_edit : this.id_edit,
-                            fk_brj_edit : this.fk_brj_edit,
-                            fn_brj_edit : this.fn_brj_edit,
+                            kode_bg_edit : this.kode_bg_edit,
+                            partname_edit : this.partname_edit,
+                            partno_edit : this.partno_edit,
                             result_jenis_edit : this.result_jenis_edit,
-                            fpartno_edit : this.fpartno_edit,
-                            fbrt_bruto_edit : this.fbrt_bruto_edit,
+                            result_satuan_edit : this.result_satuan_edit,
                             fberat_netto_edit : this.fberat_netto_edit,
+                            description_edit : this.description_edit,
                             saldo_awal_edit : this.saldo_awal_edit
                         },
                         // String
@@ -364,7 +368,7 @@ const $app =   new Vue({
                         .then(function(response) {
                             if (response.data) {
                                 $this.loading = false;
-                                $this.brjs = response.data;
+                                $this.barangs = response.data;
                             }
                         })
                         .catch(function(error) {
@@ -445,12 +449,13 @@ const $app =   new Vue({
                         url: '/save-brg',
                         // String
                         data: {
-                            fk_brj : this.fk_brj,
-                            fn_brj : this.fn_brj,
+                            kode_bg : this.kode_bg,
+                            partname : this.partname,
+                            partno : this.partno,
                             result_jenis : this.result_jenis,
-                            fpartno : this.fpartno,
-                            fbrt_bruto : this.fbrt_bruto,
+                            result_satuan: this.result_satuan,
                             fberat_netto : this.fberat_netto,
+                            description : this.description,
                             saldo_awal : this.saldo_awal
                         },
                         // String
@@ -459,7 +464,7 @@ const $app =   new Vue({
                         $this.loading = false;
                         var obj = JSON.parse($response)
                         if (obj.result) {
-                            alert("Data berhasil ditambahkan")
+                            alert("Selamat Data berhasil ditambahkan")
                             $this.loadData()
                         }
                     });

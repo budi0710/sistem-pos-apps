@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
-            $table->string('nama_brg');
-            $table->text('decrition');
-            $table->string('fk_sat');
-            $table->string('fk_jenis');
+            $table->char('kode_bg', 5)->unique();
+            $table->string('partname', 50);
+            $table->string('partno', 50);
+            $table->char('fk_sat', 2);
+            $table->char('fk_jenis', 2);
+            $table->decimal('fberat_netto')->default(0);
+            $table->text('description');
             $table->decimal('harga')->default(0);
-            $table->decimal('stok')->default(0);
+            $table->decimal('saldo_awal')->default(0);
+            $table->decimal('brg_in')->default(0);
+            $table->decimal('brg_out')->default(0);
+            $table->string('fgambar_brg');
             $table->timestamps();
         });
     }

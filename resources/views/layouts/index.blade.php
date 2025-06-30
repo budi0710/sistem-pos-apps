@@ -92,7 +92,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="utilities-color.html">Relasi Barang Customer</a>
-                        <a class="collapse-item" href="utilities-border.html">PO Customer</a>
+                        <a class="collapse-item" href="/po_customer">PO Customer</a>
                         <a class="collapse-item" href="utilities-animation.html">Pengiriman</a>
                         <a class="collapse-item" href="utilities-other.html">Retur Customer</a>
                     </div>

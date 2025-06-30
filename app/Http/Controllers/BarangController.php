@@ -22,26 +22,28 @@ public function load(){
         $data = $request->_data;
         $data = json_decode($data);
        
-        $fk_brj = $data->{'fk_brj'};
-        $fn_brj = $data->{'fn_brj'};
+        $kode_bg = $data->{'kode_bg'};
+        $partname = $data->{'partname'};
+        $partno = $data->{'partno'};
         $result_jenis = $data->{'result_jenis'};
-        $fpartno = $data->{'fpartno'};
-        $fbrt_bruto = $data->{'fbrt_bruto'};
-        $fbrt_neto = $data->{'fbrt_neto'};
-        $fdimensi = $data->{'fdimensi'};
+        $result_satuan = $data->{'result_satuan'};
+        $fberat_netto = $data->{'fberat_netto'};
+        $description = $data->{'description'};
+        $saldo_awal = $data->{'saldo_awal'};
 
         $barang = new Barang();
 
-        $barang->fn_brj = $fn_brj;
-        $barang->fk_brj = $fk_brj;
-        $barang->fk_jns_brj = $result_jenis;
-        $barang->fpartno = $fpartno;
-        $barang->fbrt_bruto = $fbrt_bruto;
-        $barang->fbrt_neto = $fbrt_neto;
-        $barang->fdimensi = $fdimensi;
-        $barang->fgambar = $path;
+        $barang->kode_bg = $kode_bg;
+        $barang->partname = $partname;
+        $barang->partno = $partno;
+        $barang->fk_sat = $result_satuan;
+        $barang->fk_jenis = $result_jenis;
+        $barang->fberat_netto = $fberat_netto;
+        $barang->description = $description;
+        $barang->saldo_awal = $saldo_awal;
+        $barang->fgambar_brg = $path;
         
-        return $Barang->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
+        return $barang->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 
     public function update(Request $request){
@@ -59,24 +61,27 @@ public function load(){
         $data = $request->_data;
         $data = json_decode($data);
 
-        $fk_brj = $data->{'fk_brj_edit'};
-        $fn_brj = $data->{'fn_brj_edit'};
+        $kode_bg = $data->{'kode_bg_edit'};
+        $partname = $data->{'partname_edit'};
+        $partno = $data->{'partno_edit'};
         $result_jenis = $data->{'result_jenis_edit'};
-        $fpartno = $data->{'fpartno_edit'};
-        $fbrt_bruto = $data->{'fbrt_bruto_edit'};
-        $fbrt_neto = $data->{'fbrt_neto_edit'};
-        $fdimensi = $data->{'fdimensi_edit'};
+        $result_satuan = $data->{'result_satuan_edit'};
+        $fberat_netto = $data->{'fberat_netto_edit'};
+        $description = $data->{'description_edit'};
+        $saldo_awal = $data->{'saldo_awal_edit'};
        
         $id_edit = $data->{'id_edit'};
         $barang = Barang::find($id_edit);
 
-        $barang->fn_brj = $fn_brj;
-        $barang->fk_jns_brj = $result_jenis;
-        $barang->fpartno = $fpartno;
-        $barang->fbrt_neto = $fbrt_neto;
-        $barang->fbrt_bruto = $fbrt_bruto;
-        $barang->fdimensi = $fdimensi;
-        $barang->fgambar = $path;
+        $barang->kode_bg = $kode_bg;
+        $barang->partname = $partname;
+        $barang->partno = $partno;
+        $barang->fk_sat = $result_satuan;
+        $barang->fk_jenis = $result_jenis;
+        $barang->fberat_netto = $fberat_netto;
+        $barang->description = $description;
+        $barang->saldo_awal = $saldo_awal;
+        $barang->fgambar_brg = $path;
 
         return $barang->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }

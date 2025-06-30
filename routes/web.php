@@ -7,6 +7,7 @@ use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJadiController;
+use App\Http\Controllers\H_poc_Controller;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\JenisBrjController;
 use App\Http\Controllers\LoginController;
@@ -172,3 +173,17 @@ Route::get('/admin-logout',function(Request $request){
 Route::get('/md5',function(){
     return md5('123456');
 });
+
+Route::get('/po-customer', function () {
+    return view('po_customer.index');
+});
+
+Route::get('/add-pocustomer',function(){
+        return view('po_customer/add_pocustomer');
+});
+
+    Route::post('/delete-poc-customer',[H_poc_Controller::class, 'delete']);
+    Route::post('/save-poc-customer',[H_poc_Controller::class, 'save']);
+    Route::post('/generate-id-poc-customer',[H_poc_Controller::class,'generateNo']);
+    Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
+    Route::post('/save-poc-customer',[H_poc_Controller::class,'saveData']);
