@@ -25,7 +25,7 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No PO Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
+                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="No PO Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -42,14 +42,14 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Description</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Nama Customer">
+                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Description">
                     </div>
                 </div>
             </div>
-            <br>
             </div>
+            <br>
                 <div class="d-flex justify-content-between mb-2">
-                    <input type="text" class="form-control w-75" placeholder="Cari...">
+                    <input type="text" class="form-control w-75" placeholder="Cari Data...">
                     <button class="btn btn-light ms-2"><i class="bi bi-gear"></i></button>
                 </div>
                 <div class="row row-cols-2 row-cols-md-4 g-3">
