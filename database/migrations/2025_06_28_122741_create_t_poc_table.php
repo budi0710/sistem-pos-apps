@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('t_poc', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_poc', 7);
+            $table->char('fk_brj', 5);
+            $table->char('fnos_poc', 7)->unique();
+            $table->integer('fq_poc');
+            $table->decimal('fharga');
             $table->timestamps();
         });
     }
