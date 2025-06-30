@@ -16,7 +16,10 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option selected>Pilih Customer</option>
+                        <option value="1">One</option>
+                    </select>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -28,7 +31,12 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">PPN</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Nama Customer">
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            PPN
+                        </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -50,7 +58,7 @@
                         <div class="product-card">
                             <div class="stock-badge">2</div>
                             <div class="product-img"></div>
-                            <strong>Americano Hot</strong>
+                            <strong>Pompa 125 ARKA</strong>
                             <div class="text-primary">Rp 25.000</div>
                         </div>
                     </div>
@@ -58,7 +66,7 @@
                         <div class="product-card">
                             <div class="stock-badge">25</div>
                             <div class="product-img"></div>
-                            <strong>Cappuccino Hot</strong>
+                            <strong>Pompa 125 ARKA ZA</strong>
                             <div class="text-primary">Rp 28.000</div>
                         </div>
                     </div>
@@ -66,7 +74,7 @@
                         <div class="product-card">
                             <div class="stock-badge">2</div>
                             <div class="product-img"></div>
-                            <strong>Americano Hot</strong>
+                            <strong>Pompa SMZ 260</strong>
                             <div class="text-primary">Rp 25.000</div>
                         </div>
                     </div>
@@ -74,7 +82,7 @@
                         <div class="product-card">
                             <div class="stock-badge">25</div>
                             <div class="product-img"></div>
-                            <strong>Cappuccino Hot</strong>
+                            <strong>Pompa SMZ 375</strong>
                             <div class="text-primary">Rp 28.000</div>
                         </div>
                     </div>
@@ -82,7 +90,7 @@
                         <div class="product-card">
                             <div class="stock-badge">2</div>
                             <div class="product-img"></div>
-                            <strong>Americano Hot</strong>
+                            <strong>Pompa 200 ARKA</strong>
                             <div class="text-primary">Rp 25.000</div>
                         </div>
                     </div>
@@ -90,7 +98,7 @@
                         <div class="product-card">
                             <div class="stock-badge">25</div>
                             <div class="product-img"></div>
-                            <strong>Cappuccino Hot</strong>
+                            <strong>Pompa 200 ARKA ZA</strong>
                             <div class="text-primary">Rp 28.000</div>
                         </div>
                     </div>
@@ -116,7 +124,7 @@
                 <div class="border-bottom pb-2 mb-2">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div><strong>Americano Hot</strong></div>
+                            <div><strong>Pompa 125 ARKA</strong></div>
                             <small>Rp.25.000 • Stok: 2</small>
                         </div>
                         <div class="d-flex align-items-center">
@@ -131,7 +139,7 @@
                 <div class="border-bottom pb-2 mb-2">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div><strong>Cappuccino Hot</strong></div>
+                            <div><strong>Pompa 125 ARKA ZA</strong></div>
                             <small>Rp.28.000 • Stok: 25</small>
                         </div>
                         <div class="d-flex align-items-center">
