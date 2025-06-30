@@ -11,6 +11,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\SettingMiddleware;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 //REGISTER
@@ -23,10 +24,13 @@ use Illuminate\Http\Request;
 // Route::get('/register',function(Request $request){
 //    return view('register');
 // });
-
+Route::get('/',function(Request $request){
+   return redirect('login');
+});
 
 Route::get('/login',function(Request $request){
-   return view('login');
+    $session = $request->session()->get('user');
+   return $session ? redirect('home') : view('login');
 });
 
 Route::post('/user-login',[UserController::class, 'login']);
@@ -40,6 +44,11 @@ Route::get('HomeController', [HomeController::class, 'index'])->name('HomeContro
 
 Route::get('/home', function () {
     return view('layouts.home');
+});
+
+
+Route::middleware([SettingMiddleware::class])->group(function () {
+    // this is for route that can access by setting middleware
 });
 
 Route::get('/about', function () {
