@@ -77,8 +77,8 @@
                             <td>@{{ data.fk_sat }}</td>
                             <td>@{{ data.fn_satuan }}</td>
                             <td>
-                                <button @click="editModalNow(data)" class="btn btn-warning">Edit</button>
-                                <button @click="deleteData(data.id,data.fn_satuan)" class="btn btn-error">x</button>
+                                <button @click="editModalNow(data)" class="btn btn-primary btn-sm">Edit</button>
+                                <button @click="deleteData(data.id,data.fn_satuan)" class="btn btn-danger btn-sm">x</button>
                             </td>
                         </tr>
                     </tbody>

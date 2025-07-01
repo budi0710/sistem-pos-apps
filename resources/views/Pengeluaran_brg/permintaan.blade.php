@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('title','Add BTBG')
+@section('title','STBJ')
 @section('main')
 <div id="app" class="app-wrapper">
             <div class="input-group mb-3">
@@ -65,8 +65,9 @@
                     <thead>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th style="width: 100px">No STBJ</th>
-                            <th style="width: 100px">Tgl STBJ</th>
+                            <th style="width: 100px">No BTBG</th>
+                            <th style="width: 100px">Tgl BTBG</th>
+                            <th style="width: 100px">Nama BRJ</th>
                             <th style="width: 100px">Decription</th>
                             <th style="width: 200px">Action</th>
                         </tr>
@@ -74,8 +75,9 @@
                     <tbody>
                         <tr v-for="data in h_pocs" class="align-middle">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.fno_stbj }}</td>
-                            <td>@{{ data.ftgl_stbj }}</td>
+                            <td>@{{ data.fno_btbg }}</td>
+                            <td>@{{ data.ftgl_btbg  }}</td>
+                            <td>@{{ data.fn_brj }}</td>
                             <td>@{{ data.description }}</td>
                             <td>
                                 <button @click="printPage(data.fno_poc)" class="btn btn-primary btn-sm">Print</button>

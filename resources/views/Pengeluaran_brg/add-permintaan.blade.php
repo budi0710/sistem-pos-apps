@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('title','Add POS')
+@section('title','Add BTBG')
 @section('main')
 <div id="app" class="container-fluid mt-3">
         <div class="row">
