@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('title','Add POC')
 @section('main')
-<div class="container-fluid mt-3">
+<div id="app" class="container-fluid mt-3">
         <div class="row">
             <!-- Katalog Produk -->
             <div class="col-md-7">
@@ -10,7 +10,7 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl PO</label>
                     <div class="col-sm-9">
-                        <input type="date" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
+                        <input type="date" class="form-control" ref="kode_cus" v-model="kode_cus"  placeholder="kode Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -18,21 +18,21 @@
                     <div class="col-sm-9">
                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                         <option selected>Pilih Customer</option>
-                        <option value="1">One</option>
+                        <option v-for="data in customers" :value="data.id">@{{data.nama_cus}}</option>
                     </select>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No PO Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="No PO Customer">
+                        <input type="text" class="form-control" ref="no_po" v-model="no_po"  placeholder="No PO Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">PPN</label>
                     <div class="col-sm-9">
                         <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" v-model="ppn">
                         <label class="form-check-label" for="flexCheckDefault">
                             PPN
                         </label>
@@ -42,7 +42,7 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Description</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Description">
+                        <input type="text" class="form-control" ref="description" v-model="description"  placeholder="Description">
                     </div>
                 </div>
             </div>
@@ -56,53 +56,14 @@
                     <!-- Card Produk -->
                     <div class="col">
                         <div class="product-card">
-                            <div class="stock-badge">2</div>
-                            <div class="product-img"></div>
+                            <div class="stock-badge">1</div>
+                            <img src="./no-image.png" class="img-fluid" alt="...">
                             <strong>Pompa 125 ARKA</strong>
                             <div class="text-primary">Rp 25.000</div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="product-card">
-                            <div class="stock-badge">25</div>
-                            <div class="product-img"></div>
-                            <strong>Pompa 125 ARKA ZA</strong>
-                            <div class="text-primary">Rp 28.000</div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="product-card">
-                            <div class="stock-badge">2</div>
-                            <div class="product-img"></div>
-                            <strong>Pompa SMZ 260</strong>
-                            <div class="text-primary">Rp 25.000</div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="product-card">
-                            <div class="stock-badge">25</div>
-                            <div class="product-img"></div>
-                            <strong>Pompa SMZ 375</strong>
-                            <div class="text-primary">Rp 28.000</div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="product-card">
-                            <div class="stock-badge">2</div>
-                            <div class="product-img"></div>
-                            <strong>Pompa 200 ARKA</strong>
-                            <div class="text-primary">Rp 25.000</div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="product-card">
-                            <div class="stock-badge">25</div>
-                            <div class="product-img"></div>
-                            <strong>Pompa 200 ARKA ZA</strong>
-                            <div class="text-primary">Rp 28.000</div>
-                        </div>
-                    </div>
-                    <!-- Tambah produk lain seperti di atas -->
+                  
+                   <!-- Card Produk --> 
                 </div>
                 <br>
                 <div class="mt-3 d-flex justify-content-center">
@@ -178,7 +139,39 @@
         </div>
     </div>
 
-    <!-- Bootstrap Icons (opsional untuk icon gear) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.js"></script>
+    <script>
+        const _TOKEN_ = '<?= csrf_token() ?>'
 
+        new Vue({
+            el : "#app",
+            data : {
+                customers : null,
+                kode_cus : null,
+                no_po : null,
+                ppn : null,
+                description : null
+            },
+            methods: {
+                loadCustomer : function(){
+                    const $this = this;
+                    axios.post("/load-data-cus", {
+                            _token: _TOKEN_
+                        })
+                        .then(function(response) {
+
+                            if (response.data) {
+                                $this.customers = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                }
+            },
+            mounted() {
+                this.loadCustomer()
+            },
+        })
+    </script>
+  
 @endsection
