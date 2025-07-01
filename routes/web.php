@@ -204,6 +204,10 @@ Route::get('/permintaan', function () {
     return view('Pengeluaran_brg/permintaan');
 });
 
+Route::get('/add-permintaan', function () {
+    return view('Pengeluaran_brg/add-permintaan');
+});
+
 Route::get('/pengeluaran', function () {
     return view('Pengeluaran_brg/pengeluaran');
 });
