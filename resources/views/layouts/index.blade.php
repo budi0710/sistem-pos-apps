@@ -109,9 +109,9 @@
                 <div id="collapseUtilities_inventory" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Penerimaan FG</a>
-                        <a class="collapse-item" href="utilities-border.html">Permintaan BRG</a>
-                        <a class="collapse-item" href="utilities-animation.html">Pengeluaran BRG</a>
+                        <a class="collapse-item" href="/penerimaan_fg">Penerimaan FG</a>
+                        <a class="collapse-item" href="/permintaan">Permintaan BRG</a>
+                        <a class="collapse-item" href="/pengeluaran">Pengeluaran BRG</a>
                         <a class="collapse-item" href="utilities-animation.html">Adjustment BRG</a>
                         <a class="collapse-item" href="utilities-animation.html">Adjustment FG</a>
                     </div>

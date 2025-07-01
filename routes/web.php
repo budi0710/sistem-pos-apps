@@ -197,3 +197,17 @@ Route::get('/Kirim', function () {
 Route::get('/add_kirim',function(){
         return view('Kirim/add_kirim');
 });
+
+//Inventory Barang
+
+Route::get('/permintaan', function () {
+    return view('Pengeluaran_brg/permintaan');
+});
+
+Route::get('/pengeluaran', function () {
+    return view('Pengeluaran_brg/pengeluaran');
+});
+
+Route::get('/penerimaan_fg', function () {
+    return view('penerimaan_fg.index');
+});
