@@ -9,8 +9,11 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl Kirim</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                         <input type="date" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ref="fno_krm" v-model="fno_krm"  placeholder="No Kirim">
                     </div>
                 </div>
                 <div class="row mb-3">
