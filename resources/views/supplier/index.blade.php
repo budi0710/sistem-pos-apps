@@ -12,59 +12,59 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Customer</h5> 
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Supplier</h5> 
                 {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
             </div>
             <div class="modal-body">
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Kode Customer</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Kode Customer</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ref="kode_sup" v-model="kode_sup"  id="kode_sup" placeholder="kode Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Nama Customer</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Nama Customer">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ref="nama_sup" v-model="nama_sup"  id="nama_sup" placeholder="Nama Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">No Telp</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" ref="notelp_cus" v-model="notelp_cus"  id="notelp_cus" placeholder="No Telp">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">No Telp</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ref="notelp_sup" v-model="notelp_sup"  id="notelp_sup" placeholder="No Telp">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Alamat</label>
-                    <div class="col-sm-8">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Alamat</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" ref="alamat_sup" v-model="alamat_sup" id="alamat_sup" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Email</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" ref="email_cus" v-model="email_cus"  id="email_cus" placeholder="Email">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ref="email_sup" v-model="email_sup"  id="email_sup" placeholder="Email">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">PPN</label>
-                    <div class="col-sm-8">
-                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">PPN</label>
+                    <div class="col-sm-9">
+                       <input class="form-check-input" type="checkbox" value="1" id="PPN_sup" ref="PPN_sup" v-model="PPN_sup">
                         <label class="form-check-label" for="flexCheckDefault">
                             PPN
                         </label>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">N.P.W.P</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" ref="NPWP_cus" v-model="NPWP_cus"  id="NPWP_cus" placeholder="N.P.W.P">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">N.P.W.P</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ref="NPWP_sup" v-model="NPWP_sup"  id="NPWP_sup" placeholder="N.P.W.P">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Contact Person</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" ref="CP_cus" v-model="CP_cus"  id="CP_cus" placeholder="Contact Person">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Contact Person</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ref="CP_sup" v-model="CP_sup"  id="CP_sup" placeholder="Contact Person">
                     </div>
                 </div>
             </div>
@@ -87,11 +87,11 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Kode jenis:</label>
-                        <input type="text" ref="kode_cus_edit" v-model="kode_cus_edit" disabled placeholder="kode Jenis" class="form-control">
+                        <input type="text" ref="kode_sup_edit" v-model="kode_sup_edit" disabled placeholder="kode Supplier" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
-                        <input type="text" ref="nama_cus_edit" v-model="nama_cus_edit" placeholder="Jenis Edit" class="form-control" >
+                        <input type="text" ref="nama_sup_edit" v-model="nama_sup_edit" placeholder="Nama Supplier" class="form-control" >
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -152,7 +152,7 @@ const $app =   new Vue({
                 kode_sup : null,
                 nama_sup : null,
                 notelp_sup : null,
-                alamat_sups : null,
+                alamat_sup : null,
                 email_sup : null,
                 PPN_sup : null,
                 NPWP_sup : null,
@@ -260,23 +260,35 @@ const $app =   new Vue({
                         });
                 },
             save: function() {
-                    if (this.jenis == null) {
+                    if (this.nama_sup == null) {
                         this.alert = false;
                         return
                     }
                     const $this = this;
                      axios.post("/save-sup", {
                                         _token: _TOKEN_,
-                                        jenis: this.jenis,
-                                        fk_jenis: this.fk_jenis
+                                        kode_sup: this.kode_sup,
+                                        nama_sup: this.nama_sup,
+                                        notelp_sup: this.notelp_sup,
+                                        alamat_sup: this.alamat_sup,
+                                        email_sup: this.email_sup,
+                                        PPN_sup: this.PPN_sup,
+                                        NPWP_sup: this.NPWP_sup,
+                                        CP_sup: this.CP_sup
                                     })
                                     .then(function(response) {
                                         if (response.data.result) {
                                             $this.loadData();
                                             $this.alert = false;
-                                            $this.jenis = null;
-                                            $this.fk_jenis = null;
-                                            alert("Tambah data sukses");
+                                            $this.kode_sup = null;
+                                            $this.nama_sup = null;
+                                            $this.notelp_sup = null;
+                                            $this.alamat_sup = null;
+                                            $this.email_sup = null;
+                                            $this.PPN_sup = null;
+                                            $this.NPWP_sup = null;
+                                            $this.CP_sup = null;
+                                            alert("Tambah data supplier sukses");
                                         }
                                     })
                                     .catch(function(error) {
