@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('ftgl_poc');
             $table->char('PPN_cus', 1);
             $table->text('description');
+            $table->string('userid',20);
             $table->timestamps();
         });
     }

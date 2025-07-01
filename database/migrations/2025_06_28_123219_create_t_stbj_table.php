@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('t_stbj', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_stbj', 7)->unique();
+            $table->char('fk_brj', 5)->unique();
+            $table->decimal('fq_stbj')->default(0);
             $table->timestamps();
         });
     }

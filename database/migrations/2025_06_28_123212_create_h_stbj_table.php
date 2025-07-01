@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('h_stbj', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_stbj', 7)->unique();
+            $table->date('ftgl_stbj');
+            $table->string('description',200);
+            $table->string('userid',20);
             $table->timestamps();
         });
     }

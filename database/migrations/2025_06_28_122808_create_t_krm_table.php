@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('t_krm', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_krm', 7)->unique();
+            $table->char('fnos_poc', 7)->unique();
+            $table->integer('fq_krm');
             $table->timestamps();
         });
     }
