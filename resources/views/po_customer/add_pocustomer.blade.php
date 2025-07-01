@@ -18,7 +18,7 @@
                     <div class="col-sm-9">
                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                         <option selected>Pilih Customer</option>
-                        <option v-for="data in customers" :value="data.id">@{{data.nama_cus}}</option>
+                        <option v-for="data in customers" :value="data.kode_cus">@{{data.nama_cus}}</option>
                     </select>
                     </div>
                 </div>

@@ -18,7 +18,7 @@
                     <div class="col-sm-9">
                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                         <option selected>Pilih Supplier</option>
-                        <option v-for="data in suppliers" :value="data.id">@{{data.nama_sup}}</option>
+                        <option v-for="data in suppliers" :value="data.kode_sup">@{{data.nama_sup}}</option>
                     </select>
                     </div>
                 </div>
@@ -139,22 +139,22 @@
         new Vue({
             el : "#app",
             data : {
-                customers : null,
-                kode_cus : null,
+                suppliers : null,
+                kode_sup : null,
                 no_po : null,
                 ppn : null,
                 description : null
             },
             methods: {
-                loadCustomer : function(){
+                loadSupplier: function(){
                     const $this = this;
-                    axios.post("/load-data-cus", {
+                    axios.post("/load-data-sup", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
 
                             if (response.data) {
-                                $this.customers = response.data;
+                                $this.suppliers = response.data;
                             }
                         })
                         .catch(function(error) {
@@ -163,7 +163,7 @@
                 }
             },
             mounted() {
-                this.loadCustomer()
+                this.loadSupplier()
             },
         })
     </script>
