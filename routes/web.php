@@ -11,10 +11,10 @@ use App\Http\Controllers\H_poc_Controller;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\JenisBrjController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\Unitkerja;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\UnitkerjaContoller;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SettingMiddleware;
@@ -237,9 +237,23 @@ Route::get('/unitkerja', function () {
     return view('hris/unitkerja');
 });
 
+Route::post('/load-unitkerja',[UnitkerjaContoller::class, 'load']);
+Route::post('/load-data-unitkerja',[UnitkerjaContoller::class, 'loadData']);
+Route::post('/save-unitkerja',[UnitkerjaContoller::class, 'save']);
+Route::post('/delete-unitkerja',[UnitkerjaContoller::class, 'delete']);
+Route::post('/update-unitkerja',[UnitkerjaContoller::class, 'update']);
+Route::post('/search-unitkerja',[UnitkerjaContoller::class, 'search']);
+
 Route::get('/jabatan', function () {
     return view('hris/jabatan');
 });
+
+Route::post('/load-jabatan',[JabatanController::class, 'load']);
+Route::post('/load-data-jabatan',[JabatanController::class, 'loadData']);
+Route::post('/save-jabatan',[JabatanController::class, 'save']);
+Route::post('/delete-jabatan',[JabatanController::class, 'delete']);
+Route::post('/update-jabatan',[JabatanController::class, 'update']);
+Route::post('/search-jabatan',[JabatanController::class, 'search']);
 
 Route::get('/karyawan', function () {
     return view('hris/karyawan');

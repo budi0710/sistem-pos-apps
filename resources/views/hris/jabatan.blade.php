@@ -13,17 +13,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Satuan</h5> 
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Jabatan</h5> 
                 {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Kode Satuan:</label>
-                    <input type="text" ref="fk_sat" v-model="fk_sat" placeholder="kode satuan" class="form-control" id="recipient-name">
+                    <label for="recipient-name" class="col-form-label">Kode Jabatan:</label>
+                    <input type="text" ref="fk_jabatan" v-model="fk_jabatan" placeholder="kode Jabatan" class="form-control" id="recipient-name">
                 </div>
                 <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Nama Satuan:</label>
-                    <input type="text" ref="satuan" v-model="satuan" placeholder="Satuan" class="form-control" id="recipient-name">
+                    <label for="recipient-name" class="col-form-label">Nama Jabatan:</label>
+                    <input type="text" ref="fn_jabatan" v-model="fn_jabatan" placeholder="fn_jabatan" class="form-control" id="recipient-name">
                 </div>
             </div>
             <div class="modal-footer">
@@ -39,17 +39,17 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Satuan</h5> 
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Jabatan</h5> 
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Kode Satuan:</label>
-                        <input type="text" ref="fk_sat_edit" v-model="fk_sat_edit" disabled placeholder="kode satuan" class="form-control">
+                        <label for="recipient-name" class="col-form-label">Kode Jabatan:</label>
+                        <input type="text" ref="fk_jabatan_edit" v-model="fk_jabatan_edit" disabled placeholder="kode Jabatan" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nama Satuan:</label>
-                        <input type="text" ref="satuan_edit" v-model="satuan_edit" placeholder="Satuan Edit" class="form-control" >
+                        <label for="recipient-name" class="col-form-label">Nama Jabatan:</label>
+                        <input type="text" ref="fn_jabatan_edit" v-model="fn_jabatan_edit" placeholder="Jabatan Edit" class="form-control" >
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -66,19 +66,19 @@
                     <thead>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Kode Satuan</th>
-                            <th>Satuan</th>
+                            <th>Kode Jabatan</th>
+                            <th>Jabatan</th>
                             <th style="width: 200px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in satuans" class="align-middle">
+                        <tr v-for="data in jabatans" class="align-middle">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.fk_sat }}</td>
-                            <td>@{{ data.fn_satuan }}</td>
+                            <td>@{{ data.fk_jabatan }}</td>
+                            <td>@{{ data.fn_jabatan }}</td>
                             <td>
                                 <button @click="editModalNow(data)" class="btn btn-primary btn-sm">Edit</button>
-                                <button @click="deleteData(data.id,data.fn_satuan)" class="btn btn-danger btn-sm">x</button>
+                                <button @click="deleteData(data.id,data.fn_jabatan)" class="btn btn-danger btn-sm">x</button>
                             </td>
                         </tr>
                     </tbody>
@@ -101,14 +101,14 @@ const _TOKEN_ = '<?= csrf_token() ?>';
 const $app =   new Vue({
         el : "#app",
         data: {
-                satuans : null,
-                fk_sat : null,
-                fk_sat_edit : null,
+                jabatans : null,
+                fk_jabatan : null,
+                fk_jabatan_edit : null,
                 alert: false,
-                satuan_edit : null,
+                fn_jabatan_edit : null,
                 links :null,
                 search : null,
-                satuan : null,
+                fn_jabatan : null,
                 loading :false,
                 id_edit : null
         },
@@ -125,7 +125,7 @@ const $app =   new Vue({
                         .then(function(response) {
                             if (response.data) {
                                 $this.loading = false;
-                                $this.satuans = response.data.data;
+                                $this.jabatans = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })
@@ -135,13 +135,13 @@ const $app =   new Vue({
                 },
           loadData : function(){
               const $this = this;
-                    axios.post("/load-satuan", {
+                    axios.post("/load-jabatan", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.satuans = response.data.data;
+                                $this.jabatans = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })
@@ -152,16 +152,16 @@ const $app =   new Vue({
             editModalNow: function(data) {
                     modal_edit.show();
                     $app.id_edit = data.id;
-                    $app.fk_sat_edit = data.fk_sat;
-                    $app.satuan_edit = data.fn_satuan;
+                    $app.fk_jabatan_edit = data.fk_jabatan;
+                    $app.fn_jabatan_edit = data.fn_jabatan;
                     //alert(data.id)
                 },
             updateData: function(){
                     if (this.id_edit) {
                         const $this = this;
-                         axios.post("/update-satuan", {
+                         axios.post("/update-jabatan", {
                             _token: _TOKEN_,
-                            satuan_edit: this.satuan_edit,
+                            fn_jabatan_edit: this.fn_jabatan_edit,
                             id : this.id_edit
                         })
                         .then(function(response) {
@@ -183,14 +183,14 @@ const $app =   new Vue({
                     }
                     this.loading = true;
                     const $this = this;
-                    axios.post("/search-satuan", {
+                    axios.post("/search-jabatan", {
                             _token: _TOKEN_,
                             search: this.search
                         })
                         .then(function(response) {
                             if (response.data) {
                                 $this.loading = false;
-                                $this.satuans = response.data;
+                                $this.jabatans = response.data;
                             }
                         })
                         .catch(function(error) {
@@ -198,22 +198,22 @@ const $app =   new Vue({
                         });
                 },
             save: function() {
-                    if (this.satuan == null) {
+                    if (this.fn_jabatan == null) {
                         this.alert = false;
                         return
                     }
                     const $this = this;
-                     axios.post("/save-satuan", {
+                     axios.post("/save-jabatan", {
                                         _token: _TOKEN_,
-                                        satuan: this.satuan,
-                                        fk_sat: this.fk_sat
+                                        fn_jabatan: this.fn_jabatan,
+                                        fk_jabatan: this.fk_jabatan
                                     })
                                     .then(function(response) {
                                         if (response.data.result) {
                                             $this.loadData();
                                             $this.alert = false;
-                                            $this.satuan = null;
-                                            $this.fk_sat = null;
+                                            $this.fn_jabatan = null;
+                                            $this.fk_jabatan = null;
                                             alert("Tambah data sukses");
                                         }
                                     })
@@ -221,12 +221,12 @@ const $app =   new Vue({
                                         console.log(error);
                                     }); 
                 },
-                deleteData: function(id, satuan) {
+                deleteData: function(id, fn_jabatan) {
                     if (id) {
                         const $this = this;
                         Swal.fire({
                             title: "Are you sure?",
-                            text: "Apakah anda ingin menghapus data ini {" + satuan + "}",
+                            text: "Apakah anda ingin menghapus data ini {" + fn_jabatan + "}",
                             icon: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#3085d6",
@@ -235,7 +235,7 @@ const $app =   new Vue({
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.loading = true;
-                                axios.post("/delete-satuan", {
+                                axios.post("/delete-jabatan", {
                                         _token: _TOKEN_,
                                         id: id
                                     })
