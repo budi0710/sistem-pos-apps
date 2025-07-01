@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('fno_krm', 7)->unique();
             $table->char('fnos_poc', 7)->unique();
-            $table->integer('fq_krm');
+            $table->integer('fq_krm')->default(0);
             $table->timestamps();
         });
     }

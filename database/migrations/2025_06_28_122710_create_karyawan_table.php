@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('karyawan', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_ktp',16);
+            $table->string('fnama_kry',50);
+            $table->char('fkelamin',1);
+            $table->string('fno_telp',15);
+            $table->text('falamat');
+            $table->char('ftatus_nikah',1);
+            $table->char('fk_jabatan', 2);
+            $table->char('fk_unitkerja', 2);
             $table->timestamps();
         });
     }

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_poc', function (Blueprint $table) {
+        Schema::create('h_pos', function (Blueprint $table) {
             $table->id();
-            $table->char('fno_poc', 7);
-            $table->char('fk_brj', 5);
-            $table->char('fnos_poc', 7)->unique();
-            $table->integer('fq_poc')->default(0);
-            $table->decimal('fharga')->default(0);
+            $table->char('fno_pos', 7)->unique();
+            $table->char('kode_sup', 3);
+            $table->date('ftgl_pos');
+            $table->char('PPN', 1);
+            $table->string('description', 100);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_poc');
+        Schema::dropIfExists('h_pos');
     }
 };

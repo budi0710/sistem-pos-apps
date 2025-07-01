@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_poc', function (Blueprint $table) {
+        Schema::create('t_btbg', function (Blueprint $table) {
             $table->id();
-            $table->char('fno_poc', 7);
-            $table->char('fk_brj', 5);
-            $table->char('fnos_poc', 7)->unique();
-            $table->integer('fq_poc')->default(0);
-            $table->decimal('fharga')->default(0);
+            $table->char('fno_btbg', 7)->unique();
+            $table->char('kode_bg', 5);
+            $table->integer('fq_btbg')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_poc');
+        Schema::dropIfExists('t_btbg');
     }
 };

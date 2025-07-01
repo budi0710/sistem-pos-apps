@@ -17,8 +17,8 @@ return new class extends Migration
             $table->char('fk_jns_brj', 2);
             $table->string('fn_brj', 50);
             $table->string('fpartno', 50);
-            $table->decimal('fbrt_neto');
-            $table->decimal('fbrt_bruto');
+            $table->decimal('fbrt_neto')->default(0);
+            $table->decimal('fbrt_bruto')->default(0);
             $table->string('fdimensi');
             $table->string('fgambar');
             $table->timestamps();

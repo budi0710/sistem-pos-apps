@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_poc', function (Blueprint $table) {
+        Schema::create('jabatan', function (Blueprint $table) {
             $table->id();
-            $table->char('fno_poc', 7);
-            $table->char('fk_brj', 5);
-            $table->char('fnos_poc', 7)->unique();
-            $table->integer('fq_poc')->default(0);
-            $table->decimal('fharga')->default(0);
+            $table->char('fk_jabatan', 2)->unique();
+            $table->string('fn_jabatan', 50);
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_poc');
+        Schema::dropIfExists('jabatan');
     }
 };
