@@ -212,6 +212,9 @@ Route::get('/penerimaan_fg', function () {
     return view('penerimaan_fg.index');
 });
 
+Route::get('/add-stbj',function(){
+        return view('penerimaan_fg/add-stbj');
+});
 
 Route::get('/po_supplier', function () {
     return view('po_supplier.index');
