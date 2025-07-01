@@ -10,8 +10,11 @@ use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\H_poc_Controller;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\JenisBrjController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Unitkerja;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SettingMiddleware;
@@ -226,4 +229,18 @@ Route::get('/po_supplier', function () {
 
 Route::get('/add-posupplier',function(){
         return view('po_supplier/add_posupplier');
+});
+
+//HRIS
+
+Route::get('/unitkerja', function () {
+    return view('hris/unitkerja');
+});
+
+Route::get('/jabatan', function () {
+    return view('hris/jabatan');
+});
+
+Route::get('/karyawan', function () {
+    return view('hris/karyawan');
 });
