@@ -136,7 +136,7 @@ Route::get('/supplier', function () {
 
 Route::post('/load-sup',[SupplierController::class, 'load']);
 Route::post('/load-data-sup',[SupplierController::class, 'loadData']);
-Route::post('/save-sup',[CustomerController::class, 'save']);
+Route::post('/save-sup',[SupplierController::class, 'save']);
 Route::post('/delete-sup',[SupplierController::class, 'delete']);
 Route::post('/update-sup',[SupplierController::class, 'update']);
 Route::post('/search-sup',[SupplierController::class, 'search']);

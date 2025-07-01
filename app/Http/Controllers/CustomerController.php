@@ -19,6 +19,12 @@ class CustomerController extends Controller
 
         $customer->nama_cus = $request->nama_cus;
         $customer->kode_cus = $request->kode_cus;
+        $customer->notelp_cus = $request->notelp_cus;
+        $customer->alamat_cus = $request->alamat_cus;
+        $customer->email_cus = $request->email_cus;
+        $customer->PPN_cus = $request->PPN_cus;
+        $customer->NPWP_cus = $request->NPWP_cus;
+        $customer->CP_cus = $request->CP_cus;
         return $customer->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 

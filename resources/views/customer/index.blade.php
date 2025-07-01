@@ -17,53 +17,53 @@
             </div>
             <div class="modal-body">
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Kode Customer</label>
-                    <div class="col-sm-8">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Kode Customer</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Nama Customer</label>
-                    <div class="col-sm-8">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Nama Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">No Telp</label>
-                    <div class="col-sm-8">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">No Telp</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ref="notelp_cus" v-model="notelp_cus"  id="notelp_cus" placeholder="No Telp">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Alamat</label>
-                    <div class="col-sm-8">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Alamat</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" ref="alamat_cus" v-model="alamat_cus"  id="alamat_cus"  id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Email</label>
-                    <div class="col-sm-8">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ref="email_cus" v-model="email_cus"  id="email_cus" placeholder="Email">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">PPN</label>
-                    <div class="col-sm-8">
-                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">PPN</label>
+                    <div class="col-sm-9">
+                       <input class="form-check-input" type="checkbox" value="1" ref="PPN_cus" v-model="PPN_cus"  id="PPN_cus">
                         <label class="form-check-label" for="flexCheckDefault">
                             PPN
                         </label>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">N.P.W.P</label>
-                    <div class="col-sm-8">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">N.P.W.P</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ref="NPWP_cus" v-model="NPWP_cus"  id="NPWP_cus" placeholder="N.P.W.P">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-4 col-form-label">Contact Person</label>
-                    <div class="col-sm-8">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Contact Person</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" ref="CP_cus" v-model="CP_cus"  id="CP_cus" placeholder="Contact Person">
                     </div>
                 </div>
@@ -260,22 +260,33 @@ const $app =   new Vue({
                         });
                 },
             save: function() {
-                    if (this.jenis == null) {
+                    if (this.nama_cus == null) {
                         this.alert = false;
                         return
                     }
                     const $this = this;
                      axios.post("/save-cus", {
                                         _token: _TOKEN_,
-                                        jenis: this.jenis,
-                                        fk_jenis: this.fk_jenis
+                                        nama_cus: this.nama_cus,
+                                        notelp_cus: this.notelp_cus,
+                                        alamat_cus: this.alamat_cus,
+                                        email_cus: this.email_cus,
+                                        PPN_cus: this.PPN_cus,
+                                        NPWP_cus: this.NPWP_cus,
+                                        CP_cus: this.CP_cus,
+                                        kode_cus: this.kode_cus
                                     })
                                     .then(function(response) {
                                         if (response.data.result) {
                                             $this.loadData();
                                             $this.alert = false;
-                                            $this.jenis = null;
-                                            $this.fk_jenis = null;
+                                            $this.kode_cus = null;
+                                            $this.nama_cus = null;
+                                            $this.notelp_cus = null;
+                                            $this.email_cus = null;
+                                            $this.PPN_cus = null;
+                                            $this.NPWP_cus = null;
+                                            $this.CP_cus = null;
                                             alert("Tambah data sukses");
                                         }
                                     })
@@ -325,10 +336,8 @@ const $app =   new Vue({
         },
         mounted(){
           this.loadData()
-          //init object modal edit
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });
-    </script>
-                    
+    </script>                 
 @endsection
