@@ -211,3 +211,12 @@ Route::get('/pengeluaran', function () {
 Route::get('/penerimaan_fg', function () {
     return view('penerimaan_fg.index');
 });
+
+
+Route::get('/po_supplier', function () {
+    return view('po_supplier.index');
+});
+
+Route::get('/add-posupplier',function(){
+        return view('po_supplier/add_posupplier');
+});
