@@ -180,11 +180,10 @@
                     <thead>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th style="width: 100px">Kode BG</th>
-                            <th>Part Name</th>
-                            <th>Part No</th>
-                            <th style="width: 100px">Berat</th>
-                            <th style="width: 100px">Saldo Awal</th>
+                            <th style="width: 100px">NIK</th>
+                            <th>Nama Karyawan</th>
+                            <th>Unit Kerja</th>
+                            <th style="width: 100px">Jabatan</th>
                             <th style="width: 100">Foto</th>
                             <th style="width: 200px">Action</th>
                         </tr>
@@ -192,11 +191,11 @@
                     <tbody>
                         <tr v-for="data in barangs" class="align-middle">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.kode_bg }}</td>
-                            <td>@{{ data.partname }}</td>
-                            <td>@{{ data.partno }}</td>
-                            <td>@{{ data.fberat_netto }}</td>
-                            <td>@{{ data.saldo_awal }}</td>
+                            <td>@{{ data.fnip }}</td>
+                            <td>@{{ data.fnama_kry }}</td>
+                            <td>@{{ data.fn_unitkerja }}</td>
+                            <td>@{{ data.fn_jabatan }}</td>
+                            <td>@{{ data.Fphoto }}</td>
                             <td>
                                 <img :src="viewFoto(data.fgambar)" alt="" width="100" height="100" srcset="">
                             </td>
