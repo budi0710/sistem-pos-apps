@@ -128,6 +128,7 @@
                 <div id="collapseUtilities_bayar" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="utilities-other.html">COA</a>
                         <a class="collapse-item" href="utilities-other.html">Petty cash</a>
                         <a class="collapse-item" href="utilities-other.html">Pembayaran Customer</a>
                         <a class="collapse-item" href="utilities-other.html">Pembayaran Supplier</a>
