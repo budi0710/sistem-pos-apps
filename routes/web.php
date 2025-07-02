@@ -15,11 +15,14 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\UnitkerjaContoller;
+use App\Http\Controllers\H_btbgController;
+use App\Http\Controllers\T_btbgController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SettingMiddleware;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+
 //REGISTER
 // Route::get('register', [RegisterController::class, 'register'])->name('register');
 // Route::post('register/action', [RegisterController::class, 'actionregister'])->name('actionregister');
@@ -210,6 +213,15 @@ Route::get('/permintaan', function () {
 Route::get('/add-permintaan', function () {
     return view('Pengeluaran_brg/add-permintaan');
 });
+
+    Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
+    Route::post('/delete-hbtbg',[H_btbgController::class, 'delete']);
+    Route::post('/save-hbtbg',[H_btbgController::class, 'save']);
+    Route::post('/generate-id-hbtbg',[H_btbgController::class,'generateNo']);
+    Route::post('/generate-kode-sbtbg',[H_btbgController::class,'generateKodeSbtbg']);
+    Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
+
+Route::post('/load-detail-permintaan',[T_btbgController::class, 'loadWhere']);
 
 Route::get('/pengeluaran', function () {
     return view('Pengeluaran_brg/pengeluaran');

@@ -6,32 +6,8 @@
             <button class="btn btn-outline-secondary" type="button" id="button-addon1" data-bs-toggle="modal" @click="openPage">Tambah Data</button>
             <input type="text" class="form-control" @keyup="searchData" ref="search" v-model="search" placeholder="Cari Data" aria-label="Example text with button addon" aria-describedby="button-addon1">
             </div>
-
     <!-- Modal -->
-        <div class="modal fade" id="my_modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Jenis BRJ</h5> 
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Kode Jenis:</label>
-                    <input type="text" ref="fk_jenis" v-model="fk_jenis" placeholder="kode Jenis" class="form-control" id="recipient-name">
-                </div>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Nama Jenis BRJ:</label>
-                    <input type="text" ref="jenis" v-model="jenis" placeholder="jenis" class="form-control" id="recipient-name">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" @click="save" class="btn btn-primary">Simpan</button>
-            </div>
-            </div>
-        </div>
-        </div>
+
     <!-- Open the modal edit using ID.showModal() method -->
         <!-- Modal -->
         <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -42,18 +18,32 @@
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Kode jenis:</label>
-                        <input type="text" ref="fk_jenis_edit" v-model="fk_jenis_edit" disabled placeholder="kode Jenis" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
-                        <input type="text" ref="jenis_edit" v-model="jenis_edit" placeholder="Jenis Edit" class="form-control" >
-                    </div>
+                    <table class="table table-hover">
+                        <!-- head -->
+                        <thead>
+                            <tr>
+                                <th>Kode Brg</th>
+                                <th>Partname</th>
+                                <th>Partno</th>
+                                <th>Satua</th>
+                                <th>Jenis</th>
+                                <th>Qty BTBG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="data in detail_btbg">
+                                <th>@{{data.kode_bg}}</th>
+                                <td>@{{data.partname}}</td>
+                                <td>@{{data.partno}}</td>
+                                <td>@{{data.fn_satuan}}</td>
+                                <td>@{{data.fn_jenis}}</td>
+                                <td>@{{data.fq_btbg}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" @click="updateData" class="btn btn-primary">Simpan</button>
                 </div>
                 </div>
             </div>
@@ -73,15 +63,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in h_pocs" class="align-middle">
+                        <tr v-for="data in h_btbgs" class="align-middle">
                             <td>@{{ data.id }}</td>
                             <td>@{{ data.fno_btbg }}</td>
                             <td>@{{ data.ftgl_btbg  }}</td>
                             <td>@{{ data.fn_brj }}</td>
                             <td>@{{ data.description }}</td>
                             <td>
-                                <button @click="printPage(data.fno_poc)" class="btn btn-primary btn-sm">Print</button>
-                                <button @click="detailData(data.fno_poc)" class="btn btn-primary btn-sm">Details</button>
+                                <button @click="printPage(data.fno_btbg)" class="btn btn-primary btn-sm">Print</button>
+                                <button @click="DetailModal(data.fno_btbg)" class="btn btn-warning">Lihat Detail</button>
                                 <button @click="editData(data.id,data)" class="btn btn-primary btn-sm">Edit</button>
                                 <button @click="deleteData(data.id,data)" class="btn btn-danger btn-sm">x</button>
                             </td>
@@ -106,11 +96,9 @@ const _TOKEN_ = '<?= csrf_token() ?>';
 const $app =   new Vue({
         el : "#app",
         data: {
-                h_pocs : null,
-                fk_jenis : null,
-                fk_jenis_edit : null,
+                detail_btbg : null,
+                h_btbgs : null,
                 alert: false,
-                jenis_edit : null,
                 links :null,
                 search : null,
                 jenis : null,
@@ -144,15 +132,32 @@ const $app =   new Vue({
             printPage : function(fno_pos){
                     window.location.href = './print-permintaan/'+fno_poc;
                 },
+            DetailModal: function(fno_btbg) {
+                    my_modal_edit.showModal();
+                    const $this = this;
+                    axios.post("/load-detail-permintaan", {
+                        _token: _TOKEN_,
+                        fno_btbg : fno_btbg
+                    })
+                    .then(function(response) {
+                    
+                        if (response.data) {
+                            $this.detail_btbg = response.data;
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                },  
             loadData : function(){
               const $this = this;
-                    axios.post("/load-hpo-customer", {
+                    axios.post("/load-hbtbg", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.h_pocs = response.data.data;
+                                $this.h_btbgs = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })
@@ -160,33 +165,6 @@ const $app =   new Vue({
                             console.log(error);
                         });
                 },
-            editModalNow: function(data) {
-                    modal_edit.show();
-                    $app.id_edit = data.id;
-                    $app.fk_jenis_edit = data.fk_jns_brj;
-                    $app.jenis_edit = data.fn_jns_brj;
-                    //alert(data.id)
-                },
-                    updateData: function(){
-                    if (this.id_edit) {
-                        const $this = this;
-                         axios.post("/update-jenis-brj", {
-                            _token: _TOKEN_,
-                            jenis_edit: this.jenis_edit,
-                            id : this.id_edit
-                        })
-                        .then(function(response) {
-                            if (response.data) {
-                                $this.loading = false;
-                                $this.loadData();
-                                alert("Update data sukses")
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
-                    }
-              },
             searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -207,30 +185,6 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
-            save: function() {
-                    if (this.jenis == null) {
-                        this.alert = false;
-                        return
-                    }
-                    const $this = this;
-                     axios.post("/save-jenis-brj", {
-                                        _token: _TOKEN_,
-                                        jenis: this.jenis,
-                                        fk_jenis: this.fk_jenis
-                                    })
-                                    .then(function(response) {
-                                        if (response.data.result) {
-                                            $this.loadData();
-                                            $this.alert = false;
-                                            $this.jenis = null;
-                                            $this.fk_jenis = null;
-                                            alert("Tambah data sukses");
-                                        }
-                                    })
-                                    .catch(function(error) {
-                                        console.log(error);
-                                    }); 
                 },
                 deleteData: function(id, Jenis) {
                     if (id) {
