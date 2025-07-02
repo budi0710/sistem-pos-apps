@@ -21,6 +21,7 @@ return new class extends Migration
             $table->char('ftatus_nikah',1);
             $table->char('fk_jabatan', 2);
             $table->char('fk_unitkerja', 2);
+            $table->string('Fphoto');
             $table->timestamps();
         });
     }
