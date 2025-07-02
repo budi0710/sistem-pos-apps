@@ -10,7 +10,7 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl PO</label>
                     <div class="col-sm-6">
-                        <input type="date" class="form-control" ref="ftgl_btbg" v-model="ftgl_btbg" >
+                        <input type="date" class="form-control" ref="ftgl_pos" v-model="ftgl_pos" >
                     </div>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" disabled ref="fno_pos" v-model="fno_pos"  placeholder="No POS">
@@ -19,7 +19,7 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" v-model="result_supplier" aria-label=".form-select-lg example">
                         <option selected>Pilih Nama Supplier</option>
                         <option v-for="data in suppliers" :value="data.kode_sup">@{{data.nama_sup}}</option>
                     </select>
@@ -51,15 +51,19 @@
                 </div>
                 <br>
                 <div class="product-container">
-                  <div class="row">
-                    <div v-for="data in barangs" :key="data.id" class="col-md-4 mb-4">
+                      <!-- Card Produk --> 
+                  <div class="row" >
+                    <div class="col-md-4 mb-4" v-for="(data,i) in barangs" :key="data.id"  >
                         <div class="product-card">
-                            <div href="#" @click="addData" v-model="kode_bg">@{{data.kode_bg}} </div>
+                            <div href="#" >
+                                <a href="#">@{{data.kode_bg}} </a>
+                            </div>
+                            <img :src="viewImage(data.fgambar_brg)" alt="" width="100" height="100">
                             <div class="text-primary" >@{{ data.partname }}</div>
-                            <div class="text-primary" >
+                            <div class="text-primary" > @{{data.partno}}
                             <label for="colFormLabel" >Harga</label>
                                 @{{ data.harga }}
-                                <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty">
+                                <input type="text" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty">
                             </div>
                             <div class="text-primary">
                                 {{-- <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty"> --}}
@@ -85,18 +89,40 @@
             <!-- Keranjang / Panel kanan -->
             <div class="col-md-5 right-panel">
                 <h5>🛒 Detail PO Supplier</h5>
-                <div class="border-bottom pb-2 mb-2">
-                    <div v-for="data in data_barangs" :key="data.id" class="col-md-4 mb-4">
+                {{-- keranjang kanan --}}
+                 <div  v-for="data in data_barangs" :key="data.id"  class="border-bottom pb-2 mb-2">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div><strong>@{{ data.kode_bg }} | @{{ data.partname }} | @{{ data.fberat_netto }}</strong></div>
+                            <small>Rp @{{data.harga}} • Qty : @{{data.fq_pos}}</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            {{-- <button class="btn btn-sm btn-light">-</button>
+                            <span class="mx-2">1</span>
+                            <button class="btn btn-sm btn-light">+</button> --}}
+                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                   <h2>Total Harga @{{_moneyFormat(total_harga)}}</h2>
+                </div>
+
+                {{-- <div class="border-bottom pb-2 mb-2">
+                    <divclass="col-md-4 mb-4">
                         <div class="product-card">
                             <strong>@{{ data.kode_bg }}</strong>
                             <div class="stock-badge">@{{ data.partname }}</div>
                             <strong>@{{ data.partname }}</strong>
                             <div class="text-primary">@{{ data.fberat_netto }}</div>
+                            <strong>@{{data.fq_pos}}</strong>
                         </div>
-                    </div>
-                </div>
+                    </divclass=>
+                </div> --}}
+                 {{-- keranjang kanan --}}
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100 mt-3">Proses PO</button>
+                    <button class="btn btn-primary w-100 mt-3" @click="prosesPO">Proses PO</button>
                 </div>
             </div>
         </div>
@@ -116,19 +142,105 @@
                 fno_poc : null,
                 fk_brj : null,
                 fn_brj : null,
-                no_po : null,
+                fno_pos : null,
                 fq_poc : null,
                 ppn : null,
                 fqt_brj : null,
                 no_po_cus : null,
                 search: null,
                 disabled_brj: false,
-                data_barangs: null,
+                data_barangs: [],
                 barangs : null,
                 links : null,
-                description : null
+                description : null,
+                inputValues:null,
+                txtQty : 'txtQty',
+                total_harga : 0,
+                result_supplier: null
             },
             methods: {
+                prosesPO: function(){
+                    const $this = this;
+                    axios.post("/proses-posupplier", {
+                        fno_pos : this.fno_pos,
+                        kode_sup : this.result_supplier,
+                        ftgl_pos : this.ftgl_pos,
+                        ppn : this.ppn,
+                        description : this.description,
+                        detail_data : this.data_barangs
+                    })
+                    .then(function(response) {
+                        if (response.data.result){
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "GOod",
+                                    text: "Data berhasil disimpan !",
+                                    footer: ''
+                                });
+
+                                _refresh()
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                },
+                enterQty: function(data,i){
+                    const obj = document.getElementById('txtQty'+i).value;
+                    
+                    if (obj===0 || obj==0 || obj==null){
+                         Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Qty harus lebih dari 0",
+                            footer: ''
+                        });
+                        return
+                    }
+                    
+                    var $data = [{
+                        "kode_bg": data.kode_bg,
+                        "partname" : data.partname,
+                        "partno": data.partno,
+                        "fq_pos": obj,
+                        "harga" : data.harga,
+                        "sub_total" : data.harga * obj
+                    }]
+                    // console.table($data);
+                    // console.log($data.length)
+
+                    if (this.data_barangs.length == 0){
+                        this.data_barangs = ($data);
+
+                        this.total_harga = data.harga * obj;
+                    }else{
+                        //alert('data lebih dari 1')
+
+                        // check jika barang nya sama
+                        var BreakException = {};
+                       this.data_barangs.forEach(element => {
+                            if (element['kode_bg']===data.kode_bg){
+                                 Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Data sudah ada",
+                                    footer: ''
+                                });
+                                throw BreakException;
+                            }   
+                        });
+                        this.data_barangs.push(...$data);
+
+                        var total_harga = 0
+                        this.data_barangs.forEach(element => {
+                            total_harga += element['sub_total']
+                        });
+                        this.total_harga = total_harga
+                    }
+                },
+                viewImage: function(data){
+                    return 'storage/'+data
+                },
                 loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -182,44 +294,44 @@
                             console.log(error);
                         });
                 },
-                addData: function() {
-                    var $storage;
-                    if (_getStorage('data')) {
-                        $storage = JSON.parse(_getStorage('data'))
-                    }
-                    var $data = [{
-                        "kode_bg": this.kode_bg,
-                        "partname" : this.partname,
-                        "partno": this.partno,
-                        "fq_poc": this.fq_poc
-                    }]
+                // addData: function() {
+                //     var $storage;
+                //     if (_getStorage('data')) {
+                //         $storage = JSON.parse(_getStorage('data'))
+                //     }
+                //     var $data = [{
+                //         "kode_bg": this.kode_bg,
+                //         "partname" : this.partname,
+                //         "partno": this.partno,
+                //         "fq_poc": this.fq_poc
+                //     }]
 
-                    if ($storage == null) {
-                        $tmp = JSON.stringify($data);
-                        _saveStorage('data', $tmp);
+                //     if ($storage == null) {
+                //         $tmp = JSON.stringify($data);
+                //         _saveStorage('data', $tmp);
                        
-                    } else {
-                        var BreakException = {};
-                        $storage.forEach(element => {
-                            if (element['kode_bg']===this.kode_bg){
-                                alert("Data sudah ada !")
-                                throw BreakException;
-                            }   
-                        });
-                        $storage.push(...$data);
-                        _saveStorage('data', JSON.stringify($storage));
-                    }
-                    this.data_barangs = JSON.parse(_getStorage('data'));
-                    const $barang_total = this.data_barangs;
+                //     } else {
+                //         var BreakException = {};
+                //         $storage.forEach(element => {
+                //             if (element['kode_bg']===this.kode_bg){
+                //                 alert("Data sudah ada !")
+                //                 throw BreakException;
+                //             }   
+                //         });
+                //         $storage.push(...$data);
+                //         _saveStorage('data', JSON.stringify($storage));
+                //     }
+                //     this.data_barangs = JSON.parse(_getStorage('data'));
+                //     const $barang_total = this.data_barangs;
 
-                    var grand_total = 0;
-                    $barang_total.forEach(element => {
-                        grand_total += element['fq_poc'];
-                    });
+                //     var grand_total = 0;
+                //     $barang_total.forEach(element => {
+                //         grand_total += element['fq_poc'];
+                //     });
 
-                    this.grand_total = grand_total
-                    this.disabled_brj=true;
-                },
+                //     this.grand_total = grand_total
+                //     this.disabled_brj=true;
+                // },
                 deleteData: function(kd){
                     var $storage = _getStorage('data');
                     $storage = JSON.parse($storage);

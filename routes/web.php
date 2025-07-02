@@ -241,10 +241,11 @@ Route::get('/po_supplier', function () {
 });
 
 Route::post('/delete-poc-customer',[H_posController::class, 'delete']);
-Route::post('/save-poc-customer',[H_posController::class, 'save']);
+//Route::post('/save-poc-customer',[H_posController::class, 'save']);
 Route::post('/generate-id-hpos',[H_posController::class,'generateNo']);
+Route::post('/proses-posupplier',[H_posController::class,'saveData']);
 Route::post('/generate-kode-spk',[H_posController::class,'generateKodeSpK']);
-Route::post('/save-poc-customer',[H_posController::class,'saveData']);
+//Route::post('/save-poc-customer',[H_posController::class,'saveData']);
 Route::post('/load-hpo-customer',[H_posController::class, 'load']);
 
 Route::get('/add-posupplier',function(){

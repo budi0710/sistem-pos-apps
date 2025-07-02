@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\H_pos;
 use App\Models\L_hpos;
 use App\Models\T_pos;
+use Illuminate\Support\Facades\DB;
 class H_posController extends Controller
 {
 /**
@@ -30,28 +31,46 @@ class H_posController extends Controller
     public function saveData(Request $request)
     {
         $h_pos = new H_pos();
+        $fno_pos = $request->fno_pos;
 
-        $h_pos->fno_pos = $request->fno_pos;
-        $h_pos->kode_sup = $request->result_supplier;
-        $h_pos->PPN = $request->PPN;
+        $h_pos->fno_pos =  $fno_pos;
+        $h_pos->kode_sup = $request->kode_sup;
+        $h_pos->ppn = $request->ppn;
         $h_pos->description = $request->description;
         $h_pos->ftgl_pos = $request->ftgl_pos;
-        $h_pos->fk_user =  $request->session()->get('admin');
+        $h_pos->user_id =  $request->session()->get('admin');
         $h_pos->save();
 
-        $data = $request->data;
-        $data = json_decode($data);
-        
-       foreach ($data as $item) {
-            $fno_spo = $item->kode_rbc;
-            $kode_bg = $item->kode_bg;
-            $fq_poc = $item->fq_poc;
-            $fharga =$request->fharga;
-          
-            DB::insert('INSERT INTO t_pos (fno_pos, fno_spo, kode_bg, fq_poc, fharga) VALUES (?, ?, ?, ? , ?)', [$fno_pos, $fno_spo, $kode_bg, $fq_poc, $fharga]);
-        }
+        $data = $request->detail_data;
 
-        return response()->json(['result'=>true]) ;
+        for ($i=0; $i < count($data) ; $i++) { 
+            $master_data = $data[$i];
+
+            $fno_spo = $this->generateKodeSpk();
+            $kode_bg = $master_data['kode_bg'];
+            $fq_pos  = $master_data['fq_pos'];
+            $harga  = $master_data['harga'];
+
+            DB::insert('INSERT INTO t_pos (fno_pos, fno_spo, kode_bg, fq_pos,fharga) VALUES (?, ?, ?, ? , ?)', [$fno_pos, $fno_spo, $kode_bg, $fq_pos, $harga]);
+            $fno_spo = '';
+        }
+       return response()->json(['result'=>true]) ;
+
+
+        // $data = json_decode($data);
+
+        // foreach ($data as $item) {
+        //     // otomatis dari tabel
+        //     $fno_spo = $this->generateNo();
+        //     $kode_bg = $item->kode_bg;
+        //     $fq_pos  = $item->fq_pos;
+        //     $fharga  = $request->fharga;
+
+
+        //     echo $kode_bg;
+        //     // DB::insert('INSERT INTO t_pos (fno_pos, fno_spo, kode_bg, fq_pos, fharga) VALUES (?, ?, ?, ? , ?)', [$fno_pos, $fno_spo, $kode_bg, $fq_pos, $fharga]);
+        // }
+       
     }
 
     private function generateFNoPoc(array  $existingNumbers): string{
@@ -102,14 +121,19 @@ class H_posController extends Controller
        }
     }
 
+    public function  generateFormattedNumber($number) {
+        return sprintf('%04d', $number+1);
+    }
+
+
     public function generateKodeSpk(){
-         $result= t_poc::select('fnos_poc')->orderBy('fnos_poc','desc')->first();
+         $result= T_pos::select('fno_spo')->orderBy('fno_spo','desc')->first();
        
        if ($result==null){
-          return '001';
+          return date('Ym').'0001';
        }else{
-          
-          return ($result);
+          $angka =substr($result->fno_spo, -4);
+          return date('Ym').$this->generateFormattedNumber($angka);
        }
     }
 

@@ -197,8 +197,9 @@
                             <td>@{{ data.partno }}</td>
                             <td>@{{ data.fberat_netto }}</td>
                             <td>@{{ data.saldo_awal }}</td>
-                            <td>
-                                <img :src="viewFoto(data.fgambar)" alt="" width="100" height="100" srcset="">
+                            <td> 
+                                {{-- ambil data dari field fgambar_brg --}}
+                                <img :src="viewFoto(data.fgambar_brg)" alt="" width="100" height="100" srcset="">
                             </td>
                             <td>
                                 <button @click="detaildata(data)" class="btn btn-primary btn-sm">Details</button>
