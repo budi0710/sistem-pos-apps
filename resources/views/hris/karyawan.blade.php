@@ -9,32 +9,32 @@
 
     <!-- Modal -->
         <div class="modal fade" id="my_modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Tambah Data Karyawan</h5> 
             </div>
             <div class="modal-body">
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Kode BG</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">No KTP</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_bg" v-model="kode_bg"  id="kode_bg" placeholder="Kode BG">
+                        <input type="text" class="form-control" ref="kode_bg" v-model="kode_bg"  id="kode_bg" placeholder="No KTP">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Part Name</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">NIK</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="partname" v-model="partname" id="partname" placeholder="Part Name">
+                        <input type="text" class="form-control" ref="partname" v-model="partname" id="partname" placeholder="NIK">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Part No</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Lengkap</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="partno" v-model="partno" id="partno" placeholder="Part No">
+                        <input type="text" class="form-control" ref="partno" v-model="partno" id="partno" placeholder="Nama Lengkap">
                     </div>
                 </div>
                 <div class="row mb-3">
-                <label for="colFormLabel" class="col-sm-3 col-form-label">Jenis BG</label>
+                <label for="colFormLabel" class="col-sm-3 col-form-label">Unit Kerja</label>
                     <div class="col-sm-9">
                         <select id="result_jenis" v-model="result_jenis" class="form-select">
                             <option selected>Choose...</option>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                <label for="colFormLabel" class="col-sm-3 col-form-label">Satuan BG</label>
+                <label for="colFormLabel" class="col-sm-3 col-form-label">Jabatan</label>
                     <div class="col-sm-9">
                         <select id="result_satuan" v-model="result_satuan" class="form-select">
                             <option selected>Choose...</option>
@@ -52,21 +52,24 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Descripsi</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Alamat</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" ref="description" v-model="description" id="description_edit"  rows="3"></textarea>
+                        <textarea class="form-control" ref="description" v-model="description" id="description_edit"  rows="3" placeholder="Alamat Lengkap"></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Netto</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">No Telp</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="fberat_netto" v-model="fberat_netto" id="fberat_netto" placeholder="Berat Netto">
+                        <input type="text" class="form-control" ref="fberat_netto" v-model="fberat_netto" id="fberat_netto" placeholder="No Telp">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Stock</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Status</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="saldo_awal" v-model="saldo_awal" id="saldo_awal" placeholder="Stok">
+                        <select id="result_satuan_edit" v-model="result_satuan_edit" class="form-select">
+                            <option selected>Choose...</option>
+                            <option v-for="data in data_satuan_brg" :value="data.fk_sat">@{{ data.fn_satuan }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -127,7 +130,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                <label for="colFormLabel" class="col-sm-3 col-form-label">Satuan BG</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Satuan BG</label>
                     <div class="col-sm-9">
                         <select id="result_satuan_edit" v-model="result_satuan_edit" class="form-select">
                             <option selected>Choose...</option>
@@ -148,9 +151,12 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Saldo Awal</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Status</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="saldo_awal_edit" v-model="saldo_awal_edit" id="saldo_awal_edit" placeholder="Stok">
+                        <select id="result_satuan_edit" v-model="result_satuan_edit" class="form-select">
+                            <option selected>Choose...</option>
+                            <option v-for="data in data_satuan_brg" :value="data.fk_sat">@{{ data.fn_satuan }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row mb-3">

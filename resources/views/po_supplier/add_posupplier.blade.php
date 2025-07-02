@@ -54,12 +54,11 @@
                   <div class="row">
                     <div v-for="data in barangs" :key="data.id" class="col-md-4 mb-4">
                         <div class="product-card">
-                            {{-- <strong href="#" @click="addData" v-model="kode_bg">@{{data.kode_bg}}</strong> --}}
-                            <strong @click="addData">@{{ data.kode_bg }}</strong>
-                            <div class="stock-badge" >@{{ data.partname }}</div>
+                            <div href="#" @click="addData" v-model="kode_bg">@{{data.kode_bg}} </div>
+                            <div class="text-primary" >@{{ data.partname }}</div>
                             <div class="text-primary" >
-                            <label for="colFormLabel" >Berat Netto</label>
-                                @{{ data.fberat_netto }}
+                            <label for="colFormLabel" >Harga</label>
+                                @{{ data.harga }}
                                 <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty">
                             </div>
                             <div class="text-primary">
