@@ -258,3 +258,10 @@ Route::post('/search-jabatan',[JabatanController::class, 'search']);
 Route::get('/karyawan', function () {
     return view('hris/karyawan');
 });
+
+Route::post('/load-karyawan',[KaryawanController::class, 'load']);
+Route::post('/load-data-karyawan',[KaryawanController::class, 'loadData']);
+Route::post('/save-karyawan',[KaryawanController::class, 'save']);
+Route::post('/delete-karyawan',[KaryawanController::class, 'delete']);
+Route::post('/update-karyawan',[KaryawanController::class, 'update']);
+Route::post('/search-karyawan',[KaryawanController::class, 'search']);

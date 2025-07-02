@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\BarangJadi;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class BarangJadiController extends Controller
 {

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('karyawan', function (Blueprint $table) {
             $table->id();
+            $table->char('fnik', 5)->unique();
             $table->char('fno_ktp',16);
             $table->string('fnama_kry',50);
             $table->char('fkelamin',1);
