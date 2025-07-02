@@ -95,7 +95,7 @@ class H_poc_Controller extends Controller
     }
 
     public function generateNo(){
-        $result= h_poc::select('fno_poc')->orderBy('fno_poc','desc')->first();
+        $result= H_poc::select('fno_poc')->orderBy('fno_poc','desc')->first();
        if ($result==null){
           return '001';
        }else{

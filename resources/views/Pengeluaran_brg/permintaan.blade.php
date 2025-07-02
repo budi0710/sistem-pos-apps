@@ -11,10 +11,10 @@
     <!-- Open the modal edit using ID.showModal() method -->
         <!-- Modal -->
         <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data jenis</h5> 
+                    <h5 class="modal-title" id="exampleModalLabel">Details Data Permintaan BG</h5> 
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
@@ -133,7 +133,7 @@ const $app =   new Vue({
                     window.location.href = './print-permintaan/'+fno_poc;
                 },
             DetailModal: function(fno_btbg) {
-                    my_modal_edit.showModal();
+                    modal_edit.show();
                     const $this = this;
                     axios.post("/load-detail-permintaan", {
                         _token: _TOKEN_,

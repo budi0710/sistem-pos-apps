@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\H_poc_Controller;
+use App\Http\Controllers\H_posController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\JenisBrjController;
 use App\Http\Controllers\RegisterController;
@@ -190,7 +191,7 @@ Route::get('/add-pocustomer',function(){
 
 Route::post('/delete-poc-customer',[H_poc_Controller::class, 'delete']);
 Route::post('/save-poc-customer',[H_poc_Controller::class, 'save']);
-Route::post('/generate-id-poc-customer',[H_poc_Controller::class,'generateNo']);
+Route::post('/generate-id-hpoc',[H_poc_Controller::class,'generateNo']);
 Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
 Route::post('/save-poc-customer',[H_poc_Controller::class,'saveData']);
 Route::post('/load-hpo-customer',[H_poc_Controller::class, 'load']);
@@ -214,12 +215,12 @@ Route::get('/add-permintaan', function () {
     return view('Pengeluaran_brg/add-permintaan');
 });
 
-    Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
-    Route::post('/delete-hbtbg',[H_btbgController::class, 'delete']);
-    Route::post('/save-hbtbg',[H_btbgController::class, 'save']);
-    Route::post('/generate-id-hbtbg',[H_btbgController::class,'generateNo']);
-    Route::post('/generate-kode-sbtbg',[H_btbgController::class,'generateKodeSbtbg']);
-    Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
+Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
+Route::post('/delete-hbtbg',[H_btbgController::class, 'delete']);
+Route::post('/save-hbtbg',[H_btbgController::class, 'save']);
+Route::post('/generate-id-hbtbg',[H_btbgController::class,'generateNo']);
+Route::post('/generate-kode-sbtbg',[H_btbgController::class,'generateKodeSbtbg']);
+Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
 
 Route::post('/load-detail-permintaan',[T_btbgController::class, 'loadWhere']);
 
@@ -238,6 +239,13 @@ Route::get('/add-stbj',function(){
 Route::get('/po_supplier', function () {
     return view('po_supplier.index');
 });
+
+Route::post('/delete-poc-customer',[H_posController::class, 'delete']);
+Route::post('/save-poc-customer',[H_posController::class, 'save']);
+Route::post('/generate-id-hpos',[H_posController::class,'generateNo']);
+Route::post('/generate-kode-spk',[H_posController::class,'generateKodeSpK']);
+Route::post('/save-poc-customer',[H_posController::class,'saveData']);
+Route::post('/load-hpo-customer',[H_posController::class, 'load']);
 
 Route::get('/add-posupplier',function(){
         return view('po_supplier/add_posupplier');

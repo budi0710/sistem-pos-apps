@@ -57,7 +57,7 @@ class H_btbgController extends Controller
         return response()->json(['result'=>true]) ;
     }
 
-    private function generateFNoPoc(array  $existingNumbers): string{
+    private function generatefno_btbg(array  $existingNumbers): string{
         // Ambil tahun dan bulan saat ini, misalnya 202506
         $prefix = date('Ym');
 
@@ -97,7 +97,7 @@ class H_btbgController extends Controller
     }
 
     public function generateNo(){
-        $result= Hpo_Customer::select('fno_poc')->orderBy('fno_poc','desc')->first();
+        $result= H_btbg::select('fno_btbg')->orderBy('fno_btbg','desc')->first();
        if ($result==null){
           return '001';
        }else{
@@ -105,8 +105,8 @@ class H_btbgController extends Controller
        }
     }
 
-    public function generateKodeSpk(){
-         $result= dpo_Customer::select('fno_spk')->orderBy('fno_spk','desc')->first();
+    public function generateKodeSbtbg(){
+         $result= T_btbg::select('fno_spk')->orderBy('fno_spk','desc')->first();
        
        if ($result==null){
           return '001';
@@ -140,16 +140,16 @@ class H_btbgController extends Controller
         // check receive apakah sudah pernah dilakukan transaksi 
 
         // ambil fno_pos terlebih dahulu
-        $fno_poc = hpo_customer::select('fno_poc')->where("id",$request->id)->get();
+        $fno_btbg = H_btbg::select('fno_btbg')->where("id",$request->id)->get();
         // ambil data index ke 0 dan key fno_pos
-        $fno_poc = $fno_poc[0]['fno_poc'];
+        $fno_btbg = $fno_btbg[0]['fno_btbg'];
        
         // delete data di table header berdasarkan primary key id
-        $hpo_customer = hpo_customer::find($request->id);
-        $hpo_customer->delete();
+        $H_btbg = H_btbg::find($request->id);
+        $H_btbg->delete();
 
         // delete data di table detail berdasarkan fno_pos
-        $dpo_customer = dpo_customer::where('fno_poc',$fno_poc)->delete();
+        $t_btbg = T_btbg::where('fno_poc',$fno_poc)->delete();
         
         return $detail ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }

@@ -8,7 +8,7 @@ use Illuminate\View\View;
 class BarangController extends Controller
 {
 public function load(){
-        return Barang::paginate(5);
+        return Barang::paginate(6);
     }
 
     public function loadData(){
@@ -47,7 +47,6 @@ public function load(){
     }
 
     public function update(Request $request){
-
         $data = $request->_data;
         $data = json_decode($data);
        
@@ -56,7 +55,6 @@ public function load(){
 
         $file = $request->file('file_barang_edit');
         $path = $file->store('barang', 'public');
-
 
         $data = $request->_data;
         $data = json_decode($data);
