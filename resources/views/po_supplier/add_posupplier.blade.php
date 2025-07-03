@@ -65,10 +65,6 @@
                                 @{{_moneyFormat(data.harga)}}
                                 <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty" style="width: 90px;">
                             </div>
-                            <div class="text-primary">
-                                {{-- <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty"> --}}
-                                {{-- <button @click="addData" class="btn btn-primary">Add</button> --}}
-                            </div>
                         </div>
                     </div>
                 </div>

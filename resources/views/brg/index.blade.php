@@ -77,10 +77,10 @@
                                 <img :src="foto_barang" width="100" height="100"/>
                                 {{-- untuk gambar masukan lebar dan tinggi ya supaya gambar tidak terllu besar --}}
                             </div>
-                            </div>
+                        </div>
                                 <input  @keyup.enter="saveData" type="file" id="file_barang" name="file_barang" @change="changeImage($event)"
                                 class="file-input file-input-ghost" />
-                            </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -464,6 +464,7 @@ const $app =   new Vue({
                     }).start(($response) => {
                         $this.loading = false;
                         var obj = JSON.parse($response)
+                       // console.log(x.responseText); // Debug response
                         if (obj.result) {
                             alert("Selamat Data berhasil ditambahkan")
                             $this.loadData()

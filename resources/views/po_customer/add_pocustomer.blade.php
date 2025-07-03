@@ -56,7 +56,7 @@
                     <button class="btn btn-light ms-2"><i class="bi bi-gear"></i></button>
                 </div>
                 <br>
-                <div class="product-container">
+                <div class="flex-container">
                   <div class="row">
                     <div class="col-md-3 mb-3" v-for="(data,i) in barangs" :key="data.id"  >
                         <div class="product-card">
@@ -100,7 +100,7 @@
                             {{-- <button class="btn btn-sm btn-light">-</button>
                             <span class="mx-2">1</span>
                             <button class="btn btn-sm btn-light">+</button> --}}
-                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span>  |  <button  class="btn btn-primary">Hapus</button>
+                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span>  |  <button  @click="hapusData" class="btn btn-primary"  >Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -282,7 +282,7 @@
                         $storage = JSON.parse(_getStorage('data'))
                     }
                     var $data = [{
-                        "kode_bg": this.kode_bg,
+                        "fk_brj": this.fk_brj,
                         "partname" : this.partname,
                         "partno": this.partno,
                         "fq_poc": this.fq_poc
@@ -338,11 +338,11 @@
                     this.grand_total = grand_total
                 },
                 clearData: function() {
-                    delete this.data_barangs[key]
-                },
-                hapusData: function() {
                     localStorage.clear()
                     _refresh()
+                },
+                hapusData: function() {
+                    delete this.data_barangs["fk_brj"]
                 },
                 searchData: function() {
                     if (this.search == null) {
