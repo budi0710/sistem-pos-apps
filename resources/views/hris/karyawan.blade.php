@@ -15,64 +15,71 @@
             <h5 class="modal-title" id="exampleModalLabel">Tambah Data Karyawan</h5> 
             </div>
             <div class="modal-body">
-                <div class="row mb-3">
+                <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No KTP</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_bg" v-model="kode_bg"  id="kode_bg" placeholder="No KTP">
+                        <input type="text" class="form-control" ref="fno_ktp" v-model="fno_ktp"  id="fno_ktp" placeholder="No KTP">
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">NIK</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="partname" v-model="partname" id="partname" placeholder="NIK">
+                        <input type="text" class="form-control" ref="fnik" v-model="fnik" id="fnik" placeholder="NIK">
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Lengkap</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="partno" v-model="partno" id="partno" placeholder="Nama Lengkap">
+                        <input type="text" class="form-control" ref="fnama_kry" v-model="fnama_kry" id="fnama_kry" placeholder="Nama Lengkap">
                     </div>
                 </div>
-                <div class="row mb-3">
-                <label for="colFormLabel" class="col-sm-3 col-form-label">Unit Kerja</label>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Kelamin</label>
                     <div class="col-sm-9">
-                        <select id="result_jenis" v-model="result_jenis" class="form-select">
-                            <option selected>Choose...</option>
-                            <option v-for="data in data_jenis_brg" :value="data.fk_jenis">@{{ data.fn_jenis }}</option>
+                            <label><input type="radio" name="gender" value="male"> Laki-laki</label>
+                            <label><input type="radio" name="gender" value="female"> Perempuan</label>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Status</label>
+                    <div class="col-sm-9">
+                        <select id="result_satuan_edit" v-model="result_satuan_edit" class="form-select">
+                            <option selected>Status Pernikahan</option>
+                            <option v-for="data in data_status" :value="data.id">@{{ data.statusnikah }}</option>
                         </select>
                     </div>
                 </div>
-                <div class="row mb-3">
-                <label for="colFormLabel" class="col-sm-3 col-form-label">Jabatan</label>
-                    <div class="col-sm-9">
-                        <select id="result_satuan" v-model="result_satuan" class="form-select">
-                            <option selected>Choose...</option>
-                            <option v-for="data in data_satuan_brg" :value="data.fk_sat">@{{ data.fn_satuan }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Alamat</label>
-                    <div class="col-sm-9">
-                        <textarea class="form-control" ref="description" v-model="description" id="description_edit"  rows="3" placeholder="Alamat Lengkap"></textarea>
-                    </div>
-                </div>
-                <div class="row mb-3">
+                <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No Telp</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" ref="fberat_netto" v-model="fberat_netto" id="fberat_netto" placeholder="No Telp">
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Status</label>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Alamat</label>
                     <div class="col-sm-9">
-                        <select id="result_satuan_edit" v-model="result_satuan_edit" class="form-select">
-                            <option selected>Choose...</option>
-                            <option v-for="data in data_satuan_brg" :value="data.fk_sat">@{{ data.fn_satuan }}</option>
+                        <textarea class="form-control" ref="falamat" v-model="falamat" id="falamat"  rows="3" placeholder="Alamat Lengkap"></textarea>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                <label for="colFormLabel" class="col-sm-3 col-form-label">Unit Kerja</label>
+                    <div class="col-sm-9">
+                        <select id="result_unit" v-model="result_unit" class="form-select">
+                            <option selected>Pilih Unit Kerja</option>
+                            <option v-for="data in data_unitkerja" :value="data.fk_unitkerja">@{{ data.fn_unitkerja }}</option>
                         </select>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-2">
+                <label for="colFormLabel" class="col-sm-3 col-form-label">Jabatan</label>
+                    <div class="col-sm-9">
+                        <select id="result_jabatan" v-model="result_jabatan" class="form-select">
+                            <option selected>Pilih Jabatan</option>
+                            <option v-for="data in data_jabatan" :value="data.fk_jabatan">@{{ data.fn_jabatan }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Gambar</label>
                     <div class="col-sm-9">
                         <div class="avatar">
@@ -99,7 +106,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Data Barang Jadi</h5> 
+            <h5 class="modal-title" id="exampleModalLabel">Edit Data Karyawan</h5> 
             </div>
             <div class="modal-body">
                 <div class="row mb-3">
@@ -125,7 +132,7 @@
                     <div class="col-sm-9">
                         <select id="result_jenis_edit" v-model="result_jenis_edit" class="form-select">
                             <option selected>Choose...</option>
-                            <option v-for="data in data_jenis_brg" :value="data.fk_jenis">@{{ data.fn_jenis }}</option>
+                            <option v-for="data in data_status" :value="data.fk_jenis">@{{ data.fn_jenis }}</option>
                         </select>
                     </div>
                 </div>
@@ -232,44 +239,24 @@ const $app =   new Vue({
         el : "#app",
         data: {
                 barangs : null,
-                kode_bg : null,
-                partname : null,
-                partno : null,
+                fno_ktp : null,
+                fnik : null,
+                fnama_kry : null,
                 fpartno : null,
-                descripsi : null,
-                fk_sat : null,
-                fk_jenis : null,
-                harga : null,
-                fberat_netto : null,
+                falamat : null,
                 fgambar : null,
-                saldo_awal : null,
-                result_jenis : null,
-                result_satuan : null,
-                description : null,
+                result_jabatan : null,
+                result_unit : null,
                 foto_barang : './no-image.png',
-                file_barang : null,
-                kode_bg_edit : null,
-                partname_edit : null,
-                partno_edit : null,
-                fpartno_edit : null,
-                descripsi_edit : null,
-                fk_sat_edit : null,
-                fk_jenis_edit : null,
-                harga_edit : null,
-                fberat_netto_edit : null,
-                description_edit : null,
                 fgambar_edit : null,
-                saldo_awal_edit : null,
-                result_jenis_edit : null,
                 foto_barang_edit: './no-image.png',
                 file_barang_edit: null,
                 alert: false,
-                data_jenis_brg : null,
-                data_satuan_brg : null,
-                result_satuan_edit : null,
+                data_unitkerja : null,
+                data_jabatan : null,
+                data_status : null,
                 links :null,
                 search : null,
-                jenis : null,
                 loading :false,
                 id_edit : null
         },
@@ -416,26 +403,40 @@ const $app =   new Vue({
                 },   
             loadDataUnitKerja: function() {
                     const $this = this;
-                    axios.post("/load-data-karyawan", {
+                    axios.post("/load-data-unitkerja", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             if (response.data) {
-                                $this.data_jenis_brg = response.data;
+                                $this.data_unitkerja = response.data;
                             }
                         })
                         .catch(function(error) {
                             console.log(error);
                         });
                 },
-            loadDataJabatan: function() {
+                loadDataJabatan: function() {
                     const $this = this;
-                    axios.post("/load-data-satuan", {
+                    axios.post("/load-data-jabatan", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             if (response.data) {
-                                $this.data_satuan_brg = response.data;
+                                $this.data_jabatan = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
+                loadDataStatus: function() {
+                    const $this = this;
+                    axios.post("/load-data-statusnikah", {
+                            _token: _TOKEN_
+                        })
+                        .then(function(response) {
+                            if (response.data) {
+                                $this.data_status = response.data;
                             }
                         })
                         .catch(function(error) {
@@ -519,6 +520,7 @@ const $app =   new Vue({
           this.loadData()
           this.loadDataUnitKerja();
           this .loadDataJabatan();
+          this .loadDataStatus();
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });

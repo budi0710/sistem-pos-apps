@@ -285,6 +285,7 @@ Route::get('/karyawan', function () {
 
 Route::post('/load-karyawan',[KaryawanController::class, 'load']);
 Route::post('/load-data-karyawan',[KaryawanController::class, 'loadData']);
+Route::post('/load-data-statusnikah',[KaryawanController::class, 'loadDataStatus']);
 Route::post('/save-karyawan',[KaryawanController::class, 'save']);
 Route::post('/delete-karyawan',[KaryawanController::class, 'delete']);
 Route::post('/update-karyawan',[KaryawanController::class, 'update']);
