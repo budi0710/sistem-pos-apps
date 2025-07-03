@@ -50,6 +50,7 @@
                     <div v-for="data in barangs" :key="data.id" class="col-md-4 mb-4">
                         <div class="product-card">
                             <strong @click="addData">@{{ data.kode_bg }}</strong>
+                            <img :src="viewImage(data.fgambar_brg)" alt="" width="100" height="100">
                             <div class="stock-badge" >@{{ data.partname }}</div>
                             <div class="text-primary" >
                             <label for="colFormLabel" >Berat Netto</label>
@@ -153,6 +154,9 @@
                         .catch(function(error) {
                             console.log(error);
                         });
+                },
+                viewImage: function(data){
+                    return 'storage/'+data
                 },
                 generateId() {
                     const $this = this;
@@ -287,5 +291,4 @@
             },
         })
     </script>
-  
 @endsection

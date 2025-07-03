@@ -17,12 +17,12 @@
                     <thead>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th style="width: 100px">No PO</th>
-                            <th style="width: 100px">Tgl PO</th>
-                            <th style="width: 100px">Supplier</th>
-                            <th style="width: 100px">PPN</th>
-                            <th style="width: 100px">Decription</th>
-                            <th style="width: 200px">Action</th>
+                            <th style="width: 70px">No PO</th>
+                            <th style="width: 70px">Tgl PO</th>
+                            <th style="width: 200px">Supplier</th>
+                            <th style="width: 20px">PPN</th>
+                            <th style="width: 200px">Decription</th>
+                            <th style="width: 150px">Action</th>
                         </tr>
                     </thead>
                     <tbody>

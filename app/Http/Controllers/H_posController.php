@@ -125,7 +125,6 @@ class H_posController extends Controller
         return sprintf('%04d', $number+1);
     }
 
-
     public function generateKodeSpk(){
          $result= T_pos::select('fno_spo')->orderBy('fno_spo','desc')->first();
        

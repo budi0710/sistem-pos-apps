@@ -9,6 +9,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\H_poc_Controller;
 use App\Http\Controllers\H_posController;
+use App\Http\Controllers\H_stbjController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\JenisBrjController;
 use App\Http\Controllers\RegisterController;
@@ -44,12 +45,8 @@ Route::get('/login',function(Request $request){
 });
 
 Route::post('/user-login',[UserController::class, 'login']);
-
 Route::post('/save-setting',[SettingController::class, 'save']);
-
 Route::post('/upload-foto-company',[SettingController::class, 'upload']);
-
-
 Route::get('HomeController', [HomeController::class, 'index'])->name('HomeController.index');
 
 Route::get('/home', function () {
@@ -235,6 +232,12 @@ Route::get('/penerimaan_fg', function () {
 Route::get('/add-stbj',function(){
         return view('penerimaan_fg/add-stbj');
 });
+
+Route::post('/delete-poc-customer',[H_stbjController::class, 'delete']);
+Route::post('/generate-id-hstbj',[H_stbjController::class,'generateNo']);
+Route::post('/proses-simpan',[H_stbjController::class,'saveData']);
+Route::post('/generate-kode-spk',[H_stbjController::class,'generateKodeSpK']);
+Route::post('/load-hpo-supplier',[H_stbjController::class, 'load']);
 
 Route::get('/po_supplier', function () {
     return view('po_supplier.index');
