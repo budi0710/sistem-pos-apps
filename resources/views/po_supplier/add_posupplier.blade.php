@@ -16,7 +16,7 @@
                         <input type="text" class="form-control" disabled ref="fno_pos" v-model="fno_pos"  placeholder="No POS">
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
                     <select class="form-select form-select-lg mb-3" v-model="result_supplier" aria-label=".form-select-lg example">
@@ -25,7 +25,7 @@
                     </select>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">PPN</label>
                     <div class="col-sm-9">
                         <div class="form-check">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Description</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" ref="description" v-model="description"  placeholder="Description">
@@ -94,13 +94,13 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <div><strong>@{{ data.kode_bg }} | @{{ data.partname }} | @{{ data.fberat_netto }}</strong></div>
-                            <small>Rp @{{data.harga}} • Qty : @{{data.fq_pos}}</small>
+                            <strong>Rp @{{data.harga}} x Qty : @{{data.fq_pos}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
                             {{-- <button class="btn btn-sm btn-light">-</button>
                             <span class="mx-2">1</span>
                             <button class="btn btn-sm btn-light">+</button> --}}
-                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span>
+                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span> | <button  class="btn btn-primary">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,6 @@
                 <div>
                    <h2>Total Harga @{{_moneyFormat(total_harga)}}</h2>
                 </div>
-
                 {{-- <div class="border-bottom pb-2 mb-2">
                     <divclass="col-md-4 mb-4">
                         <div class="product-card">

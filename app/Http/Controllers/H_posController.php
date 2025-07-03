@@ -103,7 +103,7 @@ class H_posController extends Controller
      */
     public function load()
     {
-        return L_H_POC::paginate(10);
+        return L_hpos::paginate(10);
     }
 
     private function getLast3($angka){

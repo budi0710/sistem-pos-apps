@@ -8,56 +8,8 @@
             </div>
 
     <!-- Modal -->
-        <div class="modal fade" id="my_modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Jenis BRJ</h5> 
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Kode Jenis:</label>
-                    <input type="text" ref="fk_jenis" v-model="fk_jenis" placeholder="kode Jenis" class="form-control" id="recipient-name">
-                </div>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Nama Jenis BRJ:</label>
-                    <input type="text" ref="jenis" v-model="jenis" placeholder="jenis" class="form-control" id="recipient-name">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" @click="save" class="btn btn-primary">Simpan</button>
-            </div>
-            </div>
-        </div>
-        </div>
     <!-- Open the modal edit using ID.showModal() method -->
         <!-- Modal -->
-        <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data jenis</h5> 
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Kode jenis:</label>
-                        <input type="text" ref="fk_jenis_edit" v-model="fk_jenis_edit" disabled placeholder="kode Jenis" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
-                        <input type="text" ref="jenis_edit" v-model="jenis_edit" placeholder="Jenis Edit" class="form-control" >
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" @click="updateData" class="btn btn-primary">Simpan</button>
-                </div>
-                </div>
-            </div>
-        </div>
     <!-- Open the modal using ID.showModal() method -->
     <div class="card-body">
         <div class="table-responsive">
@@ -74,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in h_pocs" class="align-middle">
+                        <tr v-for="data in h_posupplier" class="align-middle">
                             <td>@{{ data.id }}</td>
                             <td>@{{ data.fno_pos }}</td>
                             <td>@{{ data.ftgl_pos }}</td>
@@ -103,7 +55,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 <script>
     // buat object kosong 
-    var modal_edit;
+var modal_edit;
 const _TOKEN_ = '<?= csrf_token() ?>';
 const $app =   new Vue({
         el : "#app",
@@ -117,6 +69,7 @@ const $app =   new Vue({
                 search : null,
                 jenis : null,
                 loading :false,
+                h_posupplier : null,
                 id_edit : null
         },
         methods:{
@@ -148,13 +101,13 @@ const $app =   new Vue({
                 },
             loadData : function(){
               const $this = this;
-                    axios.post("/load-hpo-customer", {
+                    axios.post("/load-hpo-supplier", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.h_pocs = response.data.data;
+                                $this.h_posupplier = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })
@@ -162,33 +115,6 @@ const $app =   new Vue({
                             console.log(error);
                         });
                 },
-            editModalNow: function(data) {
-                    modal_edit.show();
-                    $app.id_edit = data.id;
-                    $app.fk_jenis_edit = data.fk_jns_brj;
-                    $app.jenis_edit = data.fn_jns_brj;
-                    //alert(data.id)
-                },
-                    updateData: function(){
-                    if (this.id_edit) {
-                        const $this = this;
-                         axios.post("/update-jenis-brj", {
-                            _token: _TOKEN_,
-                            jenis_edit: this.jenis_edit,
-                            id : this.id_edit
-                        })
-                        .then(function(response) {
-                            if (response.data) {
-                                $this.loading = false;
-                                $this.loadData();
-                                alert("Update data sukses")
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
-                    }
-              },
             searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -209,30 +135,6 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
-            save: function() {
-                    if (this.jenis == null) {
-                        this.alert = false;
-                        return
-                    }
-                    const $this = this;
-                     axios.post("/save-jenis-brj", {
-                                        _token: _TOKEN_,
-                                        jenis: this.jenis,
-                                        fk_jenis: this.fk_jenis
-                                    })
-                                    .then(function(response) {
-                                        if (response.data.result) {
-                                            $this.loadData();
-                                            $this.alert = false;
-                                            $this.jenis = null;
-                                            $this.fk_jenis = null;
-                                            alert("Tambah data sukses");
-                                        }
-                                    })
-                                    .catch(function(error) {
-                                        console.log(error);
-                                    }); 
                 },
                 deleteData: function(id, Jenis) {
                     if (id) {
@@ -276,7 +178,7 @@ const $app =   new Vue({
         },
         mounted(){
           this.loadData()
-          modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
+          //modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });
     </script>                
