@@ -19,7 +19,7 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" v-model="result_brj" aria-label=".form-select-lg example">
                         <option selected>Pilih Nama Customer</option>
                         <option v-for="data in customers" :value="data.kode_cus">@{{data.nama_cus}}</option>
                     </select>
@@ -58,18 +58,17 @@
                 <br>
                 <div class="product-container">
                   <div class="row">
-                    <div v-for="data in barangs" :key="data.id" class="col-md-4 mb-4">
+                    <div class="col-md-3 mb-3" v-for="(data,i) in barangs" :key="data.id"  >
                         <div class="product-card">
-                            <strong @click="addData">@{{ data.fk_brj }}</strong>
-                            <div class="stock-badge" >@{{ data.fn_brj }}</div>
-                            <div class="text-primary" >
-                            <label for="colFormLabel" >Berat Netto</label>
-                                @{{ data.fbrt_neto }}
-                                <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty">
+                            <div href="#" >
+                                <a href="#">@{{data.fk_brj}} | @{{data.fpartno}}</a>
                             </div>
-                            <div class="text-primary">
-                                {{-- <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty"> --}}
-                                {{-- <button @click="addData" class="btn btn-primary">Add</button> --}}
+                            <img :src="viewImage(data.fgambar)" alt="" width="100" height="100">
+                            <div class="text-primary" >@{{ data.fn_brj }}</div>
+                            <div class="text-primary" > 
+                                <label for="colFormLabel" >Harga</label>
+                                @{{_moneyFormat(data.fharga_jual)}}
+                            <input type="number" class="form-control qty-input"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty"  style="width: 90px;"/>
                             </div>
                         </div>
                     </div>
@@ -90,19 +89,26 @@
 
             <!-- Keranjang / Panel kanan -->
             <div class="col-md-5 right-panel">
-                <h5>🛒 Detail Permintaan Barang Gudang</h5>
-                <div class="border-bottom pb-2 mb-2">
-                    <div v-for="data in data_barangs" :key="data.id" class="col-md-4 mb-4">
-                        <div class="product-card">
-                            <strong>@{{ data.kode_bg }}</strong>
-                            <div class="stock-badge">@{{ data.partname }}</div>
-                            <strong>@{{ data.partname }}</strong>
-                            <div class="text-primary">@{{ data.fberat_netto }}</div>
+                <h5>🛒 Detail PO Customer</h5>
+                 <div  v-for="data in data_barangs" :key="data.id"  class="border-bottom pb-2 mb-2">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div><strong>@{{ data.fk_brj }} | @{{ data.fn_brj }}</strong></div>
+                            <strong>Rp @{{_moneyFormat(data.fharga_jual)}} x Qty : @{{data.fq_poc}}</strong>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            {{-- <button class="btn btn-sm btn-light">-</button>
+                            <span class="mx-2">1</span>
+                            <button class="btn btn-sm btn-light">+</button> --}}
+                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span>  |  <button  class="btn btn-primary">Hapus</button>
                         </div>
                     </div>
                 </div>
+                <div>
+                   <h2>Total Harga @{{_moneyFormat(total_harga)}}</h2>
+                </div>
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100 mt-3">Proses BTBG</button>
+                    <button class="btn btn-primary w-100 mt-3">Proses PO Customer</button>
                 </div>
             </div>
         </div>
@@ -127,14 +133,44 @@
                 ppn : null,
                 fqt_brj : null,
                 no_po_cus : null,
+                result_brj : null,
                 search: null,
                 disabled_brj: false,
                 data_barangs: null,
+                data_barangs: [],
                 barangs : null,
                 links : null,
+                txtQty : 'txtQty',
+                total_harga : 0,
                 description : null
             },
             methods: {
+                prosesPOC: function(){
+                    const $this = this;
+                    axios.post("/proses-posupplier", {
+                        fno_pos : this.fno_pos,
+                        kode_sup : this.result_supplier,
+                        ftgl_pos : this.ftgl_pos,
+                        ppn : this.ppn,
+                        description : this.description,
+                        detail_data : this.data_barangs
+                    })
+                    .then(function(response) {
+                        if (response.data.result){
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "GOod",
+                                    text: "Data berhasil disimpan !",
+                                    footer: ''
+                                });
+
+                                _refresh()
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                },
                 loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -154,6 +190,58 @@
                         .catch(function(error) {
                             console.log(error);
                         });
+                },
+            enterQty: function(data,i){
+                    const obj = document.getElementById('txtQty'+i).value;
+                    if (obj===0 || obj==0 || obj==null){
+                         Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Qty harus lebih dari 0",
+                            footer: ''
+                        });
+                        return
+                    }
+                    
+                    var $data = [{
+                        "fk_brj": data.fk_brj,
+                        "fn_brj" : data.fn_brj,
+                        "fpartno": data.fpartno,
+                        "fq_poc": obj,
+                        "fharga_jual" : data.fharga_jual,
+                        "sub_total" : data.fharga_jual * obj
+                    }]
+                    // console.table($data);
+                    // console.log($data.length)
+
+                    if (this.data_barangs.length == 0){
+                        this.data_barangs = ($data);
+
+                        this.total_harga = data.harga * obj;
+                    }else{
+                        //alert('data lebih dari 1')
+
+                        // check jika barang nya sama
+                        var BreakException = {};
+                       this.data_barangs.forEach(element => {
+                            if (element['fk_brj']===data.fk_brj){
+                                 Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "Data sudah ada",
+                                    footer: ''
+                                });
+                                throw BreakException;
+                            }   
+                        });
+                        this.data_barangs.push(...$data);
+
+                        var total_harga = 0
+                        this.data_barangs.forEach(element => {
+                            total_harga += element['sub_total']
+                        });
+                        this.total_harga = total_harga
+                    }
                 },
                 loadBarangCustomer: function(){
                     const $this = this;
@@ -226,6 +314,9 @@
                     this.grand_total = grand_total
                     this.disabled_brj=true;
                 },
+                viewImage: function(data){
+                    return 'storage/'+data
+                },
                 deleteData: function(kd){
                     var $storage = _getStorage('data');
                     $storage = JSON.parse($storage);
@@ -247,6 +338,9 @@
                     this.grand_total = grand_total
                 },
                 clearData: function() {
+                    delete this.data_barangs[key]
+                },
+                hapusData: function() {
                     localStorage.clear()
                     _refresh()
                 },

@@ -56,14 +56,14 @@
                     <div class="col-md-4 mb-4" v-for="(data,i) in barangs" :key="data.id"  >
                         <div class="product-card">
                             <div href="#" >
-                                <a href="#">@{{data.kode_bg}} </a>
+                                <a href="#">@{{data.kode_bg}} | @{{data.partno}}</a>
                             </div>
                             <img :src="viewImage(data.fgambar_brg)" alt="" width="100" height="100">
                             <div class="text-primary" >@{{ data.partname }}</div>
-                            <div class="text-primary" > @{{data.partno}}
-                            <label for="colFormLabel" >Harga</label>
-                                @{{ data.harga }}
-                                <input type="text" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty">
+                            <div class="text-primary" >
+                                <label for="colFormLabel" >Harga</label>
+                                @{{_moneyFormat(data.harga)}}
+                                <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty" style="width: 90px;">
                             </div>
                             <div class="text-primary">
                                 {{-- <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty"> --}}
@@ -94,7 +94,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <div><strong>@{{ data.kode_bg }} | @{{ data.partname }} | @{{ data.fberat_netto }}</strong></div>
-                            <strong>Rp @{{data.harga}} x Qty : @{{data.fq_pos}}</strong>
+                            <strong>Rp @{{_moneyFormat(data.harga)}} x Qty : @{{data.fq_pos}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
                             {{-- <button class="btn btn-sm btn-light">-</button>
@@ -108,18 +108,6 @@
                 <div>
                    <h2>Total Harga @{{_moneyFormat(total_harga)}}</h2>
                 </div>
-                {{-- <div class="border-bottom pb-2 mb-2">
-                    <divclass="col-md-4 mb-4">
-                        <div class="product-card">
-                            <strong>@{{ data.kode_bg }}</strong>
-                            <div class="stock-badge">@{{ data.partname }}</div>
-                            <strong>@{{ data.partname }}</strong>
-                            <div class="text-primary">@{{ data.fberat_netto }}</div>
-                            <strong>@{{data.fq_pos}}</strong>
-                        </div>
-                    </divclass=>
-                </div> --}}
-                 {{-- keranjang kanan --}}
                 <div class="mt-3">
                     <button class="btn btn-primary w-100 mt-3" @click="prosesPO">Proses PO</button>
                 </div>
