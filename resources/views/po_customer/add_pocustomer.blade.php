@@ -67,7 +67,7 @@
                             <div class="text-primary" >@{{ data.fn_brj }}</div>
                             <div class="text-primary" > 
                                 <label for="colFormLabel" >Harga</label>
-                                @{{_moneyFormat(data.fharga_jual)}}
+                                @{{ data.fharga_jual }}
                             <input type="number" class="form-control qty-input"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty"  style="width: 90px;"/>
                             </div>
                         </div>
@@ -94,13 +94,13 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <div><strong>@{{ data.fk_brj }} | @{{ data.fn_brj }}</strong></div>
-                            <strong>Rp @{{_moneyFormat(data.fharga_jual)}} x Qty : @{{data.fq_poc}}</strong>
+                            <strong>Rp @{{ _moneyFormat(data.fharga_jual)}} x Qty : @{{data.fq_poc}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
                             {{-- <button class="btn btn-sm btn-light">-</button>
                             <span class="mx-2">1</span>
                             <button class="btn btn-sm btn-light">+</button> --}}
-                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span>  |  <button  @click="hapusData" class="btn btn-primary"  >Hapus</button>
+                            <span class="ms-3">@{{ _moneyFormat(data.sub_total) }}</span>  |  <button  @click="hapusData" class="btn btn-primary"  >Hapus</button>
                         </div>
                     </div>
                 </div>

@@ -121,7 +121,7 @@
                 kode_bg : null,
                 partname : null,
                 fberat_netto : null,
-                ftgl_btbg : null,
+                ftgl_pos : null,
                 fno_poc : null,
                 fk_brj : null,
                 fn_brj : null,

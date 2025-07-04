@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('fpartno', 50);
             $table->decimal('fbrt_neto')->default(0);
             $table->decimal('fbrt_bruto')->default(0);
+            $table->decimal('fharga_jual')->default(0);
             $table->string('fdimensi');
             $table->string('fgambar');
             $table->timestamps();

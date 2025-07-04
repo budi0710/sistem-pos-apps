@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('t_btbg', function (Blueprint $table) {
             $table->id();
-            $table->char('fno_btbg', 7)->unique();
+            $table->string('fno_btbg', 15)->unique();
             $table->char('kode_bg', 5);
-            $table->integer('fq_btbg')->default(0);
+            $table->decimal('fq_btbg',15)->default(0);
             $table->timestamps();
         });
     }

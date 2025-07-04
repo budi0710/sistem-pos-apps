@@ -136,7 +136,6 @@ class H_poc_Controller extends Controller
     public function delete(request $request)
     {
         // check receive apakah sudah pernah dilakukan transaksi 
-
         // ambil fno_pos terlebih dahulu
         $h_poc = H_poc::select('fno_poc')->where("id",$request->id)->get();
         // ambil data index ke 0 dan key fno_pos
@@ -148,7 +147,6 @@ class H_poc_Controller extends Controller
 
         // delete data di table detail berdasarkan fno_pos
         $t_poc = T_poc::where('fno_poc',$fno_poc)->delete();
-        
         return $detail ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 }

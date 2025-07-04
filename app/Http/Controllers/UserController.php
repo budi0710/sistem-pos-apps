@@ -22,11 +22,12 @@ class UserController extends Controller
                             ->where('password',md5($password))->count();
        
         if ($users){
-             $data = User::where('email', $email)->where('password',md5($password))->first();
+            $data = User::where('email', $email)->where('password',md5($password))->first();
              
-             $role = $data['role'];
-             
-             session(['user' => $role]);
+            $role = $data['role'];
+            $id = $data->id;
+            session(['user_role' => $role]);
+            session(['user_id' => $id]);
             return response()->json(['result'=>true,'message'=>"Email or password is true"]);
         }else{
             return response()->json(['result'=>false,'message'=>"Email or password is incorrect"]);

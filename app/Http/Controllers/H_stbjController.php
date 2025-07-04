@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class H_stbjController extends Controller
 {
 
+    public function load() {
+        return H_stbj::paginate(10);
+    }
+
     public function saveData(Request $request)
     {
         $h_stbj = new H_stbj();
@@ -17,7 +21,7 @@ class H_stbjController extends Controller
         $h_stbj->fno_stbj =  $fno_stbj;
         $h_stbj->ftgl_stbj = $request->ftgl_stbj;
         $h_stbj->description = $request->description;
-        $h_stbj->userid =  $request->session()->get('admin');
+        $h_stbj->userid =  $request->session()->get('user_id');
         $h_stbj->save();
 
         $data = $request->detail_data;
@@ -25,7 +29,6 @@ class H_stbjController extends Controller
 
         for ($i=0; $i < count($data) ; $i++) { 
             $master_data = $data[$i];
-
             $fk_brj = $master_data['fk_brj'];
             $fq_stbj  = $master_data['fq_stbj'];
             DB::insert('INSERT INTO t_stbj (fno_stbj, fk_brj, fq_stbj) VALUES (?, ?, ?)', [$fno_stbj, $fk_brj, $fq_stbj]);

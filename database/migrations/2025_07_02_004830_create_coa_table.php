@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('coa', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_coa', 5)->unique();
+            $table->string('fkelompok', 50);
+            $table->string('fket',100);
             $table->timestamps();
         });
     }

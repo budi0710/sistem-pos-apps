@@ -72,7 +72,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in h_pocs" class="align-middle">
+                        <tr v-for="data in h_stbjs" class="align-middle">
                             <td>@{{ data.id }}</td>
                             <td>@{{ data.fno_stbj }}</td>
                             <td>@{{ data.ftgl_stbj }}</td>
@@ -104,7 +104,7 @@ const _TOKEN_ = '<?= csrf_token() ?>';
 const $app =   new Vue({
         el : "#app",
         data: {
-                h_pocs : null,
+                h_stbjs : null,
                 fk_jenis : null,
                 fk_jenis_edit : null,
                 alert: false,
@@ -144,13 +144,13 @@ const $app =   new Vue({
                 },
             loadData : function(){
               const $this = this;
-                    axios.post("/load-hpo-customer", {
+                    axios.post("/load-h-stbj", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.h_pocs = response.data.data;
+                                $this.h_stbjs = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })

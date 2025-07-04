@@ -38,7 +38,7 @@ class H_posController extends Controller
         $h_pos->ppn = $request->ppn;
         $h_pos->description = $request->description;
         $h_pos->ftgl_pos = $request->ftgl_pos;
-        $h_pos->user_id =  $request->session()->get('admin');
+        $h_pos->userid =  $request->session()->get('admin');
         $h_pos->save();
 
         $data = $request->detail_data;

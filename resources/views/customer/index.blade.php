@@ -19,31 +19,31 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Kode Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
+                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" required  placeholder="kode Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Nama Customer">
+                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" required  placeholder="Nama Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No Telp</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="notelp_cus" v-model="notelp_cus"  id="notelp_cus" placeholder="No Telp">
+                        <input type="text" class="form-control" ref="notelp_cus" v-model="notelp_cus"  id="notelp_cus" required  placeholder="No Telp">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Alamat</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" ref="alamat_cus" v-model="alamat_cus"  id="alamat_cus"  id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" ref="alamat_cus" v-model="alamat_cus"  id="alamat_cus"  id="exampleFormControlTextarea1" required  rows="3"></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="email_cus" v-model="email_cus"  id="email_cus" placeholder="Email">
+                        <input type="email" class="form-control" ref="email_cus" v-model="email_cus"  id="email_cus" required  placeholder="Email">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -58,13 +58,13 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">N.P.W.P</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="NPWP_cus" v-model="NPWP_cus"  id="NPWP_cus" placeholder="N.P.W.P">
+                        <input type="text" class="form-control" ref="NPWP_cus" v-model="NPWP_cus"  id="NPWP_cus" required   placeholder="N.P.W.P">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Contact Person</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="CP_cus" v-model="CP_cus"  id="CP_cus" placeholder="Contact Person">
+                        <input type="text" class="form-control" ref="CP_cus" v-model="CP_cus"  id="CP_cus" required  placeholder="Contact Person">
                     </div>
                 </div>
             </div>

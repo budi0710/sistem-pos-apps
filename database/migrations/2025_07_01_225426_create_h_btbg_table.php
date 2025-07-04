@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('h_btbg', function (Blueprint $table) {
             $table->id();
-            $table->char('fno_btbg', 7)->unique();
+            $table->string('fno_btbg', 17)->unique();
             $table->char('fk_brj', 5);
             $table->date('ftgl_btbg');
             $table->string('description');

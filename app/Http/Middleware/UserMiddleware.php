@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SettingMiddleware
+class UserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,13 +15,9 @@ class SettingMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $session = $request->session()->get('admin');
+        $session = $request->session()->get('user_id');
 
-        if ($session==1){
-            return $next($request);
-        }else{
-            return redirect('/login');
-        }
-
+        return $session ? $next($request) : redirect('/login');
+      //  return $next($request);
     }
 }

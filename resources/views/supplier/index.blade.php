@@ -43,7 +43,7 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="email_sup" v-model="email_sup"  id="email_sup" placeholder="Email">
+                        <input type="email" class="form-control" ref="email_sup" v-model="email_sup"  id="email_sup" placeholder="Email">
                     </div>
                 </div>
                 <div class="row mb-3">
