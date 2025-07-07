@@ -40,7 +40,7 @@ Route::get('/',function(Request $request){
 });
 
 Route::get('/login',function(Request $request){
-    $session = $request->session()->get('user');
+    $session = $request->session()->get('user_id');
     return $session ? redirect('home') : view('login');
 });
 
@@ -50,7 +50,7 @@ Route::post('/upload-foto-company',[SettingController::class, 'upload']);
 Route::get('HomeController', [HomeController::class, 'index'])->name('HomeController.index');
 
 Route::get('/admin-logout',function(Request $request){
-    $request->session()->forget(['user_id' => $id]);
+    $request->session()->forget('user_id');
     return redirect('/login');
 });
 
@@ -265,13 +265,13 @@ Route::post('/generate-id-hstbj',[H_stbjController::class,'generateNo']);
 Route::post('/proses-simpan',[H_stbjController::class,'saveData']);
 Route::post('/generate-kode-spk',[H_stbjController::class,'generateKodeSpK']);
 Route::post('/load-h-stbj',[H_stbjController::class, 'load']);
+Route::post('/load-detail-stbj',[H_stbjController::class, 'loadWhere']);
 
 Route::post('/delete-poc-customer',[H_posController::class, 'delete']);
-//Route::post('/save-poc-customer',[H_posController::class, 'save']);
 Route::post('/generate-id-hpos',[H_posController::class,'generateNo']);
 Route::post('/proses-posupplier',[H_posController::class,'saveData']);
 Route::post('/generate-kode-spk',[H_posController::class,'generateKodeSpK']);
-//Route::post('/save-poc-customer',[H_posController::class,'saveData']);
+Route::post('/load-detail-posupplier',[H_posController::class, 'loadWhere']);
 Route::post('/load-hpo-supplier',[H_posController::class, 'load']);
 
 //HRIS

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\H_stbj;
 use App\Models\T_stbj;
+use App\Models\L_Detail_STBJ;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,10 @@ class H_stbjController extends Controller
 
     public function load() {
         return H_stbj::paginate(10);
+    }
+
+    public function loadWhere(Request $request){
+        return L_Detail_STBJ::where('fno_stbj',$request->fno_stbj)->get();
     }
 
     public function saveData(Request $request)

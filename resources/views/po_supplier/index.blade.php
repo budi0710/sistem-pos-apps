@@ -8,6 +8,45 @@
             </div>
 
     <!-- Modal -->
+    <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Details Data PO Supplier</h5> 
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <!-- head -->
+                        <thead>
+                            <tr>
+                                <th>Kode Brg</th>
+                                <th>Partname</th>
+                                <th>Partno</th>
+                                <th>Harga</th>
+                                <th>Qty POS</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="data in detail_posupplier">
+                                <th>@{{data.kode_bg}}</th>
+                                <td>@{{data.partname}}</td>
+                                <td>@{{data.partno}}</td>
+                                <td>@{{_moneyFormat(data.fharga)}}</td>
+                                <td>@{{data.fq_pos}}</td>
+                                <td>@{{_moneyFormat(data.Fjumlah)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
     <!-- Open the modal edit using ID.showModal() method -->
         <!-- Modal -->
     <!-- Open the modal using ID.showModal() method -->
@@ -34,8 +73,8 @@
                             <td>@{{ data.PPN }}</td>
                             <td>@{{ data.description }}</td>
                             <td>
-                                <button @click="printPage(data.fno_poc)" class="btn btn-primary btn-sm">Print</button>
-                                <button @click="detailData(data.fno_poc)" class="btn btn-primary btn-sm">Details</button>
+                                <button @click="printPage(data.fno_pos)" class="btn btn-primary btn-sm">Print</button>
+                                <button @click="DetailModal(data.fno_pos)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editData(data.id,data)" class="btn btn-primary btn-sm">Edit</button>
                                 <button @click="deleteData(data.id,data)" class="btn btn-danger btn-sm">x</button>
                             </td>
@@ -70,6 +109,7 @@ const $app =   new Vue({
                 jenis : null,
                 loading :false,
                 h_posupplier : null,
+                detail_posupplier : null,
                 id_edit : null
         },
         methods:{
@@ -114,6 +154,23 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
+                },
+            DetailModal: function(fno_pos) {
+                    modal_edit.show();
+                    const $this = this;
+                    axios.post("/load-detail-posupplier", {
+                        _token: _TOKEN_,
+                        fno_pos : fno_pos
+                    })
+                    .then(function(response) {
+                    
+                        if (response.data) {
+                            $this.detail_posupplier = response.data;
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
                 },
             searchData: function() {
                     if (this.search == null) {
@@ -178,7 +235,7 @@ const $app =   new Vue({
         },
         mounted(){
           this.loadData()
-          //modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
+          modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });
     </script>                
