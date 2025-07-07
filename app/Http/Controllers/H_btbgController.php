@@ -5,6 +5,7 @@ use App\Models\H_btbg;
 use App\Models\L_hbtbg;
 use App\Models\L_dbtbg;
 use App\Models\T_btbg;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class H_btbgController extends Controller
@@ -30,31 +31,28 @@ class H_btbgController extends Controller
      */
     public function saveData(Request $request)
     {
-        $Hpo_Customer = new Hpo_Customer();
+        $h_btbg = new H_btbg();
+        $fno_btbg = $request->fno_btbg;
 
-        $Hpo_Customer->fno_poc = $request->fno_poc;
-        $Hpo_Customer->fk_cus = $request->result_customer;
-        $Hpo_Customer->fppn = $request->PPN_customer;
-        $Hpo_Customer->fpph23 = $request->pph23_customer;
-        $Hpo_Customer->fket = $request->ket;
-        $Hpo_Customer->ftgl_poc = $request->ftgl_poc;
-        $Hpo_Customer->fk_user =  $request->session()->get('admin');
-        $Hpo_Customer->save();
+        $h_btbg->fno_btbg =  $fno_btbg;
+        $h_btbg->fk_brj = $request->fk_brj;
+        $h_btbg->ftgl_btbg = $request->ftgl_btbg;
+        $h_btbg->description = $request->description;
+        $h_btbg->userid =  $request->session()->get('user_id');
+        $h_btbg->save();
 
-        $data = $request->data;
-        $data = json_decode($data);
-        
-       foreach ($data as $item) {
-            $fno_rbc = $item->kode_rbc;
-            $harga = $item->harga_poc;
-            $fqt_poc = $item->fqt_poc;
-            $fno_spk = $item->fno_spk;
-            $fno_poc =$request->fno_poc;
-          
-            DB::insert('INSERT INTO dpo_customer (fno_rbc, fno_poc,fharga,fqt_poc,fno_spk) VALUES (?, ?, ?, ? , ?)', [$fno_rbc, $fno_poc, $harga, $fqt_poc, $fno_spk]);
+        $data = $request->detail_data;
+
+        for ($i=0; $i < count($data) ; $i++) { 
+            $master_data = $data[$i];
+            $kode_bg = $master_data['kode_bg'];
+            $fq_btbg = $master_data['fq_btbg'];
+
+            DB::insert('INSERT INTO t_btbg (fno_btbg, kode_bg, fq_btbg) VALUES (?, ?, ?)', [$fno_btbg, $kode_bg, $fq_btbg]);
+            $fno_spo = '';
         }
+       return response()->json(['result'=>true]) ;
 
-        return response()->json(['result'=>true]) ;
     }
 
     private function generatefno_btbg(array  $existingNumbers): string{

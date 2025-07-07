@@ -17,6 +17,7 @@ return new class extends Migration
             $table->char('fk_brj', 5);
             $table->date('ftgl_btbg');
             $table->string('description');
+            $table->string('userid', 20);
             $table->timestamps();
         });
     }

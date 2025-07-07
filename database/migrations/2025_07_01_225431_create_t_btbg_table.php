@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('t_btbg', function (Blueprint $table) {
             $table->id();
-            $table->string('fno_btbg', 15)->unique();
+            $table->string('fno_btbg', 15);
             $table->char('kode_bg', 5);
             $table->decimal('fq_btbg',15)->default(0);
             $table->timestamps();

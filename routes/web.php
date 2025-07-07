@@ -258,6 +258,7 @@ Route::post('/save-hbtbg',[H_btbgController::class, 'save']);
 Route::post('/generate-id-hbtbg',[H_btbgController::class,'generateNo']);
 Route::post('/generate-kode-sbtbg',[H_btbgController::class,'generateKodeSbtbg']);
 Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
+Route::post('/proses-hbtbg',[H_btbgController::class,'saveData']);
 Route::post('/load-detail-permintaan',[T_btbgController::class, 'loadWhere']);
 
 Route::post('/delete-h-stbj',[H_stbjController::class, 'delete']);

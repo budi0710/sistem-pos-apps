@@ -19,7 +19,7 @@
                 <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Barang Jadi</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" v-model="result_supplier" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" v-model="result_brj" aria-label=".form-select-lg example">
                         <option selected>Pilih Nama Barang Jadi</option>
                         <option v-for="data in brjs" :value="data.fk_brj">@{{data.fn_brj}}</option>
                     </select>
@@ -114,7 +114,7 @@
                 </div> --}}
                  {{-- keranjang kanan --}}
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100 mt-3" @click="prosesPO">Proses Permintaan</button>
+                    <button class="btn btn-primary w-100 mt-3" @click="prosesBTBG">Proses Permintaan</button>
                 </div>
             </div>
         </div>
@@ -148,16 +148,15 @@
                 inputValues:null,
                 txtQty : 'txtQty',
                 total_harga : 0,
-                result_supplier: null
+                result_brj: null
             },
             methods: {
-                prosesPO: function(){
+                prosesBTBG: function(){
                     const $this = this;
-                    axios.post("/proses-posupplier", {
-                        fno_pos : this.fno_pos,
-                        kode_sup : this.result_supplier,
-                        ftgl_pos : this.ftgl_pos,
-                        ppn : this.ppn,
+                    axios.post("/proses-hbtbg", {
+                        fno_btbg : this.fno_btbg,
+                        fk_brj : this.result_brj,
+                        ftgl_btbg : this.ftgl_btbg,
                         description : this.description,
                         detail_data : this.data_barangs
                     })
@@ -194,9 +193,7 @@
                         "kode_bg": data.kode_bg,
                         "partname" : data.partname,
                         "partno": data.partno,
-                        "fq_pos": obj,
-                        "harga" : data.harga,
-                        "sub_total" : data.harga * obj
+                        "fq_btbg": obj
                     }]
                     // console.table($data);
                     // console.log($data.length)
