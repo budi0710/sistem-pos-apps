@@ -5,7 +5,7 @@ use App\Models\H_poc;
 use App\Models\L_H_POC;
 use App\Models\T_poc;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class H_poc_Controller extends Controller
 {
  /**
@@ -32,24 +32,25 @@ class H_poc_Controller extends Controller
         $h_poc = new H_poc();
 
         $h_poc->fno_poc = $request->fno_poc;
-        $h_poc->fk_cus = $request->result_customer;
-        $h_poc->fppn = $request->PPN_customer;
-        $h_poc->fket = $request->ket;
+        $h_poc->fno_poc_cus = $request->fno_poc_cus;
+        $h_poc->kode_cus = $request->kode_cus;
+        $h_poc->PPN_cus = $request->ppn;
+        $h_poc->description = $request->description;
         $h_poc->ftgl_poc = $request->ftgl_poc;
-        $h_poc->fk_user =  $request->session()->get('admin');
+        $h_poc->userid =  $request->session()->get('user_id');
         $h_poc->save();
 
-        $data = $request->data;
-        $data = json_decode($data);
+        $data = $request->detail_data;
         
-       foreach ($data as $item) {
-            $fk_brj = $item->kode_rbc;
-            $fharga = $item->harga_poc;
-            $fq_poc = $item->fqt_poc;
-            $fnos_poc = $item->fno_spk;
-            $fno_poc =$request->fno_poc;
+        for ($i=0; $i < count($data) ; $i++) { 
+            $master_data = $data[$i];
+
+            $fnos_poc = $this->generateKodeSpk();
+            $fk_brj = $master_data['fk_brj'];
+            $fq_poc  = $master_data['fq_poc'];
+            $fharga  = $master_data['fharga_jual'];
           
-            DB::insert('INSERT INTO t_poc (fno_poc, fk_brj, fharga, fq_poc,fnos_poc) VALUES (?, ?, ?, ? , ?)', [$fno_poc, $fk_brj, $fharga, $fq_poc, $fnos_poc]);
+            DB::insert('INSERT INTO t_poc (fno_poc, fk_brj, fnos_poc, fq_poc, fharga) VALUES (?, ?, ?, ? , ?)', [$fno_poc, $fk_brj, $fnos_poc,  $fq_poc, $fharga]);
         }
 
         return response()->json(['result'=>true]) ;
@@ -104,13 +105,13 @@ class H_poc_Controller extends Controller
     }
 
     public function generateKodeSpk(){
-         $result= t_poc::select('fnos_poc')->orderBy('fnos_poc','desc')->first();
+         $result= T_poc::select('fnos_poc')->orderBy('fnos_poc','desc')->first();
        
        if ($result==null){
-          return '001';
+          return date('Ym').'0001';
        }else{
-          
-          return ($result);
+          $angka =substr($result->fno_spo, -4);
+          return date('Ym').$this->generateFormattedNumber($angka);
        }
     }
 

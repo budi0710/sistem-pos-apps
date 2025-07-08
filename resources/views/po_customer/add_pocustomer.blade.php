@@ -28,7 +28,7 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No PO Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="no_po_cus" v-model="no_po_cus"  placeholder="No PO Customer">
+                        <input type="text" class="form-control" ref="fno_poc_cus" v-model="fno_poc_cus"  placeholder="No PO Customer">
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -108,7 +108,7 @@
                    <h2>Total Harga @{{_moneyFormat(total_harga)}}</h2>
                 </div>
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100 mt-3">Proses PO Customer</button>
+                    <button class="btn btn-primary w-100 mt-3"  @click="prosesPOC">Proses PO Customer</button>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
                 fq_poc : null,
                 ppn : null,
                 fqt_brj : null,
-                no_po_cus : null,
+                fno_poc_cus : null,
                 result_customer : null,
                 search: null,
                 disabled_brj: false,
@@ -147,8 +147,9 @@
             methods: {
                 prosesPOC: function(){
                     const $this = this;
-                    axios.post("/proses-posupplier", {
+                    axios.post("/proses-pocustomer", {
                         fno_poc : this.fno_poc,
+                        fno_poc_cus : this.fno_poc_cus,
                         kode_cus : this.result_customer,
                         ftgl_poc : this.ftgl_poc,
                         ppn : this.ppn,
@@ -159,8 +160,8 @@
                         if (response.data.result){
                                 Swal.fire({
                                     icon: "success",
-                                    title: "GOod",
-                                    text: "Data berhasil disimpan !",
+                                    title: "GOod Job",
+                                    text: "Data Po Customer berhasil disimpan !",
                                     footer: ''
                                 });
 
@@ -203,7 +204,7 @@
                         return;
                     }
 
-                    if (this.no_po_cus==null){
+                    if (this.fno_poc_cus==null){
                         alert("Isi No Po Customer ya")
                         return;
                     }

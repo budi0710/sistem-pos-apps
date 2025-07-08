@@ -177,6 +177,22 @@
                     });
                 },
                 enterQty: function(data,i){
+                    //untuk validasi data jika tgl dan supplier kosong maka akan di arahkan sesuai request ya
+                    if (this.ftgl_btbg==null){
+                        alert("Isi tgl dulu")
+                        return
+                    }
+
+                    if (this.result_brj==null){
+                        alert("Pilih Barang Jadinya dulu")
+                        return;
+                    }
+
+                    if (this.fqt_brj==null){
+                        alert("Isi Qty Yang Akan di produsinya dulu")
+                        return;
+                    }
+
                     const obj = document.getElementById('txtQty'+i).value;
                     
                     if (obj===0 || obj==0 || obj==null){

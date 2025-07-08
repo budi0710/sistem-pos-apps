@@ -247,9 +247,9 @@ Route::get('/md5',function(){
 
 Route::post('/delete-poc-customer',[H_poc_Controller::class, 'delete']);
 Route::post('/save-poc-customer',[H_poc_Controller::class, 'save']);
+Route::post('/proses-pocustomer',[H_poc_Controller::class, 'saveData']);
 Route::post('/generate-id-hpoc',[H_poc_Controller::class,'generateNo']);
 Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
-Route::post('/save-poc-customer',[H_poc_Controller::class,'saveData']);
 Route::post('/load-hpo-customer',[H_poc_Controller::class, 'load']);
 //Inventory Barang
 
