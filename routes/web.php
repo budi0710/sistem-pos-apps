@@ -236,7 +236,8 @@ Route::post('/update-cus',[CustomerController::class, 'update']);
 Route::post('/search-cus',[CustomerController::class, 'search']);
 
 Route::get('/admin-logout',function(Request $request){
-    $request->session()->forget('user');
+    $request->session()->forget('user_id');
+    $request->session()->forget('user_role');
     return redirect('/');
 });
 

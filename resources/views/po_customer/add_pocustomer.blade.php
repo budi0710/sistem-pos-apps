@@ -10,7 +10,7 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl POC</label>
                     <div class="col-sm-6">
-                        <input type="date" class="form-control" ref="ftgl_btbg" v-model="ftgl_btbg" >
+                        <input type="date" class="form-control" ref="ftgl_poc" v-model="ftgl_poc" >
                     </div>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" disabled ref="fno_poc" v-model="fno_poc"  placeholder="No POC">
@@ -19,7 +19,7 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" v-model="result_brj" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" v-model="result_customer" aria-label=".form-select-lg example">
                         <option selected>Pilih Nama Customer</option>
                         <option v-for="data in customers" :value="data.kode_cus">@{{data.nama_cus}}</option>
                     </select>
@@ -124,7 +124,7 @@
                 kode_bg : null,
                 partname : null,
                 fberat_netto : null,
-                ftgl_btbg : null,
+                ftgl_poc : null,
                 fno_poc : null,
                 fk_brj : null,
                 fn_brj : null,
@@ -133,7 +133,7 @@
                 ppn : null,
                 fqt_brj : null,
                 no_po_cus : null,
-                result_brj : null,
+                result_customer : null,
                 search: null,
                 disabled_brj: false,
                 data_barangs: null,
@@ -148,9 +148,9 @@
                 prosesPOC: function(){
                     const $this = this;
                     axios.post("/proses-posupplier", {
-                        fno_pos : this.fno_pos,
-                        kode_sup : this.result_supplier,
-                        ftgl_pos : this.ftgl_pos,
+                        fno_poc : this.fno_poc,
+                        kode_cus : this.result_customer,
+                        ftgl_poc : this.ftgl_poc,
                         ppn : this.ppn,
                         description : this.description,
                         detail_data : this.data_barangs
@@ -192,6 +192,22 @@
                         });
                 },
             enterQty: function(data,i){
+                //untuk validasi data jika tgl dan supplier kosong maka akan di arahkan sesuai request ya
+                    if (this.ftgl_poc==null){
+                        alert("Isi tgl dulu")
+                        return
+                    }
+
+                    if (this.result_customer==null){
+                        alert("Pilih Nama Customer ya dulu")
+                        return;
+                    }
+
+                    if (this.no_po_cus==null){
+                        alert("Isi No Po Customer ya")
+                        return;
+                    }
+
                     const obj = document.getElementById('txtQty'+i).value;
                     if (obj===0 || obj==0 || obj==null){
                          Swal.fire({

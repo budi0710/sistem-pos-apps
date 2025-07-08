@@ -20,7 +20,7 @@
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
                     <select class="form-select form-select-lg mb-3" v-model="result_supplier" aria-label=".form-select-lg example">
-                        <option selected>Pilih Nama Supplier</option>
+                        <option selected disabled>Pilih Nama Supplier</option>
                         <option v-for="data in suppliers" :value="data.kode_sup">@{{data.nama_sup}}</option>
                     </select>
                     </div>
@@ -96,7 +96,7 @@
                             {{-- <button class="btn btn-sm btn-light">-</button>
                             <span class="mx-2">1</span>
                             <button class="btn btn-sm btn-light">+</button> --}}
-                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span> | <button  class="btn btn-primary">Hapus</button>
+                            <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span> | <button @click="hapusData(data.kode_bg)"  class="btn btn-primary">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -142,6 +142,11 @@
                 result_supplier: null
             },
             methods: {
+                hapusData : function(kode_bg){
+                   this.data_barangs = this.data_barangs.filter(item => item.kode_bg !== kode_bg);
+
+                    this.totalBarang();
+                },
                 prosesPO: function(){
                     const $this = this;
                     axios.post("/proses-posupplier", {
@@ -169,6 +174,16 @@
                     });
                 },
                 enterQty: function(data,i){
+                    //untuk validasi data jika tgl dan supplier kosong maka akan di arahkan sesuai request ya
+                    if (this.ftgl_pos==null){
+                        alert("Isi tgl dulu")
+                        return
+                    }
+
+                    if (this.result_supplier==null){
+                        alert("Pilih Supplier dulu")
+                        return;
+                    }
                     const obj = document.getElementById('txtQty'+i).value;
                     
                     if (obj===0 || obj==0 || obj==null){
@@ -214,12 +229,15 @@
                         });
                         this.data_barangs.push(...$data);
 
-                        var total_harga = 0
+                       this.totalBarang()
+                    }
+                },
+                totalBarang : function(){
+                      var total_harga = 0
                         this.data_barangs.forEach(element => {
                             total_harga += element['sub_total']
                         });
                         this.total_harga = total_harga
-                    }
                 },
                 viewImage: function(data){
                     return 'storage/'+data
