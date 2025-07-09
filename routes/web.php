@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsenController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BarangController;
@@ -172,7 +173,8 @@ Route::get('/setting',function(){
 
 
 Route::get('/admin-logout',function(Request $request){
-    $request->session()->forget('user');
+    $request->session()->forget('user_id');
+    $request->session()->forget('user_role');
     return redirect('/');
 });
 
@@ -240,6 +242,10 @@ Route::get('/po_supplier', function () {
     return view('po_supplier.index');
 });
 
+Route::get('/absensi', function () {
+    return view('absen');
+});
+
 Route::post('/delete-poc-customer',[H_posController::class, 'delete']);
 //Route::post('/save-poc-customer',[H_posController::class, 'save']);
 Route::post('/generate-id-hpos',[H_posController::class,'generateNo']);
@@ -286,3 +292,8 @@ Route::post('/save-karyawan',[KaryawanController::class, 'save']);
 Route::post('/delete-karyawan',[KaryawanController::class, 'delete']);
 Route::post('/update-karyawan',[KaryawanController::class, 'update']);
 Route::post('/search-karyawan',[KaryawanController::class, 'search']);
+
+Route::post('/upload-absen-masuk',[AbsenController::class, 'uploadAbsenMasuk']);
+Route::post('/upload-absen-pulang',[AbsenController::class, 'uploadAbsenPulang']);
+
+Route::post('/get-setting',[SettingController::class, 'getData']);

@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Absens;
+use Illuminate\Http\Request;
+use DateTime;
+class AbsenController extends Controller
+{
+    public function uploadAbsenMasuk(Request $request){
+       $file = $request->file('imageAbsenMasuk');
+        $path = $file->store('absen', 'public');
+
+        $absen = new Absens();
+        $now = new DateTime();
+
+        $absen->id_user   = $request->session()->get('user_id');
+        $absen->date     = $now;
+        $absen->time_in  = date('H:i:s');
+        $absen->time_out = '';
+        $absen->image    = $path;
+
+        // check jika absen masuk dua kali 
+        $exist = Absens::whereDate('date', $now)->exists();
+        if ($exist){
+            return response()->json(['result'=>false]);
+        }else{
+            return $absen->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
+        }
+        
+    }
+
+    public function uploadAbsenPulang(Request $request){
+       $file = $request->file('imageAbsenPulang');
+        $path = $file->store('absen', 'public');
+
+        $absen = new Absens();
+        $now = new DateTime();
+
+        $absen->id_user   = $request->session()->get('user_id');
+        $absen->date     = $now;
+        $absen->time_in  = '';
+        $absen->time_out = date('H:i:s');
+        $absen->image    = $path;
+
+        $exist = Absens::whereDate('date', $now)->exists();
+        if ($exist){
+            return response()->json(['result'=>false]);
+        }else{
+            return $absen->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
+        }
+    }
+}
