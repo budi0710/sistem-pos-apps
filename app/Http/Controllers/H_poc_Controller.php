@@ -31,6 +31,8 @@ class H_poc_Controller extends Controller
     {
         $h_poc = new H_poc();
 
+        $fno_poc = $request->fno_poc;
+
         $h_poc->fno_poc = $request->fno_poc;
         $h_poc->fno_poc_cus = $request->fno_poc_cus;
         $h_poc->kode_cus = $request->kode_cus;
@@ -113,6 +115,10 @@ class H_poc_Controller extends Controller
           $angka =substr($result->fno_spo, -4);
           return date('Ym').$this->generateFormattedNumber($angka);
        }
+    }
+
+    public function  generateFormattedNumber($number) {
+        return sprintf('%04d', $number+1);
     }
 
     /**
