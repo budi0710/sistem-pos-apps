@@ -17,9 +17,9 @@ Artisan::command('insert', function () {
         'role'=> 1
     ]);
      DB::table('setting')->insert([
-        'latitude' => '123',
-        'longitude' => '123',
-        'radius' => 5,
+        'latitude' => '-2.190540',
+        'longitude' => '102.639150',
+        'radius' => 150,
         'name_company'=> 'test',
         'logo'=> '-'
     ]);

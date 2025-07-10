@@ -264,6 +264,9 @@
                     })
                     .catch(err => {
                         alert("Gagal mengakses kamera: " + err);
+
+                        btnmasuk.disabled = true;
+                        btnpulang.disabled=true;
                         // window.location.href = "."
                     });
 
@@ -276,6 +279,8 @@
                     .catch(err => {
                         alert("Gagal mengakses kamera: " + err);
                         // window.location.href = "."
+                        btnmasuk.disabled = true;
+                        btnpulang.disabled=true;
                     });
 
             },

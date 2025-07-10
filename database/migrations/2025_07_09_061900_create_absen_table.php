@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('absen', function (Blueprint $table) {
             $table->id();
             $table->string('id_user');
-            $table->datetime('date');
+            $table->date('date');
             $table->time('time_in');
             $table->time('time_out');
              $table->string('image');
