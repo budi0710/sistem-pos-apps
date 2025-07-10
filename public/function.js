@@ -96,6 +96,39 @@ function generateNewId_cus(lastId) {
     return prefix + String(newNumber).padStart(3, '0');
 }
 
+function generateNewId_Satuan(lastId) {
+    if (!lastId) return '01';
+    // /const prefix = lastId.match(0)[0]; / / Extract letters
+    const number = parseInt(lastId); // Extract number
+    const newNumber = number + 1;
+    return String(newNumber).padStart(2, '0');
+}
+
+function generateNewId_Jenis(lastId) {
+    if (!lastId) return '01';
+    // /const prefix = lastId.match(0)[0]; / / Extract letters
+    const number = parseInt(lastId); // Extract number
+    const newNumber = number + 1;
+    return String(newNumber).padStart(2, '0');
+}
+
+function generateNewId_Supplier(lastId) {
+    if (!lastId) return '001';
+    // /const prefix = lastId.match(0)[0]; / / Extract letters
+    const number = parseInt(lastId); // Extract number
+    const newNumber = number + 1;
+    return String(newNumber).padStart(3, '0');
+}
+
+function generateNewId_Customer(lastId) {
+    if (!lastId) return '001';
+    // /const prefix = lastId.match(0)[0]; / / Extract letters
+    const number = parseInt(lastId); // Extract number
+    const newNumber = number + 1;
+    return String(newNumber).padStart(3, '0');
+}
+
+
 function generateNewId_rls_sup(latestId) {
     if (!latestId) return 'RLS-001';
 

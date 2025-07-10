@@ -17,7 +17,7 @@ class AbsenController extends Controller
         $absen->id_user   = $request->session()->get('user_id');
         $absen->date     = $now;
         $absen->time_in  = date('H:i:s');
-        $absen->time_out = '';
+        $absen->time_out = "00:00:00";
         $absen->image    = $path;
 
         // check jika absen masuk dua kali 
@@ -39,7 +39,7 @@ class AbsenController extends Controller
 
         $absen->id_user   = $request->session()->get('user_id');
         $absen->date     = $now;
-        $absen->time_in  = '';
+        $absen->time_in  = "00:00:00";
         $absen->time_out = date('H:i:s');
         $absen->image    = $path;
 

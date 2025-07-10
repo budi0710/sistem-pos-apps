@@ -18,7 +18,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Kode Jenis:</label>
-                    <input type="text" ref="fk_jenis" v-model="fk_jenis" placeholder="kode Jenis" class="form-control" id="recipient-name">
+                    <input type="text"  disabled ref="fk_jenis" v-model="fk_jenis" placeholder="kode Jenis" class="form-control" id="recipient-name">
                 </div>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
@@ -112,6 +112,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            generateId() {
+                const $this = this;
+                axios.post("/generate-id-jenis", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.jenis.focus();
+                            const fk_jenis = (response.data.fk_jenis);
+                            if (fk_jenis==null){
+                                return $this.fk_jenis = generateNewId_Jenis();
+                            }else{
+                                $this.fk_jenis = generateNewId_Jenis(fk_jenis);
+                                if ($this.fk_jenis==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+             },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -219,6 +243,7 @@ const $app =   new Vue({
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                     this.generateId();
                 },
                 deleteData: function(id, Jenis) {
                     if (id) {
@@ -261,7 +286,8 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData()
+          this.loadData();
+          this.generateId();
           //init object modal edit
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }

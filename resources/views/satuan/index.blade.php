@@ -19,7 +19,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Kode Satuan:</label>
-                    <input type="text" ref="fk_sat" v-model="fk_sat" placeholder="kode satuan" class="form-control" id="recipient-name">
+                    <input type="text"  disabled ref="fk_sat" v-model="fk_sat" placeholder="kode satuan" class="form-control" id="recipient-name">
                 </div>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Nama Satuan:</label>
@@ -113,6 +113,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+             generateId() {
+                const $this = this;
+                axios.post("/generate-id-satuan", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.satuan.focus();
+                            const fk_sat = (response.data.fk_sat);
+                            if (fk_sat==null){
+                                return $this.fk_sat = generateNewId_Satuan();
+                            }else{
+                                $this.fk_sat = generateNewId_Satuan(fk_sat);
+                                if ($this.fk_sat==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+             },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -148,7 +172,7 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-          },
+                },
             editModalNow: function(data) {
                     modal_edit.show();
                     $app.id_edit = data.id;
@@ -175,7 +199,7 @@ const $app =   new Vue({
                             console.log(error);
                         });
                     }
-              },
+                },
             searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -220,8 +244,9 @@ const $app =   new Vue({
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                    this.generateId();
                 },
-                deleteData: function(id, satuan) {
+            deleteData: function(id, satuan) {
                     if (id) {
                         const $this = this;
                         Swal.fire({
@@ -262,8 +287,9 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData()
-          //init object modal edit
+          this.loadData();
+          this.generateId();
+          //init object modal edit (Untuk bisa menampilkan modal boostrap)
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });

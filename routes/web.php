@@ -115,6 +115,7 @@ Route::post('/save-satuan',[SatuanController::class, 'save']);
 Route::post('/delete-satuan',[SatuanController::class, 'delete']);
 Route::post('/update-satuan',[SatuanController::class, 'update']);
 Route::post('/search-satuan',[SatuanController::class, 'search']);
+Route::post('/generate-id-satuan',[SatuanController::class, 'generateId_Satuan']);
 
 Route::get('/jenis', function () {
     return view('jenis.index');
@@ -126,6 +127,7 @@ Route::post('/save-jenis',[JenisController::class, 'save']);
 Route::post('/delete-jenis',[JenisController::class, 'delete']);
 Route::post('/update-jenis',[JenisController::class, 'update']);
 Route::post('/search-jenis',[JenisController::class, 'search']);
+Route::post('/generate-id-jenis',[JenisController::class, 'generateId_Jenis']);
 
 Route::get('/jenis-brj', function () {
     return view('jenis-brj.index');
@@ -148,6 +150,7 @@ Route::post('/save-sup',[SupplierController::class, 'save']);
 Route::post('/delete-sup',[SupplierController::class, 'delete']);
 Route::post('/update-sup',[SupplierController::class, 'update']);
 Route::post('/search-sup',[SupplierController::class, 'search']);
+Route::post('/generate-id-supplier',[SupplierController::class, 'generateId_Supplier']);
 
 Route::get('/customer', function () {
     return view('customer.index');
@@ -159,6 +162,7 @@ Route::post('/save-cus',[CustomerController::class, 'save']);
 Route::post('/delete-cus',[CustomerController::class, 'delete']);
 Route::post('/update-cus',[CustomerController::class, 'update']);
 Route::post('/search-cus',[CustomerController::class, 'search']);
+Route::post('/generate-id-customer',[CustomerController::class, 'generateId_Customer']);
 
 Route::get('/brk', function () {
     return view('brk.index');

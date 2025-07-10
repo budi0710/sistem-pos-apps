@@ -107,6 +107,7 @@
                          const kantorLat = response.data.latitude;
                         const kantorLon = response.data.longitude;
                         console.log(kantorLat)
+                        console.log(kantorLon)
                         const distance = getDistanceFromLatLonInMeters(kantorLat, kantorLon, userLat, userLon);
                     
                         const result = document.getElementById('result');

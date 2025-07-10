@@ -19,7 +19,7 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Kode Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
+                        <input type="text" class="form-control" disabled ref="kode_cus" v-model="kode_cus"  id="kode_cus" placeholder="kode Customer">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -93,6 +93,12 @@
                         <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
                         <input type="text" ref="nama_cus_edit" v-model="nama_cus_edit" placeholder="Jenis Edit" class="form-control" >
                     </div>
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-3 col-form-label">N.P.W.P</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ref="npwp_edit" v-model="npwp_edit"  id="npwp_edit" placeholder="N.P.W.P">
+                    </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -165,6 +171,7 @@ const $app =   new Vue({
                 email_cus_edit : null,
                 PPN_cus_edit : null,
                 NPWP_cus_edit : null,
+                npwp_edit : null,
                 PPH23_cus_edit : null,
                 CP_cus_edit : null,
                 alert: false,
@@ -175,6 +182,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            generateId() {
+                const $this = this;
+                axios.post("/generate-id-customer", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.nama_cus.focus();
+                            const kode_cus = (response.data.kode_cus);
+                            if (kode_cus==null){
+                                return $this.kode_cus = generateNewId_Customer();
+                            }else{
+                                $this.kode_cus = generateNewId_Customer(kode_cus);
+                                if ($this.kode_cus==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+             },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -293,6 +324,7 @@ const $app =   new Vue({
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                     this.generateId();
                 },
                 deleteData: function(id, Jenis) {
                     if (id) {
@@ -335,9 +367,19 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData()
+          this.loadData();
+          this.generateId();
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });
+
+        const NPWP_INPUT = document.getElementById("NPWP_cus")
+            NPWP_INPUT.oninput = (e) => {
+                e.target.value = autoFormatNPWP(e.target.value);
+            };
+        const NPWP_EDIT = document.getElementById("npwp_edit")
+            NPWP_EDIT.oninput = (e) => {
+                e.target.value = autoFormatNPWP(e.target.value);
+            };
     </script>                 
 @endsection

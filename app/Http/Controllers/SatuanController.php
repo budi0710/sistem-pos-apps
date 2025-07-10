@@ -39,4 +39,16 @@ class SatuanController extends Controller
 
         return ($satuan);
     }
+
+    public function generateId_Satuan(){
+       $result  = Satuan::select('fk_sat')
+                        ->orderBy('fk_sat','desc')
+                        ->first();
+
+       if ($result==null){
+        return '01';
+       }else{
+        return $result;
+       }
+    }
 }
