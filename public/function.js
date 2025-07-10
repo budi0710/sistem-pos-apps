@@ -112,6 +112,14 @@ function generateNewId_Jenis(lastId) {
     return String(newNumber).padStart(2, '0');
 }
 
+function generateNewId_JenisBRJ(lastId) {
+    if (!lastId) return '01';
+    // /const prefix = lastId.match(0)[0]; / / Extract letters
+    const number = parseInt(lastId); // Extract number
+    const newNumber = number + 1;
+    return String(newNumber).padStart(2, '0');
+}
+
 function generateNewId_Supplier(lastId) {
     if (!lastId) return '001';
     // /const prefix = lastId.match(0)[0]; / / Extract letters

@@ -139,6 +139,7 @@ Route::post('/save-jenis-brj',[JenisBrjController::class, 'save']);
 Route::post('/delete-jenis-brj',[JenisBrjController::class, 'delete']);
 Route::post('/update-jenis-brj',[JenisBrjController::class, 'update']);
 Route::post('/search-jenis-brj',[JenisBrjController::class, 'search']);
+Route::post('/generate-id-jenis-brj',[JenisBrjController::class, 'generateId_JenisBRJ']);
 
 Route::get('/supplier', function () {
     return view('supplier.index');

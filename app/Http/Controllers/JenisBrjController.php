@@ -18,7 +18,7 @@ class JenisBrjController extends Controller
         $jenisbrj = new JenisBRJ();
 
         $jenisbrj->fn_jns_brj = $request->jenis;
-        $jenisbrj->fk_jns_brj = $request->fk_jenis;
+        $jenisbrj->fk_jns_brj = $request->fk_jns_brj;
         return $jenisbrj->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 
@@ -36,5 +36,17 @@ class JenisBrjController extends Controller
      public function search(Request $request){
         $jenisbrg = JenisBRJ::where('fn_jns_brj','like','%'.$request->search.'%')->get();
         return ($jenisbrg);
+    }
+
+    public function generateId_JenisBRJ(){
+       $result  = JenisBRJ::select('fk_jns_brj')
+                        ->orderBy('fk_jns_brj','desc')
+                        ->first();
+
+       if ($result==null){
+        return '01';
+       }else{
+        return $result;
+       }
     }
 }

@@ -18,7 +18,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Kode Jenis:</label>
-                    <input type="text" ref="fk_jenis" v-model="fk_jenis" placeholder="kode Jenis" class="form-control" id="recipient-name">
+                    <input type="text" ref="fk_jns_brj" disabled v-model="fk_jns_brj" placeholder="kode Jenis" class="form-control" id="recipient-name">
                 </div>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Nama Jenis BRJ:</label>
@@ -44,7 +44,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Kode jenis:</label>
-                        <input type="text" ref="fk_jenis_edit" v-model="fk_jenis_edit" disabled placeholder="kode Jenis" class="form-control">
+                        <input type="text" ref="fk_jns_brj_edit" v-model="fk_jns_brj_edit" disabled placeholder="kode Jenis" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
@@ -101,8 +101,9 @@ const $app =   new Vue({
         el : "#app",
         data: {
                 jeniss : null,
-                fk_jenis : null,
+                fk_jns_brj : null,
                 fk_jenis_edit : null,
+                fk_jns_brj_edit : null,
                 alert: false,
                 jenis_edit : null,
                 links :null,
@@ -112,6 +113,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            generateId() {
+                const $this = this;
+                axios.post("/generate-id-jenis-brj", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.jenis.focus();
+                            const fk_jns_brj = (response.data.fk_jns_brj);
+                            if (fk_jns_brj==null){
+                                return $this.fk_jns_brj = generateNewId_Jenis();
+                            }else{
+                                $this.fk_jns_brj = generateNewId_Jenis(fk_jns_brj);
+                                if ($this.fk_jns_brj==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+             },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -151,7 +176,7 @@ const $app =   new Vue({
             editModalNow: function(data) {
                     modal_edit.show();
                     $app.id_edit = data.id;
-                    $app.fk_jenis_edit = data.fk_jns_brj;
+                    $app.fk_jns_brj_edit = data.fk_jns_brj;
                     $app.jenis_edit = data.fn_jns_brj;
                     //alert(data.id)
                 },
@@ -205,20 +230,21 @@ const $app =   new Vue({
                      axios.post("/save-jenis-brj", {
                                         _token: _TOKEN_,
                                         jenis: this.jenis,
-                                        fk_jenis: this.fk_jenis
+                                        fk_jns_brj: this.fk_jns_brj
                                     })
                                     .then(function(response) {
                                         if (response.data.result) {
                                             $this.loadData();
                                             $this.alert = false;
                                             $this.jenis = null;
-                                            $this.fk_jenis = null;
+                                            $this.fk_jns_brj = null;
                                             alert("Tambah data sukses");
                                         }
                                     })
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                    this.generateId();
                 },
                 deleteData: function(id, Jenis) {
                     if (id) {
@@ -262,7 +288,7 @@ const $app =   new Vue({
         },
         mounted(){
           this.loadData()
-          //init object modal edit
+          this.generateId();
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });

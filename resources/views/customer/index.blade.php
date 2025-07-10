@@ -25,25 +25,25 @@
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Nama Customer">
+                        <input type="text" class="form-control" ref="nama_cus" v-model="nama_cus"  id="nama_cus" placeholder="Nama Customer" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No Telp</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="notelp_cus" v-model="notelp_cus"  id="notelp_cus" placeholder="No Telp">
+                        <input type="text" class="form-control" ref="notelp_cus" v-model="notelp_cus"  id="notelp_cus" placeholder="No Telp" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Alamat</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" ref="alamat_cus" v-model="alamat_cus"  id="alamat_cus"  id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" ref="alamat_cus" v-model="alamat_cus"  id="alamat_cus"  id="exampleFormControlTextarea1" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="email_cus" v-model="email_cus"  id="email_cus" placeholder="Email">
+                        <input type="email" class="form-control" ref="email_cus" v-model="email_cus"  id="email_cus" placeholder="Email" aria-describedby="emailHelp" required>
                     </div>
                 </div>
                 <div class="row mb-3">
