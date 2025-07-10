@@ -7,8 +7,6 @@
         <div class="card-body">
             <center>
                 <img :src="foto_company" class="rounded float-start" height="100" width="100" alt="...">
-
-
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupFile01">Upload</label>
                     <input @change="changeFoto($event)" type="file" id="logo_company" name="logo_company"

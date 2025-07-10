@@ -43,4 +43,16 @@ class CustomerController extends Controller
         $customer = Customer::where('nama_cus','like','%'.$request->search.'%')->get();
         return ($customer);
     }
+
+    public function generateId_Customer(){
+       $result  = Customer::select('kode_cus')
+                        ->orderBy('kode_cus','desc')
+                        ->first();
+
+       if ($result==null){
+        return '001';
+       }else{
+        return $result;
+       }
+    }
 }

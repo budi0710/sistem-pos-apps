@@ -19,7 +19,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Kode Satuan:</label>
-                    <input type="text" ref="fk_sat" v-model="fk_sat" placeholder="kode satuan" class="form-control" id="recipient-name">
+                    <input type="text" ref="fk_sat" v-model="fk_sat" disabled placeholder="kode satuan" class="form-control" id="recipient-name">
                 </div>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Nama Satuan:</label>
@@ -113,6 +113,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            generateId() {
+                const $this = this;
+                axios.post("/generate-id-satuan", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.satuan.focus();
+                            const fk_sat = (response.data.fk_sat);
+                            if (fk_sat==null){
+                                return $this.fk_sat = generateNewId_Satuan();
+                            }else{
+                                $this.fk_sat = generateNewId_Satuan(fk_sat);
+                                if ($this.fk_sat==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+             },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -220,6 +244,7 @@ const $app =   new Vue({
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                    this.generateId();
                 },
                 deleteData: function(id, satuan) {
                     if (id) {
@@ -262,7 +287,8 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData()
+          this.loadData();
+          this.generateId();
           //init object modal edit
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }

@@ -32,4 +32,11 @@ class SettingController extends Controller
         
         return $setting->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
+
+
+    public function getData(){
+        $data = Setting::find(1)->get();
+
+        return $data[0];
+    }
 }

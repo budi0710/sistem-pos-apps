@@ -37,4 +37,17 @@ class JenisController extends Controller
         $Jenis = Jenis::where('fn_jenis','like','%'.$request->search.'%')->get();
         return ($Jenis);
     }
+
+    
+    public function generateId_Jenis(){
+       $result  = Jenis::select('fk_jenis')
+                        ->orderBy('fk_jenis','desc')
+                        ->first();
+
+       if ($result==null){
+        return '01';
+       }else{
+        return $result;
+       }
+    }
 }

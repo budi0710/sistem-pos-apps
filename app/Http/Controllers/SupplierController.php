@@ -43,4 +43,16 @@ public function load(){
         $supplier = Supplier::where('nama_sup','like','%'.$request->search.'%')->get();
         return ($supplier);
     }
+
+    public function generateId_Supplier(){
+       $result  = Supplier::select('kode_sup')
+                        ->orderBy('kode_sup','desc')
+                        ->first();
+
+       if ($result==null){
+        return '001';
+       }else{
+        return $result;
+       }
+    }
 }

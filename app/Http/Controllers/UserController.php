@@ -24,10 +24,17 @@ class UserController extends Controller
         if ($users){
             $data = User::where('email', $email)->where('password',md5($password))->first();
              
+
             $role = $data['role'];
             $id = $data->id;
             session(['user_role' => $role]);
             session(['user_id' => $id]);
+
+             $role = $data['role'];
+             
+             session(['user_id' => $data->id]);
+             session(['user_role'=> $role]);
+
             return response()->json(['result'=>true,'message'=>"Email or password is true"]);
         }else{
             return response()->json(['result'=>false,'message'=>"Email or password is incorrect"]);

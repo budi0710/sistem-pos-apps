@@ -17,15 +17,15 @@
             </div>
             <div class="modal-body">
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Kode Customer</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Kode Supplier</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="kode_sup" v-model="kode_sup"  id="kode_sup" placeholder="kode Customer">
+                        <input type="text" class="form-control" disabled ref="kode_sup" v-model="kode_sup"  id="kode_sup" placeholder="kode Supplier">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="nama_sup" v-model="nama_sup"  id="nama_sup" placeholder="Nama Customer">
+                        <input type="text" class="form-control" ref="nama_sup" v-model="nama_sup"  id="nama_sup" placeholder="Nama Supplier">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -93,6 +93,12 @@
                         <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
                         <input type="text" ref="nama_sup_edit" v-model="nama_sup_edit" placeholder="Nama Supplier" class="form-control" >
                     </div>
+                <div class="row mb-3">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">N.P.W.P</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" ref="npwp_edit" v-model="npwp_edit"  id="npwp_edit" placeholder="N.P.W.P">
+                    </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -165,6 +171,7 @@ const $app =   new Vue({
                 email_sup_edit : null,
                 PPN_sup_edit : null,
                 NPWP_sup_edit : null,
+                npwp_edit : null,
                 PPH23_sup_edit : null,
                 CP_sup_edit : null,
                 alert: false,
@@ -175,6 +182,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            generateId() {
+                const $this = this;
+                axios.post("/generate-id-supplier", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.nama_sup.focus();
+                            const kode_sup = (response.data.kode_sup);
+                            if (kode_sup==null){
+                                return $this.kode_sup = generateNewId_Supplier();
+                            }else{
+                                $this.kode_sup = generateNewId_Supplier(kode_sup);
+                                if ($this.kode_sup==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+             },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -294,6 +325,7 @@ const $app =   new Vue({
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                    this.generateId();
                 },
                 deleteData: function(id, Jenis) {
                     if (id) {
@@ -337,10 +369,20 @@ const $app =   new Vue({
         },
         mounted(){
           this.loadData()
+          this.generateId();
           //init object modal edit
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });
+
+        const NPWP_INPUT = document.getElementById("NPWP_sup")
+            NPWP_INPUT.oninput = (e) => {
+                e.target.value = autoFormatNPWP(e.target.value);
+            };
+        const NPWP_EDIT = document.getElementById("npwp_edit")
+            NPWP_EDIT.oninput = (e) => {
+                e.target.value = autoFormatNPWP(e.target.value);
+            };
     </script>
                     
 @endsection
