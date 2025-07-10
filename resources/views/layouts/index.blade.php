@@ -149,11 +149,7 @@
                         <a class="collapse-item" href="/karyawan">Data Karyawan</a>
                         <a class="collapse-item" href="/unitkerja">Data Unit Kerja</a>
                         <a class="collapse-item" href="/jabatan">Data Jabatan</a>
-<<<<<<< HEAD
                         <a class="collapse-item" href="/absensi">Absensi</a>
-=======
-                        <a class="collapse-item" href="./absensi">Absensi</a>
->>>>>>> 02072025
                         <a class="collapse-item" href="utilities-other.html">Cuti Karyawan</a>
                         <a class="collapse-item" href="utilities-other.html">Izin Keluar</a>
                         <a class="collapse-item" href="utilities-other.html">Izin PC</a>
