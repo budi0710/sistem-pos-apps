@@ -18,7 +18,7 @@ class JenisBrjController extends Controller
         $jenisbrj = new JenisBRJ();
 
         $jenisbrj->fn_jns_brj = $request->jenis;
-        $jenisbrj->fk_jns_brj = $request->fk_jenis;
+        $jenisbrj->fk_jns_brj = $request->fk_jns_brj;
         return $jenisbrj->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 

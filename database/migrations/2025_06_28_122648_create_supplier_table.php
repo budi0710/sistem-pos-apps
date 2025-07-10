@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('alamat_sup', 100);
             $table->string('email_sup', 50);
             $table->string('PPN_sup', 1)->default(0);
-            $table->string('NPWP_sup', 20);
+            $table->string('NPWP_sup', 30);
             $table->string('PPH23_sup', 1)->default(0);
             $table->string('CP_sup', 50);
             $table->timestamps();

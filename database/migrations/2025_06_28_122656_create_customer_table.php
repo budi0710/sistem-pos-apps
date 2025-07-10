@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('alamat_cus', 100);
             $table->string('email_cus', 50);
             $table->string('PPN_cus', 1)->default(0);
-            $table->string('NPWP_cus', 20);
+            $table->string('NPWP_cus', 30);
             $table->string('PPH23_cus', 1)->default(0);
             $table->string('CP_cus', 50);
             $table->timestamps();

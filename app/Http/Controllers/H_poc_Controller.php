@@ -112,7 +112,7 @@ class H_poc_Controller extends Controller
        if ($result==null){
           return date('Ym').'0001';
        }else{
-          $angka =substr($result->fno_spo, -4);
+          $angka =substr($result->fnos_poc, -4);
           return date('Ym').$this->generateFormattedNumber($angka);
        }
     }

@@ -466,9 +466,26 @@ const $app =   new Vue({
                         var obj = JSON.parse($response)
                        // console.log(x.responseText); // Debug response
                         if (obj.result) {
+                            $this.kode_bg = null;
+                            $this.partname = null;
+                            $this.partno = null;
+                            $this.fpartno = null;
+                            $this.descripsi = null;
+                            $this.fk_sat = null;
+                            $this.fk_jenis = null;
+                            $this.harga = null;
+                            $this.fberat_netto = null;
+                            $this.fgambar = null;
+                            $this.saldo_awal = null;
+                            $this.result_jenis = null;
+                            $this.result_satuan = null;
+                            $this.description = null;
+                            $this.foto_barang = './no-image.png';
+                            $this.file_barang = null;
                             alert("Selamat Data berhasil ditambahkan")
                             $this.loadData()
                         }
+
                     });
  
                 },

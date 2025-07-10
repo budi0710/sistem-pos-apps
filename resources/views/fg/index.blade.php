@@ -417,6 +417,16 @@ const $app =   new Vue({
                         $this.loading = false;
                         var obj = JSON.parse($response)
                         if (obj.result) {
+                            $this.fk_brj = null,
+                            $this.fn_brj = null,
+                            $this.result_jenis = null,
+                            $this.fpartno = null,
+                            $this.fbrt_neto = null,
+                            $this.fbrt_bruto = null,
+                            $this.fdimensi = null,
+                            $this.fgambar = null,
+                            $this.foto_barang = './no-image.png',
+                            $this.file_barang = null,
                             alert("Data berhasil ditambahkan")
                             $this.loadData()
                         }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('t_pos', function (Blueprint $table) {
             $table->id();
             $table->char('fno_pos', 9);
-            $table->char('fno_spo', 7)->unique();
+            $table->char('fno_spo', 10)->unique();
             $table->char('kode_bg', 5);
             $table->decimal('fq_pos')->default(0);
             $table->decimal('fharga')->default(0);

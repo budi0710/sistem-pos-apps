@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('h_krm', function (Blueprint $table) {
             $table->id();
-            $table->char('fno_krm', 7)->unique();
+            $table->char('fno_krm', 9)->unique();
             $table->date('ftgl_krm');
             $table->char('kode_cus', 3);
             $table->string('fno_poc', 50);
