@@ -37,23 +37,27 @@ class AbsenController extends Controller
     }
 
     public function uploadAbsenPulang(Request $request){
-       $file = $request->file('imageAbsenPulang');
+        $file = $request->file('imageAbsenPulang');
         $path = $file->store('absen', 'public');
 
         $absen = new Absens();
         $now = new DateTime();
 
-        $absen->id_user   = $request->session()->get('user_id');
-        $absen->date     = $now;
-        $absen->time_in  = '';
+        $absen->id_user = $request->session()->get('user_id');
+        $absen->date = date('Y-m-d');
+        $absen->time_in = '00:00:00';
         $absen->time_out = date('H:i:s');
-        $absen->image    = $path;
+        $absen->image = $path;
 
-        $exist = Absens::whereDate('date', $now)->exists();
-        if ($exist){
-            return response()->json(['result'=>false]);
-        }else{
-            return $absen->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
+        $exist = Absens::where('date', date('Y-m-d'))
+            ->where('time_out', '<>', '00:00:00')
+            ->where('time_in', '=', '00:00:00')
+            ->count();
+        if ($exist) {
+            return response()->json(['result' => false]);
+         } else {
+            return $absen->save() ? response()->json(['result' => true]) : response()->json(['result' => false]);
+       
         }
     }
 }
