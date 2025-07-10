@@ -74,6 +74,14 @@ Route::get('/galery', function () {
     return view('galery');
 });
 
+Route::get('/unitkerja', function () {
+    return view('hris/unitkerja');
+});
+
+Route::get('/jabatan', function () {
+    return view('hris/jabatan');
+});
+
 Route::get('/wip', function () {
     return view('bdp.index');
 });
@@ -115,6 +123,7 @@ Route::post('/save-satuan',[SatuanController::class, 'save']);
 Route::post('/delete-satuan',[SatuanController::class, 'delete']);
 Route::post('/update-satuan',[SatuanController::class, 'update']);
 Route::post('/search-satuan',[SatuanController::class, 'search']);
+Route::post('/generate-id-satuan',[SatuanController::class, 'generateId_Satuan']);
 
 Route::get('/jenis', function () {
     return view('jenis.index');
@@ -126,6 +135,7 @@ Route::post('/save-jenis',[JenisController::class, 'save']);
 Route::post('/delete-jenis',[JenisController::class, 'delete']);
 Route::post('/update-jenis',[JenisController::class, 'update']);
 Route::post('/search-jenis',[JenisController::class, 'search']);
+Route::post('/generate-id-jenis',[JenisController::class, 'generateId_Jenis']);
 
 Route::get('/jenis-brj', function () {
     return view('jenis-brj.index');
@@ -137,6 +147,7 @@ Route::post('/save-jenis-brj',[JenisBrjController::class, 'save']);
 Route::post('/delete-jenis-brj',[JenisBrjController::class, 'delete']);
 Route::post('/update-jenis-brj',[JenisBrjController::class, 'update']);
 Route::post('/search-jenis-brj',[JenisBrjController::class, 'search']);
+Route::post('/generate-id-jenis-brj',[JenisBrjController::class, 'generateId_JenisBRJ']);
 
 Route::get('/supplier', function () {
     return view('supplier.index');
@@ -148,6 +159,7 @@ Route::post('/save-sup',[SupplierController::class, 'save']);
 Route::post('/delete-sup',[SupplierController::class, 'delete']);
 Route::post('/update-sup',[SupplierController::class, 'update']);
 Route::post('/search-sup',[SupplierController::class, 'search']);
+Route::post('/generate-id-supplier',[SupplierController::class, 'generateId_Supplier']);
 
 Route::get('/customer', function () {
     return view('customer.index');
@@ -159,6 +171,7 @@ Route::post('/save-cus',[CustomerController::class, 'save']);
 Route::post('/delete-cus',[CustomerController::class, 'delete']);
 Route::post('/update-cus',[CustomerController::class, 'update']);
 Route::post('/search-cus',[CustomerController::class, 'search']);
+Route::post('/generate-id-customer',[CustomerController::class, 'generateId_Customer']);
 
 Route::get('/brk', function () {
     return view('brk.index');
@@ -260,9 +273,6 @@ Route::get('/add-posupplier',function(){
 
 //HRIS
 
-Route::get('/unitkerja', function () {
-    return view('hris/unitkerja');
-});
 
 Route::post('/load-unitkerja',[UnitkerjaContoller::class, 'load']);
 Route::post('/load-data-unitkerja',[UnitkerjaContoller::class, 'loadData']);
@@ -270,10 +280,7 @@ Route::post('/save-unitkerja',[UnitkerjaContoller::class, 'save']);
 Route::post('/delete-unitkerja',[UnitkerjaContoller::class, 'delete']);
 Route::post('/update-unitkerja',[UnitkerjaContoller::class, 'update']);
 Route::post('/search-unitkerja',[UnitkerjaContoller::class, 'search']);
-
-Route::get('/jabatan', function () {
-    return view('hris/jabatan');
-});
+Route::post('/generate-id-unitkerja',[UnitkerjaContoller::class, 'generateId_Unitkerja']);
 
 Route::post('/load-jabatan',[JabatanController::class, 'load']);
 Route::post('/load-data-jabatan',[JabatanController::class, 'loadData']);
@@ -281,6 +288,7 @@ Route::post('/save-jabatan',[JabatanController::class, 'save']);
 Route::post('/delete-jabatan',[JabatanController::class, 'delete']);
 Route::post('/update-jabatan',[JabatanController::class, 'update']);
 Route::post('/search-jabatan',[JabatanController::class, 'search']);
+Route::post('/generate-id-jabatan',[JabatanController::class, 'generateId_Jabatan']);
 
 Route::get('/karyawan', function () {
     return view('hris/karyawan');
