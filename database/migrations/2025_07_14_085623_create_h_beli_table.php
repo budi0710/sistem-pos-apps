@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('h_beli', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_beli', 9)->unique();
+            $table->char('kode_sup', 3);
+            $table->date('ftgl_beli');
+            $table->string('surat_jalan', 100);
+            $table->string('description', 100);
+            $table->string('userid', 100);
             $table->timestamps();
         });
     }

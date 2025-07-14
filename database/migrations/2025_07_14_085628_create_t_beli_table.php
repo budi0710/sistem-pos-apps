@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('t_beli', function (Blueprint $table) {
             $table->id();
+            $table->char('fno_beli', 9);
+            $table->char('fno_spo', 10);
+            $table->decimal('fq_beli')->default(0);
             $table->timestamps();
         });
     }
