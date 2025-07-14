@@ -158,6 +158,14 @@ function generateNewId_Customer(lastId) {
     return String(newNumber).padStart(3, '0');
 }
 
+function generateNewId_RBS(lastId) {
+    if (!lastId) return '001';
+    // /const prefix = lastId.match(0)[0]; / / Extract letters
+    const number = parseInt(lastId); // Extract number
+    const newNumber = number + 1;
+    return String(newNumber).padStart(3, '00');
+}
+
 function autoFormatNPWP(NPWPString) {
     try {
         var cleaned = ("" + NPWPString).replace(/\D/g, "");

@@ -73,7 +73,7 @@
                 <div id="collapseUtilities_supp" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Relasi Barang Supplier</a>
+                        <a class="collapse-item" href="/rls-supplier">Relasi Barang Supplier</a>
                         <a class="collapse-item" href="/po_supplier">PO Supplier</a>
                         <a class="collapse-item" href="/beli-supplier">Receive</a>
                         <a class="collapse-item" href="utilities-other.html">Retur Supplier</a>

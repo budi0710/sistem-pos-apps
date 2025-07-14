@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class L_Beli extends Model
+class RlsSupplier extends Model
 {
-    protected $table = 'l_beli';
+    protected $table = 'rls_brg_sup';
     public $timestamps = true;
 }

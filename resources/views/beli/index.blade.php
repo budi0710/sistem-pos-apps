@@ -65,12 +65,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in h_posupplier" class="align-middle">
+                        <tr v-for="data in h_belisupplier" class="align-middle">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.fno_pos }}</td>
-                            <td>@{{ data.ftgl_pos }}</td>
-                            <td>@{{ data.nama_sup }}</td>
-                            <td>@{{ data.PPN }}</td>
+                            <td>@{{ data.fno_beli }}</td>
+                            <td>@{{ data.ftgl_beli }}</td>
+                            <td>@{{ data.kode_sup }}</td>
+                            <td>@{{ data.surat_jalan }}</td>
                             <td>@{{ data.description }}</td>
                             <td>
                                 <button @click="printPage(data.fno_pos)" class="btn btn-primary btn-sm">Print</button>
@@ -108,7 +108,7 @@ const $app =   new Vue({
                 search : null,
                 jenis : null,
                 loading :false,
-                h_posupplier : null,
+                h_belisupplier : null,
                 detail_posupplier : null,
                 id_edit : null
         },
@@ -134,20 +134,20 @@ const $app =   new Vue({
                         });
                     },
             openPage: function() {
-                    window.location.href = './add-posupplier';
+                    window.location.href = './add-beli';
                 },
             printPage : function(fno_pos){
-                    window.location.href = './print-posupplier/'+fno_poc;
+                    window.location.href = './print-beli/'+fno_poc;
                 },
             loadData : function(){
               const $this = this;
-                    axios.post("/load-hpo-supplier", {
+                    axios.post("/load-hbeli-supplier", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.h_posupplier = response.data.data;
+                                $this.h_belisupplier = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })

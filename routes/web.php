@@ -9,7 +9,9 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\H_poc_Controller;
+use App\Http\Controllers\RlsSupplierController;
 use App\Http\Controllers\H_posController;
+use App\Http\Controllers\H_BeliController;
 use App\Http\Controllers\H_stbjController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\JenisBrjController;
@@ -180,7 +182,11 @@ Route::middleware([UserMiddleware::class])->group(function () {
     });
 
     Route::get('/po_supplier', function () {
-    return view('po_supplier.index');
+        return view('po_supplier.index');
+    });
+
+    Route::get('/rls-supplier', function () {
+        return view('po_supplier/rls-brg-sup');
     });
 
     
@@ -190,6 +196,10 @@ Route::middleware([UserMiddleware::class])->group(function () {
 
     Route::get('/beli-supplier', function () {
         return view('beli.index');
+    });
+
+    Route::get('/add-beli',function(){
+        return view('beli/add-beli');
     });
     
     Route::get('/add-pocustomer',function(){
@@ -302,12 +312,26 @@ Route::post('/generate-kode-spk',[H_stbjController::class,'generateKodeSpK']);
 Route::post('/load-h-stbj',[H_stbjController::class, 'load']);
 Route::post('/load-detail-stbj',[H_stbjController::class, 'loadWhere']);
 
-Route::post('/delete-poc-customer',[H_posController::class, 'delete']);
+Route::post('/load-rls-sup',[RlsSupplierController::class, 'load']);
+Route::post('/load-data-rls-sup',[RlsSupplierController::class, 'loadData']);
+Route::post('/save-rls-sup',[RlsSupplierController::class, 'save']);
+Route::post('/delete-rls-sup',[RlsSupplierController::class, 'delete']);
+Route::post('/update-rls-sup',[RlsSupplierController::class, 'update']);
+Route::post('/search-rls-sup',[RlsSupplierController::class, 'search']);
+Route::post('/generate-id-rls-sup',[RlsSupplierController::class, 'generateId_RBS']);
+
+Route::post('/delete-hpos-supplier',[H_posController::class, 'delete']);
 Route::post('/generate-id-hpos',[H_posController::class,'generateNo']);
 Route::post('/proses-posupplier',[H_posController::class,'saveData']);
 Route::post('/generate-kode-spk',[H_posController::class,'generateKodeSpK']);
 Route::post('/load-detail-posupplier',[H_posController::class, 'loadWhere']);
 Route::post('/load-hpo-supplier',[H_posController::class, 'load']);
+
+Route::post('/delete-hbeli-supplier',[H_BeliController::class, 'delete']);
+Route::post('/generate-id-hbeli',[H_BeliController::class,'generateNo']);
+Route::post('/proses-belisupplier',[H_BeliController::class,'saveData']);
+Route::post('/load-detail-belisupplier',[H_BeliController::class, 'loadWhere']);
+Route::post('/load-hbeli-supplier',[H_BeliController::class, 'load']);
 
 //HRIS
 Route::post('/load-unitkerja',[UnitkerjaContoller::class, 'load']);

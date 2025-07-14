@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\H_pos;
 use App\Models\L_hpos;
 use App\Models\T_pos;
 use App\Models\L_PSupplier;
 use Illuminate\Support\Facades\DB;
+
 class H_posController extends Controller
 {
 /**
