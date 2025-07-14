@@ -14,28 +14,48 @@
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Data Relasi</h5> 
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
             </div>
             <div class="modal-body">
-                {{-- <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Supplier:</label>
-                    <input type="text" ref="fno_rbs" v-model="fno_rbs" disabled placeholder="No RBS" class="form-control" id="recipient-name">
-                </div>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">No RBS:</label>
-                    <input type="text" ref="fno_rbs" v-model="fno_rbs" disabled placeholder="No RBS" class="form-control" id="recipient-name">
-                </div>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Nama Barang Supplier:</label>
-                    <input type="text" ref="fn_brg_sup" v-model="fn_brg_sup" placeholder="fn_brg_sup" class="form-control" id="recipient-name">
-                </div> --}}
                 <div class="row mb-2">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" v-model="result_customer" aria-label=".form-select-lg example">
-                        <option selected>Pilih Nama Customer</option>
-                        <option v-for="data in customers" :value="data.kode_cus">@{{data.nama_cus}}</option>
+                    <select class="form-select form-select-lg mb-3" v-model="result_supplier" aria-label=".form-select-lg example">
+                        <option selected>Pilih Nama Supplier</option>
+                        <option v-for="data in suppliers" :value="data.kode_sup">@{{data.nama_sup}}</option>
                     </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Barang Gudang</label>
+                    <div class="col-sm-9">
+                    <select class="form-select form-select-lg mb-3" v-model="result_barangs" aria-label=".form-select-lg example">
+                        <option selected>Pilih Nama Supplier</option>
+                        <option v-for="data in barangs" :value="data.kode_bg">@{{data.partname}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Barang Supplier</label>
+                    <div class="col-sm-9">
+                         <input type="text" ref="fn_brg_sup" v-model="fn_brg_sup" placeholder="Nama Barang Supplier" class="form-control" id="fn_brg_sup">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">No RBS</label>
+                    <div class="col-sm-9">
+                          <input type="text" ref="fno_rbs" v-model="fno_rbs" disabled placeholder="No RBS" class="form-control" id="recipient-name">    
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Harga Beli</label>
+                    <div class="col-sm-9">
+                         <input type="text" ref="fharga_beli" v-model="fharga_beli" placeholder="Harga Beli" class="form-control" id="fharga_beli">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Satuan Beli</label>
+                    <div class="col-sm-9">
+                         <input type="text" ref="fsatuan_beli" v-model="fsatuan_beli" placeholder="Satuan Beli" class="form-control" id="fsatuan_beli">
                     </div>
                 </div>
             </div>
@@ -49,21 +69,55 @@
     <!-- Open the modal edit using ID.showModal() method -->
         <!-- Modal -->
         <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Data Satuan</h5> 
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Kode Satuan:</label>
-                        <input type="text" ref="fk_sat_edit" v-model="fk_sat_edit" disabled placeholder="kode satuan" class="form-control">
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
+                    <div class="col-sm-9">
+                    <select class="form-select form-select-lg mb-3" v-model="result_supplier_edit" aria-label=".form-select-lg example">
+                        <option selected>Pilih Nama Supplier</option>
+                        <option v-for="data in suppliers" :value="data.kode_sup">@{{data.nama_sup}}</option>
+                    </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nama Satuan:</label>
-                        <input type="text" ref="satuan_edit" v-model="satuan_edit" placeholder="Satuan Edit" class="form-control" >
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Barang Gudang</label>
+                    <div class="col-sm-9">
+                    <select class="form-select form-select-lg mb-3" v-model="result_barangs_edit" aria-label=".form-select-lg example">
+                        <option selected>Pilih Nama Supplier</option>
+                        <option v-for="data in barangs" :value="data.kode_bg">@{{data.partname}}</option>
+                    </select>
                     </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Barang Supplier</label>
+                    <div class="col-sm-9">
+                         <input type="text" ref="fn_brg_sup_edit" v-model="fn_brg_sup_edit" placeholder="Nama Barang Supplier" class="form-control" id="fn_brg_sup_edit">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">No RBS</label>
+                    <div class="col-sm-9">
+                          <input type="text" ref="fno_rbs_edit" v-model="fno_rbs_edit" disabled placeholder="No RBS" class="form-control" id="recipient-name">    
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Harga Beli</label>
+                    <div class="col-sm-9">
+                         <input type="text" ref="fharga_beli_edit" v-model="fharga_beli_edit" placeholder="Harga Beli" class="form-control" id="fharga_beli_edit">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Satuan Beli</label>
+                    <div class="col-sm-9">
+                         <input type="text" ref="fsatuan_beli_edit" v-model="fsatuan_beli_edit" placeholder="Satuan Beli" class="form-control" id="fsatuan_beli_edit">
+                    </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -97,7 +151,7 @@
                             <td>@{{ data.fharga_beli }}</td>
                             <td>
                                 <button @click="editModalNow(data)" class="btn btn-primary btn-sm">Edit</button>
-                                <button @click="deleteData(data.id,data.fn_satuan)" class="btn btn-danger btn-sm">x</button>
+                                <button @click="deleteData(data.id,data.fn_brg_sup)" class="btn btn-danger btn-sm">x</button>
                             </td>
                         </tr>
                     </tbody>
@@ -121,8 +175,19 @@ const $app =   new Vue({
         el : "#app",
         data: {
                 rls_brg_sups : null,
-                fk_sat : null,
+                suppliers : null,
+                barangs : null,
+                result_supplier : null,
+                result_barangs : null,
+                fharga_beli : null,
+                fsatuan_beli : null,
                 fk_sat_edit : null,
+                fn_brg_sup_edit : null,
+                fharga_beli_edit : null,
+                fsatuan_beli_edit : null,
+                result_barangs_edit : null,
+                result_supplier_edit : null,
+                fno_rbs_edit : null,
                 alert: false,
                 satuan_edit : null,
                 links :null,
@@ -192,12 +257,44 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-          },
+                },
+            loadSupplier: function(){
+                    const $this = this;
+                    axios.post("/load-data-sup", {
+                            _token: _TOKEN_
+                        })
+                        .then(function(response) {
+                            if (response.data) {
+                                $this.suppliers = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
+            loadBarangs: function(){
+                    const $this = this;
+                    axios.post("/load-data-brg", {
+                            _token: _TOKEN_
+                        })
+                        .then(function(response) {
+                            if (response.data) {
+                                $this.barangs = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
             editModalNow: function(data) {
                     modal_edit.show();
                     $app.id_edit = data.id;
-                    $app.fk_sat_edit = data.fk_sat;
-                    $app.satuan_edit = data.fn_satuan;
+                    $app.result_supplier_edit = data.kode_sup;
+                    $app.result_barangs_edit = data.kode_bg;
+                    $app.fno_rbs_edit = data.fno_rbs;
+                    $app.fn_brg_sup_edit = data.fn_brg_sup;
+                    $app.fsatuan_beli_edit = data.fsatuan_beli;
+                    $app.fharga_beli_edit = data.fharga_beli;
                     //alert(data.id)
                 },
             updateData: function(){
@@ -205,7 +302,9 @@ const $app =   new Vue({
                         const $this = this;
                          axios.post("/update-rls-sup", {
                             _token: _TOKEN_,
-                            satuan_edit: this.satuan_edit,
+                            fn_brg_sup_edit: this.fn_brg_sup_edit,
+                            fsatuan_beli_edit: this.fsatuan_beli_edit,
+                            fharga_beli_edit: this.fharga_beli_edit,
                             id : this.id_edit
                         })
                         .then(function(response) {
@@ -242,22 +341,29 @@ const $app =   new Vue({
                         });
                 },
             save: function() {
-                    if (this.satuan == null) {
+                    if (this.fn_brg_sup == null) {
                         this.alert = false;
                         return
                     }
                     const $this = this;
                      axios.post("save-rls-sup", {
                                         _token: _TOKEN_,
-                                        satuan: this.satuan,
-                                        fk_sat: this.fk_sat
+                                        result_supplier: this.result_supplier,
+                                        result_barangs: this.result_barangs,
+                                        fn_brg_sup: this.fn_brg_sup,
+                                        fsatuan_beli: this.fsatuan_beli,
+                                        fharga_beli: this.fharga_beli,
+                                        fno_rbs: this.fno_rbs
                                     })
                                     .then(function(response) {
                                         if (response.data.result) {
                                             $this.loadData();
                                             $this.alert = false;
-                                            $this.satuan = null;
-                                            $this.fk_sat = null;
+                                            $this.result_supplier = null;
+                                            $this.result_barangs = null;
+                                            $this.fn_brg_sup = null;
+                                            $this.fsatuan_beli = null;
+                                            $this.fharga_beli = null;
                                             alert("Tambah data sukses");
                                         }
                                     })
@@ -266,12 +372,12 @@ const $app =   new Vue({
                                     }); 
                     this.generateId();
                 },
-                deleteData: function(id, satuan) {
+                deleteData: function(id, fn_brg_sup) {
                     if (id) {
                         const $this = this;
                         Swal.fire({
                             title: "Are you sure?",
-                            text: "Apakah anda ingin menghapus data ini {" + satuan + "}",
+                            text: "Apakah anda ingin menghapus data ini {" + fn_brg_sup + "}",
                             icon: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#3085d6",
@@ -280,7 +386,7 @@ const $app =   new Vue({
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.loading = true;
-                                axios.post("/delete-satuan", {
+                                axios.post("/delete-rls-sup", {
                                         _token: _TOKEN_,
                                         id: id
                                     })
@@ -307,8 +413,10 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData();
-          this.generateId();
+            this.loadData();
+            this.loadSupplier();
+            this.loadBarangs();
+            this.generateId();
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });

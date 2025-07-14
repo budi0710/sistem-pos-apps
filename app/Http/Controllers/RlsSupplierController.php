@@ -18,14 +18,20 @@ class RlsSupplierController extends Controller
     public function save(Request $request){
         $rls_sup = new RlsSupplier();
 
-        $rls_sup->fn_satuan = $request->satuan;
-        $rls_sup->fk_sat = $request->fk_sat;
+        $rls_sup->fno_rbs = $request->fno_rbs;
+        $rls_sup->kode_sup = $request->result_supplier;
+        $rls_sup->kode_bg = $request->result_barangs;
+        $rls_sup->fn_brg_sup = $request->fn_brg_sup;
+        $rls_sup->fsatuan_beli = $request->fsatuan_beli;
+        $rls_sup->fharga_beli = $request->fharga_beli;
         return $rls_sup->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 
     public function update(Request $request){
         $rls_sup = RlsSupplier::find($request->id);
-        $rls_sup->fn_satuan = $request->satuan_edit;
+        $rls_sup->fn_brg_sup = $request->fn_brg_sup_edit;
+        $rls_sup->fsatuan_beli = $request->fsatuan_beli_edit;
+        $rls_sup->fharga_beli = $request->fharga_beli_edit;
         return $rls_sup->save() ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 

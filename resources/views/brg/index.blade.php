@@ -503,7 +503,7 @@ const $app =   new Vue({
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.loading = true;
-                                axios.post("/delete-brg", {
+                                axios.post("/delete-rls-sup", {
                                         _token: _TOKEN_,
                                         id: id
                                     })
