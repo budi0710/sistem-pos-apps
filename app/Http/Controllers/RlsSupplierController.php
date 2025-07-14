@@ -42,7 +42,7 @@ class RlsSupplierController extends Controller
     }
 
      public function search(Request $request){
-        $rls_sup = RlsSupplier::where('fn_satuan','like','%'.$request->search.'%')->get();
+        $rls_sup = RlsSupplier::where('fn_brg_sup','like','%'.$request->search.'%')->get();
 
         return ($rls_sup);
     }

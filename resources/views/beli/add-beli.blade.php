@@ -7,7 +7,7 @@
             <div class="col-md-7">
             <div class="card text-left">
             <div class="card-body">
-                <div class="row mb-2">
+                <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl PO</label>
                     <div class="col-sm-6">
                         <input type="date" class="form-control" ref="ftgl_pos" v-model="ftgl_pos" >
@@ -19,9 +19,18 @@
                 <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" v-model="result_supplier" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" @change="loadFno_POS(result_supplier)" v-model="result_supplier" aria-label=".form-select-lg example">
                         <option selected disabled>Pilih Nama Supplier</option>
                         <option v-for="data in suppliers" :value="data.kode_sup">@{{data.nama_sup}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">No Po Supplier</label>
+                    <div class="col-sm-9">
+                    <select class="form-select" aria-label="Default select example" @change="DetailPO_Supplier(result_fno_pos)" v-model="result_fno_pos" >
+                        <option selected disabled>No Po Supplier</option>
+                        <option v-for="data in fno_poss" :value="data.fno_pos">@{{data.fno_pos}}</option>
                     </select>
                     </div>
                 </div>
@@ -48,7 +57,7 @@
                 <div class="product-container">
                       <!-- Card Produk --> 
                   <div class="row" >
-                    <div class="col-md-4 mb-4" v-for="(data,i) in barangs" :key="data.id"  >
+                    <div class="col-md-3 mb-3" v-for="(data,i) in detail_po" :key="data.fno_spo"  >
                         <div class="product-card">
                             <div href="#" >
                                 <a href="#">@{{data.kode_bg}} | @{{data.partno}}</a>
@@ -57,7 +66,7 @@
                             <div class="text-primary" >@{{ data.partname }}</div>
                             <div class="text-primary" >
                                 <label for="colFormLabel" >Harga</label>
-                                @{{_moneyFormat(data.harga)}}
+                                @{{_moneyFormat(data.fharga)}}
                                 <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty" style="width: 90px;">
                             </div>
                         </div>
@@ -81,16 +90,13 @@
             <div class="col-md-5 right-panel">
                 <h5>🛒 Detail PO Supplier</h5>
                 {{-- keranjang kanan --}}
-                 <div  v-for="data in data_barangs" :key="data.id"  class="border-bottom pb-2 mb-2">
+                 <div  v-for="data in detail_posupplier" :key="data.fno_spo"  class="border-bottom pb-2 mb-2">
                     <div class="d-flex justify-content-between">
                         <div>
                             <div><strong>@{{ data.kode_bg }} | @{{ data.partname }} | @{{ data.fberat_netto }}</strong></div>
-                            <strong>Rp @{{_moneyFormat(data.harga)}} x Qty : @{{data.fq_pos}}</strong>
+                            <strong>Rp @{{_moneyFormat(data.fharga)}} x Qty : @{{data.fq_pos}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
-                            {{-- <button class="btn btn-sm btn-light">-</button>
-                            <span class="mx-2">1</span>
-                            <button class="btn btn-sm btn-light">+</button> --}}
                             <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span> | <button @click="hapusData(data.kode_bg)"  class="btn btn-primary">Hapus</button>
                         </div>
                     </div>
@@ -112,6 +118,9 @@
             el : "#app",
             data : {
                 suppliers : null,
+                detail_po : null,
+                result_fno_pos : null,
+                fno_poss : null,
                 barangjadi : null,
                 kode_bg : null,
                 partname : null,
@@ -127,6 +136,7 @@
                 no_po_cus : null,
                 search: null,
                 disabled_brj: false,
+                detail_posupplier : null,
                 data_barangs: [],
                 barangs : null,
                 links : null,
@@ -140,7 +150,6 @@
             methods: {
                 hapusData : function(kode_bg){
                    this.data_barangs = this.data_barangs.filter(item => item.kode_bg !== kode_bg);
-
                     this.totalBarang();
                 },
                 prosesPO: function(){
@@ -180,6 +189,11 @@
                         alert("Pilih Supplier dulu")
                         return;
                     }
+
+                    if (this.result_fno_pos==null){
+                        alert("Pilih No PO Supplier dulu")
+                        return;
+                    }
                     const obj = document.getElementById('txtQty'+i).value;
                     
                     if (obj===0 || obj==0 || obj==null){
@@ -197,8 +211,8 @@
                         "partname" : data.partname,
                         "partno": data.partno,
                         "fq_pos": obj,
-                        "harga" : data.harga,
-                        "sub_total" : data.harga * obj
+                        "fharga" : data.fharga,
+                        "sub_total" : data.fharga * obj
                     }]
                     // console.table($data);
                     // console.log($data.length)
@@ -206,7 +220,7 @@
                     if (this.data_barangs.length == 0){
                         this.data_barangs = ($data);
 
-                        this.total_harga = data.harga * obj;
+                        this.total_harga = data.fharga * obj;
                     }else{
                         //alert('data lebih dari 1')
 
@@ -224,7 +238,6 @@
                             }   
                         });
                         this.data_barangs.push(...$data);
-
                        this.totalBarang()
                     }
                 },
@@ -257,7 +270,7 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
+                    },
                 loadSupplier: function(){
                     const $this = this;
                     axios.post("/load-data-sup", {
@@ -271,7 +284,23 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
+                    },
+                loadFno_POS: function(result_supplier){
+                    const $this = this;
+                    axios.post("/load-fno-supplier", {
+                            _token: _TOKEN_,
+                            kode_supplier : result_supplier
+                        })
+                        .then(function(response) {
+                            if (response.data) {
+                                $this.fno_poss = response.data;
+                                //$this.fno_poss = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    },
                 generateId() {
                     const $this = this;
                     axios.post("/generate-id-hbeli", {
@@ -290,45 +319,7 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
-                // addData: function() {
-                //     var $storage;
-                //     if (_getStorage('data')) {
-                //         $storage = JSON.parse(_getStorage('data'))
-                //     }
-                //     var $data = [{
-                //         "kode_bg": this.kode_bg,
-                //         "partname" : this.partname,
-                //         "partno": this.partno,
-                //         "fq_poc": this.fq_poc
-                //     }]
-
-                //     if ($storage == null) {
-                //         $tmp = JSON.stringify($data);
-                //         _saveStorage('data', $tmp);
-                       
-                //     } else {
-                //         var BreakException = {};
-                //         $storage.forEach(element => {
-                //             if (element['kode_bg']===this.kode_bg){
-                //                 alert("Data sudah ada !")
-                //                 throw BreakException;
-                //             }   
-                //         });
-                //         $storage.push(...$data);
-                //         _saveStorage('data', JSON.stringify($storage));
-                //     }
-                //     this.data_barangs = JSON.parse(_getStorage('data'));
-                //     const $barang_total = this.data_barangs;
-
-                //     var grand_total = 0;
-                //     $barang_total.forEach(element => {
-                //         grand_total += element['fq_poc'];
-                //     });
-
-                //     this.grand_total = grand_total
-                //     this.disabled_brj=true;
-                // },
+                    },
                 deleteData: function(kd){
                     var $storage = _getStorage('data');
                     $storage = JSON.parse($storage);
@@ -348,11 +339,11 @@
                         grand_total += element['sub_total'];
                     });
                     this.grand_total = grand_total
-                },
+                    },
                 clearData: function() {
                     localStorage.clear()
                     _refresh()
-                },
+                    },
                 searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -372,15 +363,31 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
+                    },
                 handleQtyInput(selectedIndex) {
-                    this.items.forEach((item, index) => {
-                    if (index !== selectedIndex) {
-                        item.qty = '';
-                    }
-                    });
-                },
-                loadBarangGudang: function(){
+                        this.items.forEach((item, index) => {
+                        if (index !== selectedIndex) {
+                            item.qty = '';
+                        }
+                        });
+                    },
+            DetailPO_Supplier: function(fno_pos) {
+                        const $this = this;
+                        axios.post("/load-detail-posupplier", {
+                            _token: _TOKEN_,
+                            fno_pos : fno_pos
+                        })
+                        .then(function(response) {
+                        
+                            if (response.data) {
+                                $this.detail_po = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    },
+            loadBarangGudang: function(){
                     const $this = this;
                     axios.post("/load-brg", {
                             _token: _TOKEN_
@@ -395,12 +402,14 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                }
+                    }
             },
             mounted() {
-                this.loadBarangGudang();
+                //this.loadBarangGudang();
+                this.DetailPO_Supplier();
                 this.generateId();
                 this.loadSupplier();
+                this.loadFno_POS();
                 localStorage.clear(); 
             },
         })

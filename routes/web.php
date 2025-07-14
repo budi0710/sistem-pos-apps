@@ -326,6 +326,7 @@ Route::post('/proses-posupplier',[H_posController::class,'saveData']);
 Route::post('/generate-kode-spk',[H_posController::class,'generateKodeSpK']);
 Route::post('/load-detail-posupplier',[H_posController::class, 'loadWhere']);
 Route::post('/load-hpo-supplier',[H_posController::class, 'load']);
+Route::post('/load-fno-supplier',[H_posController::class, 'loadWhereFnoPOS']);
 
 Route::post('/delete-hbeli-supplier',[H_BeliController::class, 'delete']);
 Route::post('/generate-id-hbeli',[H_BeliController::class,'generateNo']);

@@ -10,16 +10,23 @@ use Illuminate\Support\Facades\DB;
 
 class H_posController extends Controller
 {
-/**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
     }
+    public function load()
+    {
+        return L_hpos::paginate(10);
+    }
 
     public function loadWhere(Request $request){
         return L_PSupplier::where('fno_pos',$request->fno_pos)->get();
+    }
+
+    public function loadWhereFnoPOS(Request $request){
+        return H_pos::select('fno_pos')->where('kode_sup',$request->kode_supplier)->get();
+        //dd($request->kode_sup);
     }
 
     /**
@@ -60,21 +67,6 @@ class H_posController extends Controller
             $fno_spo = '';
         }
        return response()->json(['result'=>true]) ;
-
-
-        // $data = json_decode($data);
-
-        // foreach ($data as $item) {
-        //     // otomatis dari tabel
-        //     $fno_spo = $this->generateNo();
-        //     $kode_bg = $item->kode_bg;
-        //     $fq_pos  = $item->fq_pos;
-        //     $fharga  = $request->fharga;
-
-
-        //     echo $kode_bg;
-        //     // DB::insert('INSERT INTO t_pos (fno_pos, fno_spo, kode_bg, fq_pos, fharga) VALUES (?, ?, ?, ? , ?)', [$fno_pos, $fno_spo, $kode_bg, $fq_pos, $fharga]);
-        // }
        
     }
 
@@ -106,10 +98,7 @@ class H_posController extends Controller
     /**
      * Display the specified resource.z
      */
-    public function load()
-    {
-        return L_hpos::paginate(10);
-    }
+
 
     private function getLast3($angka){
            // $angka = "202506001"; // Pastikan ini dalam bentuk string
