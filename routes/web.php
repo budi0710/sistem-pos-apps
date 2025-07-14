@@ -60,11 +60,19 @@ Route::middleware([UserMiddleware::class])->group(function () {
     Route::get('/setting',function(){
     $data = Setting::where('id',1)->first();
 
+    Route::get('/absensi', function () {
+        return view('absen');
+    });
+
     return view('setting',$data);
     });
 
     Route::get('/home', function () {
         return view('layouts.home');
+    });
+
+    Route::get('/dasboard', function () {
+        return view('layouts.dasboard');
     });
 
     Route::get('/about', function () {
@@ -117,17 +125,17 @@ Route::middleware([UserMiddleware::class])->group(function () {
         return view('customer.index');
     });
 
-Route::get('/unitkerja', function () {
-    return view('hris/unitkerja');
-});
+    Route::get('/unitkerja', function () {
+        return view('hris/unitkerja');
+    });
 
-Route::get('/jabatan', function () {
-    return view('hris/jabatan');
-});
+    Route::get('/jabatan', function () {
+        return view('hris/jabatan');
+    });
 
-Route::get('/wip', function () {
-    return view('bdp.index');
-});
+    Route::get('/wip', function () {
+        return view('bdp.index');
+    });
 
 
     Route::get('/brk', function () {
@@ -179,6 +187,10 @@ Route::get('/wip', function () {
     Route::get('/add-posupplier',function(){
             return view('po_supplier/add_posupplier');
     });
+
+    Route::get('/beli-supplier', function () {
+        return view('beli.index');
+    });
     
     Route::get('/add-pocustomer',function(){
         return view('po_customer/add_pocustomer');
@@ -200,6 +212,13 @@ Route::get('/wip', function () {
 Route::middleware([SettingMiddleware::class])->group(function () {
     // this is for route that can access by setting middleware
 });
+
+Route::get('/admin-logout',function(Request $request){
+    $request->session()->forget('user_id');
+    $request->session()->forget('user_role');
+    return redirect('/');
+});
+
 
 Route::post('/load-brg',[BarangController::class, 'load']);
 Route::post('/load-data-brg',[BarangController::class, 'loadData']);
@@ -255,12 +274,6 @@ Route::post('/update-cus',[CustomerController::class, 'update']);
 Route::post('/search-cus',[CustomerController::class, 'search']);
 Route::post('/generate-id-customer',[CustomerController::class, 'generateId_Customer']);
 
-Route::get('/admin-logout',function(Request $request){
-    $request->session()->forget('user_id');
-    $request->session()->forget('user_role');
-    return redirect('/');
-});
-
 Route::get('/md5',function(){
     return md5('123456');
 });
@@ -288,10 +301,6 @@ Route::post('/proses-simpan',[H_stbjController::class,'saveData']);
 Route::post('/generate-kode-spk',[H_stbjController::class,'generateKodeSpK']);
 Route::post('/load-h-stbj',[H_stbjController::class, 'load']);
 Route::post('/load-detail-stbj',[H_stbjController::class, 'loadWhere']);
-
-Route::get('/absensi', function () {
-    return view('absen');
-});
 
 Route::post('/delete-poc-customer',[H_posController::class, 'delete']);
 Route::post('/generate-id-hpos',[H_posController::class,'generateNo']);
@@ -325,8 +334,6 @@ Route::post('/save-karyawan',[KaryawanController::class, 'save']);
 Route::post('/delete-karyawan',[KaryawanController::class, 'delete']);
 Route::post('/update-karyawan',[KaryawanController::class, 'update']);
 Route::post('/search-karyawan',[KaryawanController::class, 'search']);
-
-
 
 Route::post('/upload-absen-masuk',[AbsenController::class, 'uploadAbsenMasuk']);
 Route::post('/upload-absen-pulang',[AbsenController::class, 'uploadAbsenPulang']);

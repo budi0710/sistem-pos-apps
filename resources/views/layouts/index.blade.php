@@ -29,7 +29,7 @@
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="./home">
+                <a class="nav-link" href="./dasboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -75,7 +75,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="utilities-color.html">Relasi Barang Supplier</a>
                         <a class="collapse-item" href="/po_supplier">PO Supplier</a>
-                        <a class="collapse-item" href="utilities-animation.html">Receive</a>
+                        <a class="collapse-item" href="/beli-supplier">Receive</a>
                         <a class="collapse-item" href="utilities-other.html">Retur Supplier</a>
                     </div>
                 </div>
