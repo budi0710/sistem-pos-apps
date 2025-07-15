@@ -67,7 +67,8 @@
                             <div class="text-primary" >
                                 <label for="colFormLabel" >Harga</label>
                                 @{{_moneyFormat(data.fharga)}}
-                                <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty" style="width: 90px;">
+                                <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  
+                                placeholder="Isi Qty" style="width: 90px;">
                             </div>
                         </div>
                     </div>

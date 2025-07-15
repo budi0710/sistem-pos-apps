@@ -43,7 +43,8 @@
                             <div class="text-primary" > @{{data.fpartno}}
                             <label for="colFormLabel" >Berat Netto</label>
                                 @{{ data.fbrt_neto }}
-                                <input type="text" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty">
+                                <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)" 
+                                 placeholder="Isi Qty" style="width: 90px;">
                             </div>
                         </div>
                     </div>
@@ -140,6 +141,10 @@
                     });
                 },
                 enterQty: function(data,i){
+                    if (this.ftgl_stbj==null){
+                        alert("Isi tgl dulu")
+                        return
+                    }
                     const obj = document.getElementById('txtQty'+i).value;
                     if (obj===0 || obj==0 || obj==null){
                          Swal.fire({

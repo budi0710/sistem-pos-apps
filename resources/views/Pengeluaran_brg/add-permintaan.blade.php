@@ -56,7 +56,8 @@
                             <img :src="viewImage(data.fgambar_brg)" alt="" width="100" height="100">
                             <div class="text-primary" >@{{ data.partname }}</div>
                             <div class="text-primary" > @{{data.partno}}
-                                <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty">
+                                <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  
+                                placeholder="Isi Qty" style="width: 90px;">
                             </div>
                             <div class="text-primary">
                                 {{-- <input type="text" class="form-control" ref="fq_poc" v-model="fq_poc"  placeholder="Isi Qty"> --}}
