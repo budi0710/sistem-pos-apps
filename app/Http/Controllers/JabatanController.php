@@ -37,4 +37,16 @@ class JabatanController extends Controller
         $jabatan = Jabatan::where('fn_jabatan','like','%'.$request->search.'%')->get();
         return ($jabatan);
     }
+
+    public function generateId_Jabatan(){
+       $result  = Jabatan::select('fk_jabatan')
+                        ->orderBy('fk_jabatan','desc')
+                        ->first();
+
+       if ($result==null){
+        return '01';
+       }else{
+        return $result;
+       }
+    }
 }

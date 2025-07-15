@@ -19,11 +19,11 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Kode Jabatan:</label>
-                    <input type="text" ref="fk_jabatan" v-model="fk_jabatan" placeholder="kode Jabatan" class="form-control" id="recipient-name">
+                    <input type="text" ref="fk_jabatan" disabled v-model="fk_jabatan" placeholder="kode Jabatan" class="form-control" id="recipient-name">
                 </div>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Nama Jabatan:</label>
-                    <input type="text" ref="fn_jabatan" v-model="fn_jabatan" placeholder="fn_jabatan" class="form-control" id="recipient-name">
+                    <input type="text" ref="fn_jabatan" v-model="fn_jabatan" placeholder="Nama Jabatan" class="form-control" id="recipient-name">
                 </div>
             </div>
             <div class="modal-footer">
@@ -113,6 +113,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            generateId() {
+                const $this = this;
+                axios.post("/generate-id-jabatan", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.fn_jabatan.focus();
+                            const fk_jabatan = (response.data.fk_jabatan);
+                            if (fk_jabatan==null){
+                                return $this.fk_jabatan = generateNewId_Jabatan();
+                            }else{
+                                $this.fk_jabatan = generateNewId_Jabatan(fk_jabatan);
+                                if ($this.fk_jabatan==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -133,7 +157,7 @@ const $app =   new Vue({
                             console.log(error);
                         });
                 },
-          loadData : function(){
+            loadData : function(){
               const $this = this;
                     axios.post("/load-jabatan", {
                             _token: _TOKEN_
@@ -148,7 +172,7 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-          },
+                },
             editModalNow: function(data) {
                     modal_edit.show();
                     $app.id_edit = data.id;
@@ -220,6 +244,7 @@ const $app =   new Vue({
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                    this.generateId();  
                 },
                 deleteData: function(id, fn_jabatan) {
                     if (id) {
@@ -262,7 +287,8 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData()
+          this.loadData();
+          this.generateId();
           //init object modal edit
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }

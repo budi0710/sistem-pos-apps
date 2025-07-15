@@ -19,7 +19,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Kode Unit:</label>
-                    <input type="text" ref="fk_unitkerja" v-model="fk_unitkerja" placeholder="kode " class="form-control" id="recipient-name">
+                    <input type="text" ref="fk_unitkerja" disabled v-model="fk_unitkerja" placeholder="kode " class="form-control" id="recipient-name">
                 </div>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Nama Unit Kerja:</label>
@@ -113,6 +113,30 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
+            generateId() {
+                const $this = this;
+                axios.post("/generate-id-unit", {
+                _token: _TOKEN_
+                    })
+                    .then(function(response) {
+                        if (response.data) {
+                             $this.$refs.fn_unitkerja.focus();
+                            const fk_unitkerja = (response.data.fk_unitkerja);
+                            if (fk_unitkerja==null){
+                                return $this.fk_unitkerja = generateNewId_Unit();
+                            }else{
+                                $this.fk_unitkerja = generateNewId_Unit(fk_unitkerja);
+                                if ($this.fk_unitkerja==="erorr"){
+                                    alert("Disabld Button")
+                                    $this.disabled_button_save = true
+                                }
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                },
             loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -133,7 +157,7 @@ const $app =   new Vue({
                             console.log(error);
                         });
                 },
-          loadData : function(){
+            loadData : function(){
               const $this = this;
                     axios.post("/load-unitkerja", {
                             _token: _TOKEN_
@@ -148,7 +172,7 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-          },
+                },
             editModalNow: function(data) {
                     modal_edit.show();
                     $app.id_edit = data.id;
@@ -220,6 +244,7 @@ const $app =   new Vue({
                                     .catch(function(error) {
                                         console.log(error);
                                     }); 
+                        this.generateId();
                 },
                 deleteData: function(id, fn_unitkerja) {
                     if (id) {
@@ -262,8 +287,8 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData()
-          //init object modal edit
+          this.loadData();
+          this.generateId();
           modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });

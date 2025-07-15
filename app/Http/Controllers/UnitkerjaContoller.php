@@ -39,4 +39,16 @@ class UnitkerjaContoller extends Controller
 
         return ($unitkerja);
     }
+
+    public function generateId_Unit(){
+       $result  = Unitkerja::select('fk_unitkerja')
+                        ->orderBy('fk_unitkerja','desc')
+                        ->first();
+
+       if ($result==null){
+        return '01';
+       }else{
+        return $result;
+       }
+    }
 }

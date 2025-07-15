@@ -349,6 +349,7 @@ Route::post('/save-unitkerja',[UnitkerjaContoller::class, 'save']);
 Route::post('/delete-unitkerja',[UnitkerjaContoller::class, 'delete']);
 Route::post('/update-unitkerja',[UnitkerjaContoller::class, 'update']);
 Route::post('/search-unitkerja',[UnitkerjaContoller::class, 'search']);
+Route::post('/generate-id-unit',[UnitkerjaContoller::class, 'generateId_Unit']);
 
 Route::post('/generate-id-unitkerja',[UnitkerjaContoller::class, 'generateId_Unitkerja']);
 
