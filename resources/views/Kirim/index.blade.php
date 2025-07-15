@@ -11,25 +11,39 @@
     <!-- Open the modal edit using ID.showModal() method -->
         <!-- Modal -->
         <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data jenis</h5> 
+                    <h5 class="modal-title" id="exampleModalLabel">Details Data Kirim Customer</h5> 
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Kode jenis:</label>
-                        <input type="text" ref="fk_jenis_edit" v-model="fk_jenis_edit" disabled placeholder="kode Jenis" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
-                        <input type="text" ref="jenis_edit" v-model="jenis_edit" placeholder="Jenis Edit" class="form-control" >
-                    </div>
+                    <table class="table table-hover">
+                        <!-- head -->
+                        <thead>
+                            <tr>
+                                <th>Kode Brg</th>
+                                <th>Partname</th>
+                                <th>Partno</th>
+                                <th>Harga</th>
+                                <th>Qty POS</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="data in detail_kirim">
+                                <th>@{{data.fk_brj}}</th>
+                                <td>@{{data.fn_brj}}</td>
+                                <td>@{{data.fpartno}}</td>
+                                <td>@{{_moneyFormat(data.fharga)}}</td>
+                                <td>@{{data.fq_krm}}</td>
+                                <td>@{{_moneyFormat(data.Fjumlah)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" @click="updateData" class="btn btn-primary">Simpan</button>
                 </div>
                 </div>
             </div>
@@ -50,16 +64,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in jeniss" class="align-middle">
+                        <tr v-for="data in kirim" class="align-middle">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.fk_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
-                            <td>@{{ data.fn_jns_brj }}</td>
+                            <td>@{{ data.fno_krm }}</td>
+                            <td>@{{ data.ftgl_krm }}</td>
+                            <td>@{{ data.nama_cus }}</td>
+                            <td>@{{ data.fnama_supir }}</td>
+                            <td>@{{ data.description }}</td>
                             <td>
-                                <button @click="printPage(data.fno_poc)" class="btn btn-primary btn-sm">Print</button>
-                                <button @click="detailData(data.fno_poc)" class="btn btn-primary btn-sm">Details</button>
+                                <button @click="printPage(data.fno_krm)" class="btn btn-primary btn-sm">Print</button>
+                                <button @click="DetailModal(data.fno_krm)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editData(data.id,data)" class="btn btn-primary btn-sm">Edit</button>
                                 <button @click="deleteData(data.id,data)" class="btn btn-danger btn-sm">x</button>
                             </td>
@@ -79,12 +93,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 <script>
     // buat object kosong 
-    var modal_edit;
+var modal_edit;
 const _TOKEN_ = '<?= csrf_token() ?>';
 const $app =   new Vue({
         el : "#app",
         data: {
-                jeniss : null,
+                kirim : null,
+                detail_kirim : null,
                 fk_jenis : null,
                 fk_jenis_edit : null,
                 alert: false,
@@ -108,7 +123,7 @@ const $app =   new Vue({
                         .then(function(response) {
                             if (response.data) {
                                 $this.loading = false;
-                                $this.jeniss = response.data.data;
+                                $this.kirim = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })
@@ -124,13 +139,13 @@ const $app =   new Vue({
                 },
             loadData : function(){
               const $this = this;
-                    axios.post("/load-jenis-brj", {
+                    axios.post("/load-hkrm-customer", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.jeniss = response.data.data;
+                                $this.kirim = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })
@@ -165,6 +180,23 @@ const $app =   new Vue({
                         });
                     }
               },
+            DetailModal: function(fno_krm) {
+                    modal_edit.show();
+                    const $this = this;
+                    axios.post("/load-detail-kirim", {
+                        _token: _TOKEN_,
+                        fno_krm : fno_krm
+                    })
+                    .then(function(response) {
+                    
+                        if (response.data) {
+                            $this.detail_kirim = response.data;
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                },
             searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -179,36 +211,12 @@ const $app =   new Vue({
                         .then(function(response) {
                             if (response.data) {
                                 $this.loading = false;
-                                $this.jeniss = response.data;
+                                $this.kirim = response.data;
                             }
                         })
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
-            save: function() {
-                    if (this.jenis == null) {
-                        this.alert = false;
-                        return
-                    }
-                    const $this = this;
-                     axios.post("/save-jenis-brj", {
-                                        _token: _TOKEN_,
-                                        jenis: this.jenis,
-                                        fk_jenis: this.fk_jenis
-                                    })
-                                    .then(function(response) {
-                                        if (response.data.result) {
-                                            $this.loadData();
-                                            $this.alert = false;
-                                            $this.jenis = null;
-                                            $this.fk_jenis = null;
-                                            alert("Tambah data sukses");
-                                        }
-                                    })
-                                    .catch(function(error) {
-                                        console.log(error);
-                                    }); 
                 },
                 deleteData: function(id, Jenis) {
                     if (id) {
@@ -251,8 +259,9 @@ const $app =   new Vue({
                 },
         },
         mounted(){
-          this.loadData()
-          modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
+            //his.DetailModal();
+            this.loadData();
+            modal_edit = new bootstrap.Modal(document.getElementById('my_modal_edit'));
         }
       });
     </script>                

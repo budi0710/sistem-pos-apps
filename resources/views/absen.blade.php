@@ -2,7 +2,6 @@
 @section('title', 'Absensi')
 @section('main')
     <h1>Halaman Absen</h1>
-
     <div class="container" id="app">
         <div class="card">
             <div class="card-body">

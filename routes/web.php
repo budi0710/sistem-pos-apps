@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\H_poc_Controller;
+use App\Http\Controllers\H_krm_Controller;
 use App\Http\Controllers\RlsSupplierController;
 use App\Http\Controllers\H_posController;
 use App\Http\Controllers\H_BeliController;
@@ -61,10 +62,6 @@ Route::middleware([UserMiddleware::class])->group(function () {
     //Masukkan kesini routenya yg btuh auth session
     Route::get('/setting',function(){
     $data = Setting::where('id',1)->first();
-
-    Route::get('/absensi', function () {
-        return view('absen');
-    });
 
     return view('setting',$data);
     });
@@ -295,6 +292,16 @@ Route::post('/generate-id-hpoc',[H_poc_Controller::class,'generateNo']);
 Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
 Route::post('/load-hpo-customer',[H_poc_Controller::class, 'load']);
 Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
+Route::post('/load-fno-customer',[H_poc_Controller::class, 'loadWhereFnoPOC']);
+Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
+
+
+Route::post('/delete-krm-customer',[H_krm_Controller::class, 'delete']);
+Route::post('/proses-krmcustomer',[H_krm_Controller::class, 'saveData']);
+Route::post('/generate-id-hkrm',[H_krm_Controller::class,'generateNo']);
+Route::post('/load-hkrm-customer',[H_krm_Controller::class, 'load']);
+Route::post('/load-detail-kirim',[H_krm_Controller::class, 'loadWhere']);
+
 //Inventory Barang
 
 Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
@@ -364,3 +371,8 @@ Route::post('/search-karyawan',[KaryawanController::class, 'search']);
 Route::post('/upload-absen-masuk',[AbsenController::class, 'uploadAbsenMasuk']);
 Route::post('/upload-absen-pulang',[AbsenController::class, 'uploadAbsenPulang']);
 Route::post('/get-setting',[SettingController::class, 'getData']);
+
+
+Route::get('/absensi', function () {
+        return view('absen');
+    });

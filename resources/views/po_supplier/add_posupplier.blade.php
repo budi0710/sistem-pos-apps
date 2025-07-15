@@ -295,44 +295,6 @@
                             console.log(error);
                         });
                 },
-                // addData: function() {
-                //     var $storage;
-                //     if (_getStorage('data')) {
-                //         $storage = JSON.parse(_getStorage('data'))
-                //     }
-                //     var $data = [{
-                //         "kode_bg": this.kode_bg,
-                //         "partname" : this.partname,
-                //         "partno": this.partno,
-                //         "fq_poc": this.fq_poc
-                //     }]
-
-                //     if ($storage == null) {
-                //         $tmp = JSON.stringify($data);
-                //         _saveStorage('data', $tmp);
-                       
-                //     } else {
-                //         var BreakException = {};
-                //         $storage.forEach(element => {
-                //             if (element['kode_bg']===this.kode_bg){
-                //                 alert("Data sudah ada !")
-                //                 throw BreakException;
-                //             }   
-                //         });
-                //         $storage.push(...$data);
-                //         _saveStorage('data', JSON.stringify($storage));
-                //     }
-                //     this.data_barangs = JSON.parse(_getStorage('data'));
-                //     const $barang_total = this.data_barangs;
-
-                //     var grand_total = 0;
-                //     $barang_total.forEach(element => {
-                //         grand_total += element['fq_poc'];
-                //     });
-
-                //     this.grand_total = grand_total
-                //     this.disabled_brj=true;
-                // },
                 deleteData: function(kd){
                     var $storage = _getStorage('data');
                     $storage = JSON.parse($storage);

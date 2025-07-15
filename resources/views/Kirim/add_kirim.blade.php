@@ -8,18 +8,18 @@
             <div class="card text-left">
             <div class="card-body">
                 <div class="row mb-2">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl POC</label>
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl Kirim</label>
                     <div class="col-sm-6">
-                        <input type="date" class="form-control" ref="ftgl_poc" v-model="ftgl_poc" >
+                        <input type="date" class="form-control" ref="ftgl_krm" v-model="ftgl_krm" >
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" disabled ref="fno_poc" v-model="fno_poc"  placeholder="No POC">
+                        <input type="text" class="form-control" disabled ref="fno_krm" v-model="fno_krm"  placeholder="No Kirim">
                     </div>
                 </div>
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" v-model="result_customer" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" v-model="result_customer" @change="loadFno_POC(result_customer)" aria-label=".form-select-lg example">
                         <option selected>Pilih Nama Customer</option>
                         <option v-for="data in customers" :value="data.kode_cus">@{{data.nama_cus}}</option>
                     </select>
@@ -28,16 +28,19 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No PO Customer</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" v-model="result_fno_poc" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" v-model="result_fno_poc" @change="DetailPO_Customer(result_fno_poc)" aria-label=".form-select-lg example">
                         <option selected>Pilih PO Customer</option>
-                        <option v-for="data in customers" :value="data.kode_cus">@{{data.nama_cus}}</option>
+                        <option v-for="data in fno_pocs" :value="data.fno_poc">@{{data.fno_poc}}</option>
                     </select>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Supir</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                         <input type="text" class="form-control" ref="fn_supir" v-model="fn_supir"  placeholder="Nama Supir">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ref="fno_plat_mobil" v-model="fno_plat_mobil"  placeholder="No Plat Mobil">
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -56,16 +59,16 @@
                 <br>
                 <div class="flex-container">
                   <div class="row">
-                    <div class="col-md-3 mb-3" v-for="(data,i) in barangs" :key="data.id"  >
+                    <div class="col-md-3 mb-3" v-for="(data,i) in detail_po" :key="data.fnos_poc"  >
                         <div class="product-card">
                             <div href="#" >
-                                <a href="#">@{{data.fk_brj}} | @{{data.fpartno}}</a>
+                                <a href="#">@{{data.fk_brj}} | @{{data.fnos_poc}} </a>
                             </div>
                             <img :src="viewImage(data.fgambar)" alt="" width="100" height="100">
                             <div class="text-primary" >@{{ data.fn_brj }}</div>
                             <div class="text-primary" > 
                                 <label for="colFormLabel" >Harga</label>
-                                @{{ data.fharga_jual }}
+                                @{{ _moneyFormat(data.fharga) }}
                             <input type="number" class="form-control qty-input"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty"  style="width: 90px;"/>
                             </div>
                         </div>
@@ -87,17 +90,14 @@
 
             <!-- Keranjang / Panel kanan -->
             <div class="col-md-5 right-panel">
-                <h5>🛒 Detail PO Customer</h5>
+                <h5>🛒 Detail Kirim Customer</h5>
                  <div  v-for="data in data_barangs" :key="data.id"  class="border-bottom pb-2 mb-2">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div><strong>@{{ data.fk_brj }} | @{{ data.fn_brj }}</strong></div>
-                            <strong>Rp @{{ _moneyFormat(data.fharga_jual)}} x Qty : @{{data.fq_poc}}</strong>
+                            <div><strong>@{{ data.fk_brj }} | @{{ data.fn_brj }} | @{{ data.fnos_poc }}</strong></div>
+                            <strong>@{{ _moneyFormat(data.fharga)}} x Qty : @{{data.fq_poc}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
-                            {{-- <button class="btn btn-sm btn-light">-</button>
-                            <span class="mx-2">1</span>
-                            <button class="btn btn-sm btn-light">+</button> --}}
                             <span class="ms-3">@{{ _moneyFormat(data.sub_total) }}</span>  |  <button  @click="hapusData" class="btn btn-primary"  >Hapus</button>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                    <h2>Total Harga @{{_moneyFormat(total_harga)}}</h2>
                 </div>
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100 mt-3"  @click="prosesPOC">Proses PO Customer</button>
+                    <button class="btn btn-primary w-100 mt-3"  @click="prosesKRM">Proses PO Customer</button>
                 </div>
             </div>
         </div>
@@ -118,13 +118,16 @@
             el : "#app",
             data : {
                 customers : null,
+                detail_po : null,
+                fno_pocs : null,
                 barangjadi : null,
                 kode_bg : null,
+                fno_plat_mobil : null,
                 fn_supir : null,
                 partname : null,
                 fberat_netto : null,
-                ftgl_poc : null,
-                fno_poc : null,
+                ftgl_krm : null,
+                fno_krm : null,
                 fk_brj : null,
                 fn_brj : null,
                 no_po : null,
@@ -145,14 +148,15 @@
                 description : null
             },
             methods: {
-                prosesPOC: function(){
+                prosesKRM: function(){
                     const $this = this;
-                    axios.post("/proses-pocustomer", {
-                        fno_poc : this.fno_poc,
-                        fno_poc_cus : this.fno_poc_cus,
+                    axios.post("/proses-krmcustomer", {
+                        fno_krm : this.fno_krm,
+                        ftgl_krm : this.ftgl_krm,
                         kode_cus : this.result_customer,
-                        ftgl_poc : this.ftgl_poc,
-                        ppn : this.ppn,
+                        fno_poc : this.result_fno_poc,
+                        fno_plat_mobil : this.fno_plat_mobil,
+                        fnama_supir : this.fn_supir,
                         description : this.description,
                         detail_data : this.data_barangs
                     })
@@ -166,12 +170,12 @@
                                 });
 
                                 _refresh()
-                        }
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    });
-                },
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    },
                 loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -191,10 +195,10 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
-            enterQty: function(data,i){
+                    },
+                enterQty: function(data,i){
                 //untuk validasi data jika tgl dan supplier kosong maka akan di arahkan sesuai request ya
-                    if (this.ftgl_poc==null){
+                    if (this.ftgl_krm==null){
                         alert("Isi tgl dulu")
                         return
                     }
@@ -229,10 +233,10 @@
                     var $data = [{
                         "fk_brj": data.fk_brj,
                         "fn_brj" : data.fn_brj,
-                        "fpartno": data.fpartno,
-                        "fq_poc": obj,
-                        "fharga_jual" : data.fharga_jual,
-                        "sub_total" : data.fharga_jual * obj
+                        "fnos_poc": data.fnos_poc,
+                        "fq_krm": obj,
+                        "fharga" : data.fharga,
+                        "sub_total" : data.fharga * obj
                     }]
                     // console.table($data);
                     // console.log($data.length)
@@ -240,7 +244,7 @@
                     if (this.data_barangs.length == 0){
                         this.data_barangs = ($data);
 
-                        this.total_harga = data.harga * obj;
+                        this.total_harga = data.fharga * obj;
                     }else{
                         //alert('data lebih dari 1')
 
@@ -265,7 +269,7 @@
                         });
                         this.total_harga = total_harga
                     }
-                },
+                    },
                 loadBarangCustomer: function(){
                     const $this = this;
                     axios.post("/load-data-cus", {
@@ -279,26 +283,26 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
+                    },
                 generateId() {
                     const $this = this;
-                    axios.post("/generate-id-hpoc", {
+                    axios.post("/generate-id-hkrm", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             if (response.data) {
-                                if (response.data.fno_poc) {
-                                    const angka = String(response.data.fno_poc).slice(-3);
-                                    $this.fno_poc = generateNoUrutDateMonth(angka);
+                                if (response.data.fno_krm) {
+                                    const angka = String(response.data.fno_krm).slice(-3);
+                                    $this.fno_krm = generateNoUrutDateMonth(angka);
                                 } else {
-                                    $this.fno_poc = tahun + bulan + (response.data);
+                                    $this.fno_krm = tahun + bulan + (response.data);
                                 }
                             }
                         })
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
+                    },
                 addData: function() {
                     var $storage;
                     if (_getStorage('data')) {
@@ -336,10 +340,10 @@
 
                     this.grand_total = grand_total
                     this.disabled_brj=true;
-                },
+                    },
                 viewImage: function(data){
                     return 'storage/'+data
-                },
+                    },
                 deleteData: function(kd){
                     var $storage = _getStorage('data');
                     $storage = JSON.parse($storage);
@@ -359,14 +363,14 @@
                         grand_total += element['sub_total'];
                     });
                     this.grand_total = grand_total
-                },
+                    },
                 clearData: function() {
                     localStorage.clear()
                     _refresh()
-                },
+                    },
                 hapusData: function() {
                     delete this.data_barangs["fk_brj"]
-                },
+                    },
                 searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -386,14 +390,46 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                },
+                    },
                 handleQtyInput(selectedIndex) {
                     this.items.forEach((item, index) => {
                     if (index !== selectedIndex) {
                         item.qty = '';
                     }
                     });
-                },
+                    },
+                loadFno_POC: function(result_customer){
+                    const $this = this;
+                    axios.post("/load-fno-customer", {
+                            _token: _TOKEN_,
+                            kode_cus : result_customer
+                        })
+                        .then(function(response) {
+                            if (response.data) {
+                                $this.fno_pocs = response.data;
+                                //$this.fno_poss = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    },
+                DetailPO_Customer: function(fno_poc) {
+                        const $this = this;
+                        axios.post("/load-detail-pocustomer", {
+                            _token: _TOKEN_,
+                            fno_poc : fno_poc
+                        })
+                        .then(function(response) {
+                        
+                            if (response.data) {
+                                $this.detail_po = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    },
                 loadBarangGudangJadi: function(){
                     const $this = this;
                     axios.post("/load-brj", {
@@ -413,7 +449,9 @@
             },
             mounted() {
                 this.loadBarangGudangJadi();
+                this.DetailPO_Customer();
                 this.generateId();
+                this.loadFno_POC();
                 this.loadBarangCustomer();
                 localStorage.clear(); 
             },
