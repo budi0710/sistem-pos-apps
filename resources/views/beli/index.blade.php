@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('title','Receive')
+@section('title','Beli Supplier')
 @section('main')
 <div id="app" class="app-wrapper">
             <div class="input-group mb-3">
@@ -24,7 +24,7 @@
                                 <th>Partname</th>
                                 <th>Partno</th>
                                 <th>Harga</th>
-                                <th>Qty POS</th>
+                                <th>Qty Beli</th>
                                 <th>Jumlah</th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@
                                 <td>@{{data.partname}}</td>
                                 <td>@{{data.partno}}</td>
                                 <td>@{{_moneyFormat(data.fharga)}}</td>
-                                <td>@{{data.fq_pos}}</td>
+                                <td>@{{data.fq_beli}}</td>
                                 <td>@{{_moneyFormat(data.Fjumlah)}}</td>
                             </tr>
                         </tbody>
@@ -73,8 +73,8 @@
                             <td>@{{ data.surat_jalan }}</td>
                             <td>@{{ data.description }}</td>
                             <td>
-                                <button @click="printPage(data.fno_pos)" class="btn btn-primary btn-sm">Print</button>
-                                <button @click="DetailModal(data.fno_pos)" class="btn btn-primary btn-sm">Details</button>
+                                <button @click="printPage(data.fno_beli)" class="btn btn-primary btn-sm">Print</button>
+                                <button @click="DetailModal(data.fno_beli)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editData(data.id,data)" class="btn btn-primary btn-sm">Edit</button>
                                 <button @click="deleteData(data.id,data)" class="btn btn-danger btn-sm">x</button>
                             </td>
@@ -155,12 +155,12 @@ const $app =   new Vue({
                             console.log(error);
                         });
                 },
-            DetailModal: function(fno_pos) {
+            DetailModal: function(fno_beli) {
                     modal_edit.show();
                     const $this = this;
-                    axios.post("/load-detail-posupplier", {
+                    axios.post("/load-detail-belisupplier", {
                         _token: _TOKEN_,
-                        fno_pos : fno_pos
+                        fno_beli : fno_beli
                     })
                     .then(function(response) {
                     

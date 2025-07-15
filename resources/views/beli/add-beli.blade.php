@@ -7,19 +7,19 @@
             <div class="col-md-7">
             <div class="card text-left">
             <div class="card-body">
-                <div class="row mb-1">
-                    <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl PO</label>
+                <div class="row mb-2">
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl Beli</label>
                     <div class="col-sm-6">
-                        <input type="date" class="form-control" ref="ftgl_pos" v-model="ftgl_pos" >
+                        <input type="date" class="form-control" ref="ftgl_beli" v-model="ftgl_beli" >
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" disabled ref="fno_beli" v-model="fno_beli"  placeholder="No POS">
+                        <input type="text" class="form-control" disabled ref="fno_beli" v-model="fno_beli"  placeholder="No Beli">
                     </div>
                 </div>
                 <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" @change="loadFno_POS(result_supplier)" v-model="result_supplier" aria-label=".form-select-lg example">
+                    <select class="form-select form-select-lg mb-3" v-model="result_supplier" @change="loadFno_POS(result_supplier)" aria-label=".form-select-lg example">
                         <option selected disabled>Pilih Nama Supplier</option>
                         <option v-for="data in suppliers" :value="data.kode_sup">@{{data.nama_sup}}</option>
                     </select>
@@ -37,7 +37,7 @@
                 <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Surat Jalan</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="surat_jalan" v-model="surat_jalan"  placeholder="Surat Jalan Supplier  ">
+                        <input type="text" class="form-control" ref="surat_jalan" v-model="surat_jalan"  placeholder="Surat Jalan">
                     </div>
                 </div>
                 <div class="row mb-1">
@@ -57,10 +57,10 @@
                 <div class="product-container">
                       <!-- Card Produk --> 
                   <div class="row" >
-                    <div class="col-md-3 mb-3" v-for="(data,i) in detail_po" :key="data.fno_spo"  >
+                    <div class="col-md-4 mb-4" v-for="(data,i) in detail_po" :key="data.fno_spo"  >
                         <div class="product-card">
                             <div href="#" >
-                                <a href="#">@{{data.kode_bg}} | @{{data.partno}}</a>
+                                <a href="#">@{{data.kode_bg}} | @{{data.fno_spo}}</a>
                             </div>
                             <img :src="viewImage(data.fgambar_brg)" alt="" width="100" height="100">
                             <div class="text-primary" >@{{ data.partname }}</div>
@@ -88,13 +88,13 @@
 
             <!-- Keranjang / Panel kanan -->
             <div class="col-md-5 right-panel">
-                <h5>🛒 Detail PO Supplier</h5>
+                <h5>🛒 Detail Beli Supplier</h5>
                 {{-- keranjang kanan --}}
-                 <div  v-for="data in detail_posupplier" :key="data.fno_spo"  class="border-bottom pb-2 mb-2">
+                 <div  v-for="data in data_barangs" :key="data.fno_spo"  class="border-bottom pb-2 mb-2">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div><strong>@{{ data.kode_bg }} | @{{ data.partname }} | @{{ data.fberat_netto }}</strong></div>
-                            <strong>Rp @{{_moneyFormat(data.fharga)}} x Qty : @{{data.fq_pos}}</strong>
+                            <div><strong>@{{ data.kode_bg }} | @{{ data.fno_spo }} | @{{ data.partname }}</strong></div>
+                            <strong> @{{_moneyFormat(data.fharga)}} x Qty : @{{data.fq_beli}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="ms-3">@{{_moneyFormat(data.sub_total)}}</span> | <button @click="hapusData(data.kode_bg)"  class="btn btn-primary">Hapus</button>
@@ -106,7 +106,7 @@
                    <h2>Total Harga @{{_moneyFormat(total_harga)}}</h2>
                 </div>
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100 mt-3" @click="prosesPO">Proses PO</button>
+                    <button class="btn btn-primary w-100 mt-3" @click="prosesPO">Proses Beli</button>
                 </div>
             </div>
         </div>
@@ -118,30 +118,30 @@
             el : "#app",
             data : {
                 suppliers : null,
+                surat_jalan : null,
+                fno_poss : null,
+                fno_beli : null,
                 detail_po : null,
                 result_fno_pos : null,
-                fno_poss : null,
                 barangjadi : null,
                 kode_bg : null,
                 partname : null,
                 fberat_netto : null,
-                ftgl_pos : null,
-                fno_beli : null,
+                ftgl_beli : null,
+                fno_poc : null,
                 fk_brj : null,
                 fn_brj : null,
                 fno_pos : null,
-                fq_poc : null,
+                fq_beli : null,
                 ppn : null,
                 fqt_brj : null,
                 no_po_cus : null,
                 search: null,
                 disabled_brj: false,
-                detail_posupplier : null,
                 data_barangs: [],
                 barangs : null,
                 links : null,
                 description : null,
-                surat_jalan : null,
                 inputValues:null,
                 txtQty : 'txtQty',
                 total_harga : 0,
@@ -150,15 +150,16 @@
             methods: {
                 hapusData : function(kode_bg){
                    this.data_barangs = this.data_barangs.filter(item => item.kode_bg !== kode_bg);
+
                     this.totalBarang();
-                },
+                    },
                 prosesPO: function(){
                     const $this = this;
-                    axios.post("/proses-posupplier", {
-                        fno_pos : this.fno_pos,
+                    axios.post("/proses-belisupplier", {
+                        fno_beli : this.fno_beli,
                         kode_sup : this.result_supplier,
-                        ftgl_pos : this.ftgl_pos,
-                        ppn : this.ppn,
+                        ftgl_beli : this.ftgl_beli,
+                        surat_jalan : this.surat_jalan,
                         description : this.description,
                         detail_data : this.data_barangs
                     })
@@ -172,15 +173,15 @@
                                 });
 
                                 _refresh()
-                        }
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    });
-                },
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    },
                 enterQty: function(data,i){
                     //untuk validasi data jika tgl dan supplier kosong maka akan di arahkan sesuai request ya
-                    if (this.ftgl_pos==null){
+                    if (this.ftgl_beli==null){
                         alert("Isi tgl dulu")
                         return
                     }
@@ -194,6 +195,12 @@
                         alert("Pilih No PO Supplier dulu")
                         return;
                     }
+
+                    if (this.surat_jalan==null){
+                        alert("Isi Surat Jalan")
+                        return;
+                    }
+
                     const obj = document.getElementById('txtQty'+i).value;
                     
                     if (obj===0 || obj==0 || obj==null){
@@ -209,8 +216,8 @@
                     var $data = [{
                         "kode_bg": data.kode_bg,
                         "partname" : data.partname,
-                        "partno": data.partno,
-                        "fq_pos": obj,
+                        "fno_spo": data.fno_spo,
+                        "fq_beli": obj,
                         "fharga" : data.fharga,
                         "sub_total" : data.fharga * obj
                     }]
@@ -238,19 +245,20 @@
                             }   
                         });
                         this.data_barangs.push(...$data);
+
                        this.totalBarang()
                     }
-                },
+                    },
                 totalBarang : function(){
                       var total_harga = 0
                         this.data_barangs.forEach(element => {
                             total_harga += element['sub_total']
                         });
                         this.total_harga = total_harga
-                },
+                    },
                 viewImage: function(data){
                     return 'storage/'+data
-                },
+                    },
                 loadPaginate: function(url) {
                     if (url == null) {
                         return
@@ -279,22 +287,6 @@
                         .then(function(response) {
                             if (response.data) {
                                 $this.suppliers = response.data;
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
-                    },
-                loadFno_POS: function(result_supplier){
-                    const $this = this;
-                    axios.post("/load-fno-supplier", {
-                            _token: _TOKEN_,
-                            kode_supplier : result_supplier
-                        })
-                        .then(function(response) {
-                            if (response.data) {
-                                $this.fno_poss = response.data;
-                                //$this.fno_poss = response.data;
                             }
                         })
                         .catch(function(error) {
@@ -339,11 +331,11 @@
                         grand_total += element['sub_total'];
                     });
                     this.grand_total = grand_total
-                    },
+                },
                 clearData: function() {
                     localStorage.clear()
                     _refresh()
-                    },
+                },
                 searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -363,14 +355,14 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                    },
+                },
                 handleQtyInput(selectedIndex) {
-                        this.items.forEach((item, index) => {
-                        if (index !== selectedIndex) {
-                            item.qty = '';
-                        }
-                        });
-                    },
+                    this.items.forEach((item, index) => {
+                    if (index !== selectedIndex) {
+                        item.qty = '';
+                    }
+                    });
+                },
             DetailPO_Supplier: function(fno_pos) {
                         const $this = this;
                         axios.post("/load-detail-posupplier", {
@@ -381,6 +373,22 @@
                         
                             if (response.data) {
                                 $this.detail_po = response.data;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                    },
+            loadFno_POS: function(result_supplier){
+                    const $this = this;
+                    axios.post("/load-fno-supplier", {
+                            _token: _TOKEN_,
+                            kode_supplier : result_supplier
+                        })
+                        .then(function(response) {
+                            if (response.data) {
+                                $this.fno_poss = response.data;
+                                //$this.fno_poss = response.data;
                             }
                         })
                         .catch(function(error) {
@@ -402,14 +410,14 @@
                         .catch(function(error) {
                             console.log(error);
                         });
-                    }
+                }
             },
             mounted() {
-                //this.loadBarangGudang();
+               // this.loadBarangGudang();
                 this.DetailPO_Supplier();
+                this.loadFno_POS();
                 this.generateId();
                 this.loadSupplier();
-                this.loadFno_POS();
                 localStorage.clear(); 
             },
         })

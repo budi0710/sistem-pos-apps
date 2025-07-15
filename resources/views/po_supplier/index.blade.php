@@ -125,7 +125,7 @@ const $app =   new Vue({
                         .then(function(response) {
                             if (response.data) {
                                 $this.loading = false;
-                                $this.jeniss = response.data.data;
+                                $this.h_posupplier = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })

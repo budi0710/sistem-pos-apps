@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\H_poc;
 use App\Models\L_H_POC;
+use App\Models\L_POC;
 use App\Models\T_poc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,15 @@ class H_poc_Controller extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function loadWhere(Request $request){
+        return L_POC::where('fno_poc',$request->fno_poc)->get();
+    }
+
+    public function loadWhereFnoPOC(Request $request){
+        return H_poc::select('fno_poc')->where('kode_cus',$request->kode_cus)->get();
+        //dd($request->kode_sup);
+    }
+
     public function saveData(Request $request)
     {
         $h_poc = new H_poc();

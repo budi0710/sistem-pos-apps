@@ -8,30 +8,6 @@
             </div>
 
     <!-- Modal -->
-        <div class="modal fade" id="my_modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Jenis BRJ</h5> 
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Kode Jenis:</label>
-                    <input type="text" ref="fk_jenis" v-model="fk_jenis" placeholder="kode Jenis" class="form-control" id="recipient-name">
-                </div>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Nama Jenis BRJ:</label>
-                    <input type="text" ref="jenis" v-model="jenis" placeholder="jenis" class="form-control" id="recipient-name">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" @click="save" class="btn btn-primary">Simpan</button>
-            </div>
-            </div>
-        </div>
-        </div>
     <!-- Open the modal edit using ID.showModal() method -->
         <!-- Modal -->
         <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

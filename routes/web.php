@@ -294,6 +294,7 @@ Route::post('/proses-pocustomer',[H_poc_Controller::class, 'saveData']);
 Route::post('/generate-id-hpoc',[H_poc_Controller::class,'generateNo']);
 Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
 Route::post('/load-hpo-customer',[H_poc_Controller::class, 'load']);
+Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
 //Inventory Barang
 
 Route::post('/load-hbtbg',[H_btbgController::class, 'load']);

@@ -8,56 +8,46 @@
             </div>
 
     <!-- Modal -->
-        <div class="modal fade" id="my_modal_add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Jenis BRJ</h5> 
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Kode Jenis:</label>
-                    <input type="text" ref="fk_jenis" v-model="fk_jenis" placeholder="kode Jenis" class="form-control" id="recipient-name">
-                </div>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Nama Jenis BRJ:</label>
-                    <input type="text" ref="jenis" v-model="jenis" placeholder="jenis" class="form-control" id="recipient-name">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" @click="save" class="btn btn-primary">Simpan</button>
-            </div>
-            </div>
-        </div>
-        </div>
-    <!-- Open the modal edit using ID.showModal() method -->
-        <!-- Modal -->
-        <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+    <div class="modal fade" id="my_modal_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data jenis</h5> 
+                    <h5 class="modal-title" id="exampleModalLabel">Details Data PO Supplier</h5> 
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Kode jenis:</label>
-                        <input type="text" ref="fk_jenis_edit" v-model="fk_jenis_edit" disabled placeholder="kode Jenis" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nama Jenis:</label>
-                        <input type="text" ref="jenis_edit" v-model="jenis_edit" placeholder="Jenis Edit" class="form-control" >
-                    </div>
+                    <table class="table table-hover">
+                        <!-- head -->
+                        <thead>
+                            <tr>
+                                <th>Kode Brg</th>
+                                <th>Partname</th>
+                                <th>Partno</th>
+                                <th>Harga</th>
+                                <th>Qty POS</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="data in detail_pocustomer">
+                                <th>@{{data.fk_brj}}</th>
+                                <td>@{{data.fn_brj}}</td>
+                                <td>@{{data.fpartno}}</td>
+                                <td>@{{_moneyFormat(data.fharga)}}</td>
+                                <td>@{{data.fq_poc}}</td>
+                                <td>@{{_moneyFormat(data.Fjumlah)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" @click="updateData" class="btn btn-primary">Simpan</button>
                 </div>
                 </div>
             </div>
         </div>
+    <!-- Open the modal edit using ID.showModal() method -->
+        <!-- Modal -->
     <!-- Open the modal using ID.showModal() method -->
     <div class="card-body">
         <div class="table-responsive">
@@ -85,7 +75,7 @@
                             <td>@{{ data.description }}</td>
                             <td>
                                 <button @click="printPage(data.fno_poc)" class="btn btn-primary btn-sm">Print</button>
-                                <button @click="detailData(data.fno_poc)" class="btn btn-primary btn-sm">Details</button>
+                                <button @click="DetailModal(data.fno_poc)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editData(data.id,data)" class="btn btn-primary btn-sm">Edit</button>
                                 <button @click="deleteData(data.id,data)" class="btn btn-danger btn-sm">x</button>
                             </td>
@@ -113,6 +103,7 @@ const $app =   new Vue({
                 h_pocs : null,
                 fk_jenis : null,
                 fk_jenis_edit : null,
+                detail_pocustomer : null,
                 alert: false,
                 jenis_edit : null,
                 links :null,
@@ -191,6 +182,23 @@ const $app =   new Vue({
                         });
                     }
               },
+            DetailModal: function(fno_poc) {
+                    modal_edit.show();
+                    const $this = this;
+                    axios.post("/load-detail-pocustomer", {
+                        _token: _TOKEN_,
+                        fno_poc : fno_poc
+                    })
+                    .then(function(response) {
+                    
+                        if (response.data) {
+                            $this.detail_pocustomer = response.data;
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                },
             searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()

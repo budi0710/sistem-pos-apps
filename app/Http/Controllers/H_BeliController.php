@@ -26,4 +26,28 @@ class H_BeliController extends Controller
           return ($result);
        }
     }
+
+    public function saveData(Request $request) {
+        $h_beli = new H_Beli();
+        $fno_beli = $request->fno_beli;
+
+        $h_beli->fno_beli =  $fno_beli;
+        $h_beli->kode_sup = $request->kode_sup;
+        $h_beli->ftgl_beli = $request->ftgl_beli;
+        $h_beli->surat_jalan = $request->surat_jalan;
+        $h_beli->description = $request->description;
+        $h_beli->userid =  $request->session()->get('user_id');
+        $h_beli->save();
+
+        $data = $request->detail_data;
+
+        for ($i=0; $i < count($data) ; $i++) { 
+            $master_data = $data[$i];
+            $fno_spo = $master_data['fno_spo'];
+            $fq_beli  = $master_data['fq_beli'];
+            DB::insert('INSERT INTO t_beli (fno_beli, fno_spo, fq_beli) VALUES (?, ?, ?)', [$fno_beli, $fno_spo, $fq_beli]);
+        }
+       return response()->json(['result'=>true]) ;
+       
+    }
 }
