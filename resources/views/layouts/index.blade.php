@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIS | @yield('title')</title>
+    <title>AAP | @yield('title')</title>
 
     <link href="{{ asset('sbadmin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -23,7 +23,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Production Information System V.1</div>
+                <div class="sidebar-brand-text mx-3">Adhitama Arka Prasada V.1</div>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -118,6 +118,23 @@
                 </div>
             </li>
 
+
+            <!-- Nav Item - Utilities Collapse Menu Transaksi Pembayaran -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities_PPA"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>PPA</span>
+                </a>
+                <div id="collapseUtilities_PPA" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="utilities-other.html">Jenis PPA</a>
+                        <a class="collapse-item" href="utilities-other.html">Data PPA</a>
+                        <a class="collapse-item" href="utilities-other.html">PPA Rinci</a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Utilities Collapse Menu Transaksi Pembayaran -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities_bayar"
