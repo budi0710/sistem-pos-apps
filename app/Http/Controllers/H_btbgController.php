@@ -48,7 +48,7 @@ class H_btbgController extends Controller
             $kode_bg = $master_data['kode_bg'];
             $fq_btbg = $master_data['fq_btbg'];
 
-            DB::insert('INSERT INTO t_btbg (fno_btbg, kode_bg, fq_btbg) VALUES (?, ?, ?)', [$fno_btbg, $kode_bg, $fq_btbg]);
+            DB::insert('INSERT INTO t_btbg (fno_btbg, kode_bg, fq_btbg_rcn) VALUES (?, ?, ?)', [$fno_btbg, $kode_bg, $fq_btbg]);
             $fno_spo = '';
         }
        return response()->json(['result'=>true]) ;

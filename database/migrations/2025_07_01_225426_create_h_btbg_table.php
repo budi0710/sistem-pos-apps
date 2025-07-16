@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('fno_btbg', 10)->unique();
             $table->char('fk_brj', 5);
+            $table->decimal('fq_brj',4)->default(0);
             $table->date('ftgl_btbg');
             $table->string('description');
             $table->string('userid', 20);
