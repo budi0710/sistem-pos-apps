@@ -190,6 +190,13 @@ function generateNewId_RBS(lastId) {
     return String(newNumber).padStart(3, '00');
 }
 
+function hanyaAngka(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+
 function autoFormatNPWP(NPWPString) {
     try {
         var cleaned = ("" + NPWPString).replace(/\D/g, "");

@@ -1,6 +1,9 @@
 @extends('layouts.index')
 @section('title','Home')
 @section('main')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -236,7 +239,7 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
+                                        <canvas id="pie_chart"></canvas>
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
@@ -478,8 +481,45 @@
 
                         </div>
                     </div>
-
                 </div>
+                <script>
+                        Highcharts.chart('pie_chart', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Product Count by Category Chart'
+                        },
+                        plotOptions: {
+                            series: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: [{
+                                    enabled: true,
+                                    distance: 20
+                                }, {
+                                    enabled: true,
+                                    distance: -40,
+                                    format: '{point.percentage:.1f}%',
+                                    style: {
+                                        fontSize: '1.2em',
+                                        textOutline: 'none',
+                                        opacity: 0.7
+                                    },
+                                    filter: {
+                                        operator: '>',
+                                        property: 'percentage',
+                                        value: 10
+                                    }
+                                }]
+                            }
+                        },
+                        series: [{
+                            name: 'Total',
+                            colorByPoint: true
+                        }]
+                    });
+            </script>
                 <!-- /.container-fluid -->           
 @endsection
 

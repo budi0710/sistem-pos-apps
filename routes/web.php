@@ -1,7 +1,9 @@
 <?php
 
+
 use App\Http\Controllers\AbsenController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SatuanController;
@@ -45,7 +47,7 @@ Route::get('/',function(Request $request){
 
 Route::get('/login',function(Request $request){
     $session = $request->session()->get('user_id');
-    return $session ? redirect('home') : view('login');
+    return $session ? redirect('dashboard') : view('login');
 });
 
 Route::post('/user-login',[UserController::class, 'login']);
@@ -66,9 +68,9 @@ Route::middleware([UserMiddleware::class])->group(function () {
     return view('setting',$data);
     });
 
-    Route::get('/home', function () {
-        return view('layouts.home');
-    });
+    Route::get('/home',[DashboardController::class, 'dashboard']);
+
+    //Route::get('/dashboard',[DashboardController::class, 'dashboard']);
 
     Route::get('/dasboard', function () {
         return view('layouts.dasboard');
@@ -377,3 +379,5 @@ Route::post('/get-setting',[SettingController::class, 'getData']);
 Route::get('/absensi', function () {
         return view('absen');
     });
+
+Route::get('/dashboard',[DashboardController::class, 'dashboard']);

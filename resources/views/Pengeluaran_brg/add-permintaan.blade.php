@@ -28,7 +28,7 @@
                 <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Qty Barang Jadi</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" ref="fqt_brj" v-model="fqt_brj"  placeholder="Qty Barang Jadi">
+                        <input type="number" class="form-control" ref="fqt_brj" v-model="fqt_brj" onkeypress="return hanyaAngka(event)" placeholder="Qty Barang Jadi">
                     </div>
                 </div>
                 <div class="row mb-1">

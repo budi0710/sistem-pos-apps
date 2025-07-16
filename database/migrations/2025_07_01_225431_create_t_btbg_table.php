@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('fno_btbg', 10);
             $table->char('kode_bg', 5);
             $table->decimal('fq_btbg',15)->default(0);
+            $table->decimal('fq_btbg_akt',15)->default(0);
             $table->timestamps();
         });
     }
