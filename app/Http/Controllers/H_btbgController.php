@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\H_btbg; 
 use App\Models\L_hbtbg;
+use App\Models\l_hbtbg2;
 use App\Models\L_dbtbg;
 use App\Models\T_btbg;
 use Illuminate\Support\Facades\DB;
@@ -37,6 +38,7 @@ class H_btbgController extends Controller
         $h_btbg->fno_btbg =  $fno_btbg;
         $h_btbg->fk_brj = $request->fk_brj;
         $h_btbg->ftgl_btbg = $request->ftgl_btbg;
+        $h_btbg->fq_brj = $request->fq_brj;
         $h_btbg->description = $request->description;
         $h_btbg->userid =  $request->session()->get('user_id');
         $h_btbg->save();
@@ -86,6 +88,11 @@ class H_btbgController extends Controller
     public function load()
     {
         return L_hbtbg::paginate(10);
+    }
+
+    public function load_Akt()
+    {
+        return l_hbtbg2::paginate(10);
     }
 
     private function getLast3($angka){

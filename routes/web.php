@@ -28,6 +28,9 @@ use App\Http\Controllers\T_btbgController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SettingMiddleware;
+use App\Models\H_btbg; 
+use App\Models\L_hbtbg; 
+use App\Models\L_dbtbg;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Middleware\UserMiddleware;
@@ -295,7 +298,7 @@ Route::post('/generate-kode-spk',[H_poc_Controller::class,'generateKodeSpK']);
 Route::post('/load-hpo-customer',[H_poc_Controller::class, 'load']);
 Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
 Route::post('/load-fno-customer',[H_poc_Controller::class, 'loadWhereFnoPOC']);
-Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
+// Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
 
 
 Route::post('/delete-krm-customer',[H_krm_Controller::class, 'delete']);
@@ -307,11 +310,12 @@ Route::post('/load-detail-kirim',[H_krm_Controller::class, 'loadWhere']);
 //Inventory Barang
 
 Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
+Route::post('/load-hbtbg-akt',[H_btbgController::class, 'load_Akt']);
 Route::post('/delete-hbtbg',[H_btbgController::class, 'delete']);
 Route::post('/save-hbtbg',[H_btbgController::class, 'save']);
 Route::post('/generate-id-hbtbg',[H_btbgController::class,'generateNo']);
 Route::post('/generate-kode-sbtbg',[H_btbgController::class,'generateKodeSbtbg']);
-Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
+// Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
 Route::post('/proses-hbtbg',[H_btbgController::class,'saveData']);
 Route::post('/load-detail-permintaan',[T_btbgController::class, 'loadWhere']);
 
@@ -381,3 +385,25 @@ Route::get('/absensi', function () {
     });
 
 Route::get('/dashboard',[DashboardController::class, 'dashboard']);
+
+Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
+        $data = L_hbtbg::where('fno_btbg',$fno_btbg)->count();
+        $data_detail_btbg =  L_dbtbg::where('fno_btbg',$fno_btbg)->count();
+
+        if ($data){
+
+             $data_header     = L_hbtbg::where('fno_btbg',$fno_btbg)->get();
+             $data_header     = $data_header[0];
+
+            if ($data_detail_btbg==0){
+                return redirect('pengeluaran_brg/pengeluaran');
+            }
+              
+            $data_detail_btbg =  L_dbtbg::where('fno_btbg',$fno_btbg)->get();
+            $data = array('data_header'=>$data_header,'data_detail'=>$data_detail_btbg);
+
+            return view('pengeluaran_brg/add-pengeluaran',$data);
+        }else{
+            return redirect('pengeluaran_brg/pengeluaran');
+        }
+    });

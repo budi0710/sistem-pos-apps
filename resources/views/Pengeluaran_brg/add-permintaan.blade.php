@@ -28,7 +28,7 @@
                 <div class="row mb-1">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Qty Barang Jadi</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" ref="fqt_brj" v-model="fqt_brj" onkeypress="return hanyaAngka(event)" placeholder="Qty Barang Jadi">
+                        <input type="number" class="form-control" ref="fq_brj" v-model="fq_brj" onkeypress="return hanyaAngka(event)" placeholder="Qty Barang Jadi">
                     </div>
                 </div>
                 <div class="row mb-1">
@@ -138,7 +138,7 @@
                 fno_btbg : null,
                 fq_btbg : null,
                 ppn : null,
-                fqt_brj : null,
+                fq_brj : null,
                 no_po_cus : null,
                 search: null,
                 disabled_brj: false,
@@ -154,9 +154,10 @@
             methods: {
                 prosesBTBG: function(){
                     const $this = this;
-                    axios.post("/proses-hbtbg", {
+                    axios.post("/proses-hbtbg-akt", {
                         fno_btbg : this.fno_btbg,
                         fk_brj : this.result_brj,
+                        fq_brj : this.fq_brj,
                         ftgl_btbg : this.ftgl_btbg,
                         description : this.description,
                         detail_data : this.data_barangs
@@ -189,7 +190,7 @@
                         return;
                     }
 
-                    if (this.fqt_brj==null){
+                    if (this.fq_brj==null){
                         alert("Isi Qty Yang Akan di produsinya dulu")
                         return;
                     }

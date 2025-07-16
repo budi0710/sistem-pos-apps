@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('title','STBJ')
+@section('title','Permintaan BRG')
 @section('main')
 <div id="app" class="app-wrapper">
             <div class="input-group mb-3">
