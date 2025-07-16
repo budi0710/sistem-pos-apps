@@ -317,6 +317,7 @@ Route::post('/generate-id-hbtbg',[H_btbgController::class,'generateNo']);
 Route::post('/generate-kode-sbtbg',[H_btbgController::class,'generateKodeSbtbg']);
 // Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
 Route::post('/proses-hbtbg',[H_btbgController::class,'saveData']);
+Route::post('/proses-hbtbg-akt',[H_btbgController::class,'editBTBG']);
 Route::post('/load-detail-permintaan',[T_btbgController::class, 'loadWhere']);
 
 Route::post('/delete-h-stbj',[H_stbjController::class, 'delete']);
@@ -396,14 +397,13 @@ Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
              $data_header     = $data_header[0];
 
             if ($data_detail_btbg==0){
-                return redirect('pengeluaran_brg/pengeluaran');
+                return redirect('/pengeluaran');
             }
               
             $data_detail_btbg =  L_dbtbg::where('fno_btbg',$fno_btbg)->get();
             $data = array('data_header'=>$data_header,'data_detail'=>$data_detail_btbg);
-
             return view('pengeluaran_brg/add-pengeluaran',$data);
         }else{
-            return redirect('pengeluaran_brg/pengeluaran');
+            return redirect('/pengeluaran');
         }
     });

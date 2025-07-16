@@ -158,4 +158,23 @@ class H_btbgController extends Controller
         
         return $detail ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
+
+    public function editBTBG(Request $request){
+        $fno_btbg = $request->fno_btbg;
+        $data = $request->detail_data;
+
+        for ($i = 0; $i < count($data); $i++) {
+            $master_data = $data[$i];
+            $kode_bg = $master_data['kode_bg'];
+            $fq_btbg_akt = $master_data['fq_btbg_akt'];
+
+            T_btbg::where('kode_bg', $kode_bg)
+                ->where('fno_btbg', $fno_btbg)
+                ->update([
+                    'fq_btbg_akt' => $fq_btbg_akt,
+                ]);
+        }
+
+        return response()->json(['result' => true]);
+    }
 }

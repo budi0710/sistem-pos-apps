@@ -97,7 +97,7 @@
                    <h2>Total Pengeluaran Barang Gudang </h2>
                 </div>
                 <div class="mt-3">
-                    <button class="btn btn-primary w-100 mt-3" >Proses Pengeluaran</button>
+                    <button class="btn btn-primary w-100 mt-3"  @click="prosesBTBG_AKT">Proses Pengeluaran</button>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
             methods: {
                 prosesBTBG_AKT: function(){
                     const $this = this;
-                    axios.post("/proses-hbtbg", {
+                    axios.post("/proses-hbtbg-akt", {
                         fno_btbg : this.fno_btbg,
                         fk_brj : this.result_brj,
                         fq_brj : this.fq_brj,
@@ -144,12 +144,13 @@
                         if (response.data.result){
                                 Swal.fire({
                                     icon: "success",
-                                    title: "GOod",
-                                    text: "Data berhasil disimpan !",
+                                    title: "GOOD",
+                                    text: "Data berhasil disimpan!",
                                     footer: ''
+                                }).then(() => {
+                                    window.location.href = "/pengeluaran";
                                 });
-
-                                _refresh()
+                                //_refresh()
                         }
                     })
                     .catch(function(error) {
@@ -224,8 +225,8 @@
                         //alert('data lebih dari 1')
 
                         // check jika barang nya sama
-                        var BreakException = {};
-                       this.data_barangs.forEach(element => {
+                    var BreakException = {};
+                    this.data_barangs.forEach(element => {
                             if (element['kode_bg']===data.kode_bg){
                                  Swal.fire({
                                     icon: "error",
