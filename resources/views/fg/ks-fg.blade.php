@@ -3,9 +3,10 @@
 @section('main')
 <div id="app" class="app-wrapper">
     <div class="input-group mb-3">
+        <button class="btn btn-primary" @click="loadDataKsFg">Refresh</button>
         <button class="btn btn-outline-secondary" type="button" @click="prosesData">Proses Data</button>
         <select v-model="result_barangs" class="form-select">
-            <option selected>Pilih Barang Jadi</option>
+            <option selected :value="null">Pilih Barang Jadi</option>
             <option v-for="data in barangs" :value="data.fk_brj">@{{ data.fn_brj }}</option>
         </select> |
         <select v-model="years" class="form-select">

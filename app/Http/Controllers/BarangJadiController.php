@@ -103,10 +103,22 @@ class BarangJadiController extends Controller
         $month = $request->month;
         $barang = $request->barang;
 
-        $data = KartuStok_fg::where(DB::raw('YEAR(ftgl_transaksi)'), '=', $year)
+        if ($year!=null && $month==null && $barang==null) { 
+
+             $data = KartuStok_fg::where(DB::raw('YEAR(ftgl_transaksi)'), '=', $year)->get();
+
+        }else if ($year==null && $month!=null && $barang==null){
+             $data = KartuStok_fg::where(DB::raw('MONTH(ftgl_transaksi)'), '=', $month)->get();
+             
+        }else if($barang!=null && $year==null && $month == null){
+            $data = KartuStok_fg::where('fk_brj',$barang)->get();
+        }else{
+             $data = KartuStok_fg::where(DB::raw('YEAR(ftgl_transaksi)'), '=', $year)
                                 ->where(DB::raw('MONTH(ftgl_transaksi)'), '=', $month)
                                 ->where('fk_brj',$barang)->get();
+        }
 
+       
         return $data;
     }
 
