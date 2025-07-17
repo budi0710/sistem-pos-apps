@@ -228,7 +228,6 @@
                             }   
                         });
                         this.data_barangs.push(...$data);
-
                        this.totalBarang()
                     }
                 },

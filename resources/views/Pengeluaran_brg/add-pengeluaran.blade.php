@@ -88,13 +88,13 @@
                             <strong>Qty : @{{data.fq_btbg_akt}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
-                            <button  class="btn btn-primary" @click="hapusData(data.kode_bg)">Hapus</button>
+                            <button  class="btn btn-danger btn-sm" @click="hapusData(data.kode_bg)">Hapus</button>
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div>
-                   <h2>Total Pengeluaran Barang Gudang </h2>
+                   <h2>Total Pengeluaran Barang Gudang @{{total_harga}} </h2>
                 </div>
                 <div class="mt-3">
                     <button class="btn btn-primary w-100 mt-3"  @click="prosesBTBG_AKT">Proses Pengeluaran</button>
@@ -111,6 +111,7 @@
             data: {
                 barangs: null,
                 prosesBTBG : null,
+                total_harga : null,
                 txtQty : 'txtQty',
                 brjs : null,
                 alert: false,
@@ -131,6 +132,16 @@
             },
             methods: {
                 prosesBTBG_AKT: function(){
+                    if (this.data_barangs.length == 0){
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Belum Ada Transaksi Pengeluaran Barang",
+                            footer: ''
+                        });
+                        return;
+                    }
+
                     const $this = this;
                     axios.post("/proses-hbtbg-akt", {
                         fno_btbg : this.fno_btbg,
@@ -208,6 +219,16 @@
                         });
                         return
                     }
+
+                    if (obj>data.fq_btbg){
+                         Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Qty Pengeluaran Melebihi Permintaan",
+                            footer: ''
+                        });
+                        return
+                    }
                     
                     var $data = [{
                         "kode_bg": data.kode_bg,
@@ -219,7 +240,6 @@
 
                     if (this.data_barangs.length == 0){
                         this.data_barangs = ($data);
-
                         this.total_harga =  obj;
                     }else{
                         //alert('data lebih dari 1')
@@ -238,13 +258,15 @@
                             }   
                         });
                         this.data_barangs.push(...$data);
-
-                        var total_harga = 0
+                        this.totalBarang()
+                    }
+                },
+                totalBarang : function(){
+                      var total_harga = 0
                         this.data_barangs.forEach(element => {
-                            total_harga += element['sub_total']
+                            total_harga += parseFloat(element['fq_btbg_akt'])
                         });
                         this.total_harga = total_harga
-                    }
                 },
                 update: function() {
                     if (this.tgl_pos == null) {
