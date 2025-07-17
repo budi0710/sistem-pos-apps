@@ -9,6 +9,8 @@ use App\Models\Barang;
 use App\Models\Customer;
 use App\Models\Karyawan;
 use App\Models\Supplier;
+use App\Models\H_btbg;
+use App\Models\H_krm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,6 +74,25 @@ class DashboardController extends Controller
         /** Jumlah Data Customer */
         $jumlah_customer = DB::table('customer')->count('kode_cus') ?? 0;
 
-        return view('dashboard', compact('pie', 'line', 'column','jumlah_barangs','jumlah_FG','jumlah_karyawan','jumlah_supplier','jumlah_customer'));
+        /** Jumlah Data Permintaan */
+        $jumlah_permintaan = DB::table('h_btbg')->count('fno_btbg') ?? 0;
+
+        /** Jumlah Data STBJ */
+        $jumlah_stbj = DB::table('h_stbj')->count('fno_stbj') ?? 0;
+
+                /** Jumlah Data STBJ */
+        $jumlah_krm = DB::table('h_krm')->count('fno_krm') ?? 0;
+
+        return view('dashboard', compact('pie', 
+                                        'line', 
+                                        'column',
+                                        'jumlah_barangs',
+                                        'jumlah_FG',
+                                        'jumlah_karyawan',
+                                        'jumlah_supplier',
+                                        'jumlah_customer',
+                                        'jumlah_permintaan', 
+                                        'jumlah_stbj',
+                                        'jumlah_krm'));
     }
 }
