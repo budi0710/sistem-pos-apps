@@ -53,14 +53,14 @@
             <tfoot>
                 <tr>
                     <td colspan="4">Total</td>
-                    <td></td>
-                    <td></td>
+                    <td>@{{ totalQtyIn.toFixed(2) }}</td>
+                    <td>@{{ totalQtyOut.toFixed(2) }}</td>
                 </tr>
                 <tr>
                     <td colspan="5">Saldo</td>
-                    <td></td>
+                    <td>@{{ saldo.toFixed(2) }}</td>
                 </tr>
-            </tfoot>
+            </tfoot>    
         </table>
     </div>
 </div>
@@ -137,35 +137,25 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-          },
-          computed: {
-                filteredTransactions() {
-                    let filtered = this.transactions;
-
-                    if (this.selectedYear) {
-                        filtered = filtered.filter(t => new Date(t.tglTransaksi).getFullYear().toString() === this.selectedYear);
-                    }
-                    if (this.selectedMonth) {
-                        filtered = filtered.filter(t => (new Date(t.tglTransaksi).getMonth() + 1).toString() === this.selectedMonth);
-                    }
-                    return filtered;
-                },
-                totalQtyIn() {
-                    return this.filteredTransactions.reduce((sum, transaction) => sum + transaction.qtyIn, 0);
-                },
-                totalQtyOut() {
-                    return this.filteredTransactions.reduce((sum, transaction) => sum + transaction.qtyOut, 0);
-                },
-                saldo() {
-                    return this.totalQtyIn - this.totalQtyOut;
-                }
-            }
+          }
             
         },
         mounted(){
           this.loadData();
           this.loadDataKsFg();
+        },
+
+    computed: {
+        totalQtyIn() {
+            return this.barangs_ks.reduce((total, item) => total + (parseFloat(item.fq_in) || 0), 0);
+        },
+        totalQtyOut() {
+            return this.barangs_ks.reduce((total, item) => total + (parseFloat(item.fq_out) || 0), 0);
+        },
+        saldo() {
+            return this.totalQtyIn - this.totalQtyOut;
         }
+            }
       });
     </script>
 @endsection

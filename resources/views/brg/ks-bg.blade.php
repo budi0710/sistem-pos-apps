@@ -53,12 +53,12 @@
             <tfoot>
                 <tr>
                     <td colspan="4">Total</td>
-                    <td>10</td>
-                    <td>10</td>
+                    <td>@{{ totalQtyIn.toFixed(2) }}</td>
+                    <td>@{{ totalQtyOut.toFixed(2) }}</td>
                 </tr>
                 <tr>
                     <td colspan="5">Saldo</td>
-                    <td>0</td>
+                    <td>@{{ saldo.toFixed(2) }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -146,7 +146,18 @@ const $app =   new Vue({
         mounted(){
           this.loadData();
           this.loadDataKsBg();
+        },
+        computed: {
+        totalQtyIn() {
+            return this.barangs_ks.reduce((total, item) => total + (parseFloat(item.fq_in) || 0), 0);
+        },
+        totalQtyOut() {
+            return this.barangs_ks.reduce((total, item) => total + (parseFloat(item.fq_out) || 0), 0);
+        },
+        saldo() {
+            return this.totalQtyIn - this.totalQtyOut;
         }
+            }
       });
     </script>
 @endsection
