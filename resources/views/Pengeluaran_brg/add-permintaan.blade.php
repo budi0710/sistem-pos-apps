@@ -154,7 +154,7 @@
             methods: {
                 prosesBTBG: function(){
                     const $this = this;
-                    axios.post("/proses-hbtbg-akt", {
+                    axios.post("/proses-hbtbg", {
                         fno_btbg : this.fno_btbg,
                         fk_brj : this.result_brj,
                         fq_brj : this.fq_brj,

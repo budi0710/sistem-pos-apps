@@ -27,7 +27,8 @@
                                 <th>Partno</th>
                                 <th>Satua</th>
                                 <th>Jenis</th>
-                                <th>Qty BTBG</th>
+                                <th>BTBG RCN</th>
+                                <th>BTBG AKT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,7 +38,8 @@
                                 <td>@{{data.partno}}</td>
                                 <td>@{{data.fn_satuan}}</td>
                                 <td>@{{data.fn_jenis}}</td>
-                                <td>@{{data.fq_btbg}}</td>
+                                <td align ="justify">@{{data.fq_btbg}}</td>
+                                <td align ="justify">@{{data.fq_btbg_akt}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -56,6 +56,22 @@ class DashboardController extends Controller
         $column['categories'] = array_values($column['categories']);
         $column['series'] = array_values($column['series']);
         //dd($column);
-        return view('dashboard', compact('pie', 'line', 'column'));
+
+        /** Jumlah Data Barang */
+        $jumlah_barangs = DB::table('barangs')->count('kode_bg') ?? 0;
+
+        /** Jumlah Data Jadi */
+        $jumlah_FG = DB::table('barangjadi')->count('fk_brj') ?? 0;
+
+        /** Jumlah Data Karyawan */
+        $jumlah_karyawan = DB::table('karyawan')->count('fnik') ?? 0;
+
+        /** Jumlah Data Supplier */
+        $jumlah_supplier = DB::table('supplier')->count('kode_sup') ?? 0;
+
+        /** Jumlah Data Customer */
+        $jumlah_customer = DB::table('customer')->count('kode_cus') ?? 0;
+
+        return view('dashboard', compact('pie', 'line', 'column','jumlah_barangs','jumlah_FG','jumlah_karyawan','jumlah_supplier','jumlah_customer'));
     }
 }
