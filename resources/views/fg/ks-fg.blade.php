@@ -95,7 +95,7 @@ const $app =   new Vue({
         el : "#app",
         data: {
                 barangs : null,
-                barangs_ks : null,
+                barangs_ks : [],
                 databarangs : null,
                 result_barangs : null,
                 kode_bg : null,
