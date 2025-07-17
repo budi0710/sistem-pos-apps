@@ -421,3 +421,8 @@ Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
             return redirect('/pengeluaran');
         }
     });
+
+Route::post('/load-years',function(){
+    return date('Y');
+});
+

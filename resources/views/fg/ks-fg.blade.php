@@ -95,17 +95,7 @@ const $app =   new Vue({
                 loading :false,
                 id_edit : null,
                 years : null,
-                year : [
-                    {
-                        year : 2025
-                    },
-                    {
-                        year : 2024
-                    },
-                    {
-                        year : 2023
-                    }
-                ],
+                year : [],
                 bulans : null,
                 bulan : [
                     {
@@ -170,6 +160,30 @@ const $app =   new Vue({
                 ]
         },
         methods:{
+            loadYears : function(){
+                const $this = this;
+                 axios.post("/load-years", {
+                    _token: _TOKEN_
+                })
+                .then(function(response) {
+                    if (response.data) {
+                        let years = response.data;
+
+                        let y = 20;
+                        let new_year = [{
+                            "year":years
+                        }];
+                        for (let index = 0; index < y; index++) {
+                            years -= 1;
+                            new_year.push({
+                                "year":years
+                            });
+                        }
+                        console.log(new_year)
+                        $this.year = new_year;
+                    }
+                })
+            },
             prosesData: function(){
                 const $this = this;
                 axios.post("/proses-data-ks-fg", {
@@ -225,6 +239,7 @@ const $app =   new Vue({
         mounted(){
           this.loadData();
           this.loadDataKsFg();
+          this.loadYears()
         },
 
     computed: {
