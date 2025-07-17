@@ -46,24 +46,25 @@
                     <td>@{{ data.ftgl_transaksi }}</td>
                     <td>@{{ data.fno_bukti }}</td>
                     <td>@{{ data.fket }}</td>
-                    <td class="qty-in">@{{ data.fq_in }}</td>
-                    <td class="qty-out">@{{ data.fq_out }}</td>
+                    <td>@{{ data.fq_in }}</td>
+                    <td>@{{ data.fq_out }}</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="4">Total</td>
-                    <td id="totalQtyIn"></td>
-                    <td id="totalQtyOut"></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td colspan="5">Saldo</td>
-                    <td id="balanceQty"></td>
+                    <td></td>
                 </tr>
             </tfoot>
         </table>
     </div>
 </div>
+
 <script>
     const dropdownBulan = document.getElementById('bulan');
     dropdownBulan.addEventListener('change', function() {
@@ -87,47 +88,6 @@
     }
     populateYears(); // Panggil fungsi untuk mengisi dropdown saat halaman dimuat
   </script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    function calculateTotalsAndBalance() {
-        let totalQtyIn = 0;
-        let totalQtyOut = 0;
-
-        // Get all elements with class 'qty-in'
-        const qtyInElements = document.querySelectorAll('#transactionTableBody .qty-in');
-        qtyInElements.forEach(function(element) {
-            // Parse the text content as a float and add to totalQtyIn
-            totalQtyIn += parseFloat(element.textContent);
-        });
-
-        // Get all elements with class 'qty-out'
-        const qtyOutElements = document.querySelectorAll('#transactionTableBody .qty-out');
-        qtyOutElements.forEach(function(element) {
-            // Parse the text content as a float and add to totalQtyOut
-            totalQtyOut += parseFloat(element.textContent);
-        });
-
-        // Calculate Saldo (Balance)
-        const balance = totalQtyIn - totalQtyOut;
-
-        // Display the totals
-        document.getElementById('totalQtyIn').textContent = totalQtyIn.toFixed(2); // .toFixed(2) for two decimal places
-        document.getElementById('totalQtyOut').textContent = totalQtyOut.toFixed(2);
-
-        // Display the balance
-        document.getElementById('balanceQty').textContent = balance.toFixed(2);
-    }
-
-    // Call the function when the page loads
-        calculateTotalsAndBalance();
-
-        // If you have a "Proses Data" button or filters, you'd call this function
-        // whenever the data in the table changes. For example:
-        // document.querySelector('.btn-primary').addEventListener('click', calculateTotalsAndBalance);
-        });
-  </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 <script>
 const _TOKEN_ = '<?= csrf_token() ?>';
@@ -146,7 +106,7 @@ const $app =   new Vue({
                 id_edit : null
         },
         methods:{
-          loadData : function(){
+            loadData : function(){
               const $this = this;
                     axios.post("/load-data-brj", {
                             _token: _TOKEN_
@@ -162,7 +122,7 @@ const $app =   new Vue({
                             console.log(error);
                         });
                 },
-        loadDataKsFg : function(){
+            loadDataKsFg : function(){
               const $this = this;
                     axios.post("/load-data-ksfg", {
                             _token: _TOKEN_
@@ -177,7 +137,29 @@ const $app =   new Vue({
                         .catch(function(error) {
                             console.log(error);
                         });
-          }
+          },
+          computed: {
+                filteredTransactions() {
+                    let filtered = this.transactions;
+
+                    if (this.selectedYear) {
+                        filtered = filtered.filter(t => new Date(t.tglTransaksi).getFullYear().toString() === this.selectedYear);
+                    }
+                    if (this.selectedMonth) {
+                        filtered = filtered.filter(t => (new Date(t.tglTransaksi).getMonth() + 1).toString() === this.selectedMonth);
+                    }
+                    return filtered;
+                },
+                totalQtyIn() {
+                    return this.filteredTransactions.reduce((sum, transaction) => sum + transaction.qtyIn, 0);
+                },
+                totalQtyOut() {
+                    return this.filteredTransactions.reduce((sum, transaction) => sum + transaction.qtyOut, 0);
+                },
+                saldo() {
+                    return this.totalQtyIn - this.totalQtyOut;
+                }
+            }
             
         },
         mounted(){
