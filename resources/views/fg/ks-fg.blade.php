@@ -22,7 +22,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nama BG</th>
+                    <th>Nama Barang Jadi</th>
                     <th>Tgl Transaksi</th>
                     <th>No Bukti</th>
                     <th>Keterangan</th>
@@ -100,7 +100,7 @@ const $app =   new Vue({
                         year : 2025
                     },
                     {
-                        year : 2024
+                         : 2024
                     },
                     {
                         year : 2023

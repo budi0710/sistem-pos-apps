@@ -187,7 +187,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card mb-3">
                 <div class="card-header">
                     Pie Chart (Penerimaan Barang Produksi)
@@ -197,7 +197,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card mb-3">
                 <div class="card-header">
                     Line Chart (Penerimaan Barang Produksi)
@@ -207,16 +207,17 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-header">
-            Column Chart (Penerimaan Barang Produksi)
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    Column Chart (Penerimaan Barang Produksi)
+                </div>
+                <div class="card-body">
+                    <div id="column_chart"></div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <div id="column_chart"></div>
-        </div>
     </div>
-
 <script>
         Highcharts.chart('column_chart', {
             chart: {
@@ -341,7 +342,7 @@
                         distance: -40,
                         format: '{point.percentage:.1f}%',
                         style: {
-                            fontSize: '1.2em',
+                            fontSize: '0.5 em',
                             textOutline: 'none',
                             opacity: 0.7
                         },
