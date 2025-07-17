@@ -11,6 +11,7 @@ use App\Models\Karyawan;
 use App\Models\Supplier;
 use App\Models\H_btbg;
 use App\Models\H_krm;
+use App\Models\H_poc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -80,8 +81,11 @@ class DashboardController extends Controller
         /** Jumlah Data STBJ */
         $jumlah_stbj = DB::table('h_stbj')->count('fno_stbj') ?? 0;
 
-                /** Jumlah Data STBJ */
+        /** Jumlah Data STBJ */
         $jumlah_krm = DB::table('h_krm')->count('fno_krm') ?? 0;
+
+        /** Jumlah Data PO Customer */
+        $jumlah_poc = DB::table('h_poc')->count('fno_poc') ?? 0;
 
         return view('dashboard', compact('pie', 
                                         'line', 
@@ -93,6 +97,6 @@ class DashboardController extends Controller
                                         'jumlah_customer',
                                         'jumlah_permintaan', 
                                         'jumlah_stbj',
-                                        'jumlah_krm'));
+                                        'jumlah_krm','jumlah_poc'));
     }
 }

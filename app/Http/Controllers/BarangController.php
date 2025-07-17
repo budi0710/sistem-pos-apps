@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Barang;
+use App\Models\KartuStok_bg;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -92,6 +93,26 @@ public function load(){
      public function search(Request $request){
         $barang = Barang::where('partname','like','%'.$request->search.'%')->get();
         return ($barang);
+    }
+
+    public function kartustok(Request $request){
+        $tahun = $request->input('tahun');
+        $bulan = $request->input('bulan');
+        $part_name = $request->input('fn_BG');
+
+        $stok = KartuStok::whereYear('ftgl_transaksi', $tahun)
+        ->whereMonth('ftgl_transaksi', $bulan)
+        ->when($part_name, function($query) use ($part_name) {
+            return $query->where('fn_BG', 'LIKE', "%$fn_BG%");
+        })
+        ->orderBy('ftgl_transaksi')
+        ->get();
+
+    return response()->json($stok);
+    }
+
+    public function loadDataks(){
+        return KartuStok_bg::all();
     }
 
 }

@@ -65,8 +65,8 @@
                             <img :src="viewImage(data.fgambar_brg)" alt="" width="100" height="100">
                             <div class="text-primary" >@{{ data.partname }}</div>
                             <div class="text-primary" >
-                                <label for="colFormLabel" >Harga</label>
-                                @{{_moneyFormat(data.fharga)}}
+                                <label for="colFormLabel" >Qty PO</label>
+                                @{{data.fq_pos}}
                                 <input type="number" class="form-control"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  
                                 placeholder="Isi Qty" style="width: 90px;">
                             </div>
@@ -209,6 +209,16 @@
                             icon: "error",
                             title: "Oops...",
                             text: "Qty harus lebih dari 0",
+                            footer: ''
+                        });
+                        return
+                    }
+
+                    if (obj>data.fq_pos){
+                         Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Qty Beli Melebihi Qty PO",
                             footer: ''
                         });
                         return

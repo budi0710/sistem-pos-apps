@@ -67,8 +67,8 @@
                             <img :src="viewImage(data.fgambar)" alt="" width="100" height="100">
                             <div class="text-primary" >@{{ data.fn_brj }}</div>
                             <div class="text-primary" > 
-                                <label for="colFormLabel" >Harga</label>
-                                @{{ _moneyFormat(data.fharga) }}
+                                <label for="colFormLabel" >Qty POC</label>
+                                @{{ data.fq_poc }}
                             <input type="number" class="form-control qty-input"  :id="txtQty+i" @keyup.enter="enterQty(data,i)"  placeholder="Isi Qty"  style="width: 90px;"/>
                             </div>
                         </div>
@@ -95,10 +95,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <div><strong>@{{ data.fk_brj }} | @{{ data.fn_brj }} | @{{ data.fnos_poc }}</strong></div>
-                            <strong>@{{ _moneyFormat(data.fharga)}} x Qty : @{{data.fq_poc}}</strong>
+                            <strong> Qty Kirim : @{{data.fq_krm}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
-                            <span class="ms-3">@{{ _moneyFormat(data.sub_total) }}</span>  |  <button  @click="hapusData" class="btn btn-primary"  >Hapus</button>
+                            <span class="ms-3">@{{ _moneyFormat(data.sub_total) }}</span>  |  <button class="btn btn-danger btn-sm" @click="hapusData(data.fnos_poc)" >Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -229,6 +229,16 @@
                         });
                         return
                     }
+
+                    if (obj>data.fq_poc){
+                         Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Qty Kirim Melebihi Qty POC",
+                            footer: ''
+                        });
+                        return
+                    }
                     
                     var $data = [{
                         "fk_brj": data.fk_brj,
@@ -236,7 +246,7 @@
                         "fnos_poc": data.fnos_poc,
                         "fq_krm": obj,
                         "fharga" : data.fharga,
-                        "sub_total" : data.fharga * obj
+                        "sub_total" : obj
                     }]
                     // console.table($data);
                     // console.log($data.length)
@@ -244,7 +254,7 @@
                     if (this.data_barangs.length == 0){
                         this.data_barangs = ($data);
 
-                        this.total_harga = data.fharga * obj;
+                        this.total_harga = obj;
                     }else{
                         //alert('data lebih dari 1')
 
@@ -263,13 +273,21 @@
                         });
                         this.data_barangs.push(...$data);
 
-                        var total_harga = 0
-                        this.data_barangs.forEach(element => {
-                            total_harga += element['sub_total']
-                        });
-                        this.total_harga = total_harga
+                        //var total_harga = 0
+                        //this.data_barangs.forEach(element => {
+                           // total_harga += element['sub_total']
+                        //});
+                        this.totalBarang()
                     }
                     },
+
+                totalBarang : function(){
+                      var total_harga = 0
+                        this.data_barangs.forEach(element => {
+                            total_harga += parseFloat(element['fq_krm'])
+                        });
+                        this.total_harga = total_harga
+                },    
                 loadBarangCustomer: function(){
                     const $this = this;
                     axios.post("/load-data-cus", {
@@ -368,9 +386,10 @@
                     localStorage.clear()
                     _refresh()
                     },
-                hapusData: function() {
-                    delete this.data_barangs["fk_brj"]
-                    },
+                hapusData : function(fnos_poc){
+                   this.data_barangs = this.data_barangs.filter(item => item.fnos_poc !== fnos_poc);
+                    this.totalBarang();
+                },
                 searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()

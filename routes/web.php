@@ -238,6 +238,10 @@ Route::post('/save-brg',[BarangController::class, 'save']);
 Route::post('/delete-brg',[BarangController::class, 'delete']);
 Route::post('/update-brg',[BarangController::class, 'update']);
 Route::post('/search-brg',[BarangController::class, 'search']);
+Route::post('/load-data-ksbg',[BarangController::class, 'loadDataks']);
+Route::get('/ks-bg', function () {
+        return view('brg/ks-bg');
+    });
 
 Route::post('/load-brj',[BarangJadiController::class, 'load']);
 Route::post('/load-data-brj',[BarangJadiController::class, 'loadData']);
@@ -245,6 +249,12 @@ Route::post('/save-brj',[BarangJadiController::class, 'save']);
 Route::post('/delete-brj',[BarangJadiController::class, 'delete']);
 Route::post('/update-brj',[BarangJadiController::class, 'update']);
 Route::post('/search-brj',[BarangJadiController::class, 'search']);
+Route::post('/load-data-ksfg',[BarangJadiController::class, 'loadDataks']);
+
+Route::get('/ks-fg', function () {
+        return view('fg/ks-fg');
+    });
+
 
 Route::post('/load-satuan',[SatuanController::class, 'load']);
 Route::post('/load-data-satuan',[SatuanController::class, 'loadData']);

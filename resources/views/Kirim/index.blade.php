@@ -26,7 +26,7 @@
                                 <th>Partname</th>
                                 <th>Partno</th>
                                 <th>Harga</th>
-                                <th>Qty POS</th>
+                                <th>Qty Kirim</th>
                                 <th>Jumlah</th>
                             </tr>
                         </thead>

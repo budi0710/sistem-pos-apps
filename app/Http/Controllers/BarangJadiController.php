@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\BarangJadi;
+use App\Models\KartuStok_fg;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -90,6 +91,10 @@ class BarangJadiController extends Controller
      public function search(Request $request){
         $barangjadi = BarangJadi::where('fn_brj','like','%'.$request->search.'%')->get();
         return ($barangjadi);
+    }
+
+    public function loadDataks(){
+        return KartuStok_fg::all();
     }
 
 }
