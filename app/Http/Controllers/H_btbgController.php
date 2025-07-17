@@ -154,9 +154,9 @@ class H_btbgController extends Controller
         $H_btbg->delete();
 
         // delete data di table detail berdasarkan fno_pos
-        $t_btbg = T_btbg::where('fno_poc',$fno_poc)->delete();
+       // $t_btbg = T_btbg::where('fno_poc',$fno_poc)->delete();
         
-        return $detail ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
+       // return $t_btbg ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 
     public function editBTBG(Request $request){

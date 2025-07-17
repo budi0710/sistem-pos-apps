@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangJadi;
 use App\Models\KartuStok_fg;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class BarangJadiController extends Controller
@@ -95,6 +96,18 @@ class BarangJadiController extends Controller
 
     public function loadDataks(){
         return KartuStok_fg::all();
+    }
+
+    public function prosesDataFg(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        $barang = $request->barang;
+
+        $data = KartuStok_fg::where(DB::raw('YEAR(ftgl_transaksi)'), '=', $year)
+                                ->where(DB::raw('MONTH(ftgl_transaksi)'), '=', $month)
+                                ->where('fk_brj',$barang)->get();
+
+        return $data;
     }
 
 }

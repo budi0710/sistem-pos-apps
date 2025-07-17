@@ -34,6 +34,8 @@ use App\Models\L_dbtbg;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Middleware\UserMiddleware;
+use App\Models\BarangJadi;
+
 //REGISTER
 // Route::get('register', [RegisterController::class, 'register'])->name('register');
 // Route::post('register/action', [RegisterController::class, 'actionregister'])->name('actionregister');
@@ -318,6 +320,8 @@ Route::post('/load-hkrm-customer',[H_krm_Controller::class, 'load']);
 Route::post('/load-detail-kirim',[H_krm_Controller::class, 'loadWhere']);
 
 //Inventory Barang
+
+Route::post('/proses-data-ks-fg',[BarangJadiController::class, 'prosesDataFg']);
 
 Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
 Route::post('/load-hbtbg-akt',[H_btbgController::class, 'load_Akt']);
