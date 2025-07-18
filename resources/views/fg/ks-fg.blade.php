@@ -3,18 +3,19 @@
 @section('main')
 <div id="app" class="app-wrapper">
     <div class="input-group mb-3">
+        <button class="btn btn-primary" @click="loadDataKsFg">Refresh</button>
         <button class="btn btn-outline-secondary" type="button" @click="prosesData">Proses Data</button>
         <select v-model="result_barangs" class="form-select">
-            <option selected>Pilih Barang Jadi</option>
+            <option selected :value="null">Pilih Barang Jadi</option>
             <option v-for="data in barangs" :value="data.fk_brj">@{{ data.fn_brj }}</option>
         </select> |
         <select v-model="years" class="form-select">
-            <option selected>Pilih Tahun</option>
+            <option selected :value="null">Pilih Tahun</option>
             <option :value="y.year" v-for="y in year">@{{y.year}}</option>
         </select>
         <select v-model="bulans" class="form-select">
-            <option selected>Pilih Bulan</option>
-             <option :value="b.id" v-for="b in bulan">@{{b.name}}</option> 
+            <option selected :value="null">Pilih Bulan</option>
+            <option :value="b.id" v-for="b in bulan">@{{b.name}}</option> 
         </select>
     </div>
 
@@ -22,7 +23,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Nama Barang Jadi</th>
+                    <th>Nama BG</th>
                     <th>Tgl Transaksi</th>
                     <th>No Bukti</th>
                     <th>Keterangan</th>
@@ -95,17 +96,7 @@ const $app =   new Vue({
                 loading :false,
                 id_edit : null,
                 years : null,
-                year : [
-                    {
-                        year : 2025
-                    },
-                    {
-                         : 2024
-                    },
-                    {
-                        year : 2023
-                    }
-                ],
+                year : [],
                 bulans : null,
                 bulan : [
                     {
@@ -170,6 +161,30 @@ const $app =   new Vue({
                 ]
         },
         methods:{
+            loadYears : function(){
+                const $this = this;
+                 axios.post("/load-years", {
+                    _token: _TOKEN_
+                })
+                .then(function(response) {
+                    if (response.data) {
+                        let years = response.data;
+
+                        let y = 5;
+                        let new_year = [{
+                            "year":years
+                        }];
+                        for (let index = 0; index < y; index++) {
+                            years -= 1;
+                            new_year.push({
+                                "year":years
+                            });
+                        }
+                        console.log(new_year)
+                        $this.year = new_year;
+                    }
+                })
+            },
             prosesData: function(){
                 const $this = this;
                 axios.post("/proses-data-ks-fg", {
@@ -225,6 +240,7 @@ const $app =   new Vue({
         mounted(){
           this.loadData();
           this.loadDataKsFg();
+          this.loadYears()
         },
 
     computed: {
