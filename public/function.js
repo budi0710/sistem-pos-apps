@@ -197,6 +197,15 @@ function hanyaAngka(evt) {
     return true;
 }
 
+function formatDate(dateTimeString) {
+    if (!dateTimeString) return '';
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // +1 because months are 0-indexed
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 function autoFormatNPWP(NPWPString) {
     try {
         var cleaned = ("" + NPWPString).replace(/\D/g, "");

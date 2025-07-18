@@ -73,13 +73,12 @@ Route::middleware([UserMiddleware::class])->group(function () {
     return view('setting',$data);
     });
 
-    Route::get('/home',[DashboardController::class, 'dashboard']);
+    // Route::get('/home',[DashboardController::class, 'dashboard'],[DashboardController::class, 'dashboard_kirim']);
+Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
 
-    //Route::get('/dashboard',[DashboardController::class, 'dashboard']);
-
-    Route::get('/dasboard', function () {
-        return view('layouts.dasboard');
-    });
+    // Route::get('/dasboard', function () {
+    //     return view('layouts.dasboard');
+    // });
 
     Route::get('/about', function () {
         return view('about');

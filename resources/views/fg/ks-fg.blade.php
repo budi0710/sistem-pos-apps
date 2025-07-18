@@ -8,7 +8,7 @@
         <select v-model="result_barangs" class="form-select">
             <option selected :value="null">Pilih Barang Jadi</option>
             <option v-for="data in barangs" :value="data.fk_brj">@{{ data.fn_brj }}</option>
-        </select> |
+        </select>
         <select v-model="years" class="form-select">
             <option selected :value="null">Pilih Tahun</option>
             <option :value="y.year" v-for="y in year">@{{y.year}}</option>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>Nama BG</th>
@@ -42,14 +42,14 @@
                 </tr>
             </tbody>
             <tfoot>
-                <tr>
-                    <td colspan="4">Total</td>
-                    <td>@{{ totalQtyIn.toFixed(2) }}</td>
-                    <td>@{{ totalQtyOut.toFixed(2) }}</td>
+                <tr class="table-light">
+                    <td colspan="4" class="fw-bold">Total</td>
+                    <td  class="fw-bold">@{{ totalQtyIn.toFixed(2) }}</td>
+                    <td  class="fw-bold">@{{ totalQtyOut.toFixed(2) }}</td>
                 </tr>
-                <tr>
-                    <td colspan="5">Saldo</td>
-                    <td>@{{ saldo.toFixed(2) }}</td>
+                <tr class="table-light"  class="fw-bold">
+                    <td colspan="5" class="fw-bold">Saldo</td>
+                    <td  class="fw-bold">@{{ saldo.toFixed(2) }}</td>
                 </tr>
             </tfoot>    
         </table>
@@ -88,6 +88,7 @@ const $app =   new Vue({
                 barangs : null,
                 barangs_ks : [],
                 databarangs : null,
+                formatDate : null,
                 result_barangs : null,
                 kode_bg : null,
                 partname : null,

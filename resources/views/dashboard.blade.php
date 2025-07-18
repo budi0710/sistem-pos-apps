@@ -186,6 +186,7 @@
         </div>
     </div>
 
+    <!-- Cart STBJ -->
     <div class="row">
         <div class="col-md-4">
             <div class="card mb-3">
@@ -218,6 +219,32 @@
             </div>
         </div>
     </div>
+
+     <!-- Cart Kirim -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    Line Chart (Kirim Barang Produksi)
+                </div>
+                <div class="card-body">
+                    <div id="line_chart_kirim"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    Column Chart (Kirim Barang Produksi)
+                </div>
+                <div class="card-body">
+                    <div id="column_chart_kirim"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- JS Cart STBJ -->
 <script>
         Highcharts.chart('column_chart', {
             chart: {
@@ -237,7 +264,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Sales',
+                    text: 'STBJ',
                 },
                 labels: {
                     overflow: 'justify'
@@ -278,7 +305,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Sales'
+                    text: 'Stbj'
                 }
             },
 
@@ -301,7 +328,7 @@
             },
 
             series: [{
-                name: 'Sales',
+                name: 'Tahun',
                 data: <?= json_encode($line['data']) ?>
             }],
 
@@ -357,7 +384,152 @@
             series: [{
                 name: 'Total',
                 colorByPoint: true,
-                data: <?= json_encode($pie) ?>
+                data: <?= json_encode($pie_stbj) ?>
+            }]
+        });
+    </script>
+
+
+<script>
+        Highcharts.chart('column_chart_kirim', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Sum delivery of Product Grouped by Year Chart',
+            },
+            xAxis: {
+                categories: <?= json_encode($column_kirim['categories']) ?>,
+                title: {
+                    text: null
+                },
+                gridLineWidth: 1,
+                lineWidth: 0
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Sales',
+                },
+                labels: {
+                    overflow: 'justify'
+                },
+                gridLineWidth: 0
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: '50%',
+                    dataLabels: {
+                        enabled: true
+                    },
+                    groupPadding: 0.1
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -40,
+                y: 80,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: <?= json_encode($column_kirim['series']) ?>
+        });
+    </script>
+    <script>
+        Highcharts.chart('line_chart_kirim', {
+
+            title: {
+                text: 'Sum of Delivery  Chart',
+            },
+            yAxis: {
+                title: {
+                    text: 'Sales'
+                }
+            },
+
+            xAxis: {
+                categories: <?= json_encode($line_kirim['categories']) ?>
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+
+            plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                }
+            },
+
+            series: [{
+                name: 'Sales',
+                data: <?= json_encode($line_kirim['data']) ?>
+            }],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+
+        });
+    </script>
+    <script>
+        Highcharts.chart('pie_chart_kirim', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Product Count by Category Chart'
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: [{
+                        enabled: true,
+                        distance: 20
+                    }, {
+                        enabled: true,
+                        distance: -40,
+                        format: '{point.percentage:.1f}%',
+                        style: {
+                            fontSize: '0.5 em',
+                            textOutline: 'none',
+                            opacity: 0.7
+                        },
+                        filter: {
+                            operator: '>',
+                            property: 'percentage',
+                            value: 10
+                        }
+                    }]
+                }
+            },
+            series: [{
+                name: 'Total',
+                colorByPoint: true,
+                data: <?= json_encode($pie_kirim) ?>
             }]
         });
     </script>
