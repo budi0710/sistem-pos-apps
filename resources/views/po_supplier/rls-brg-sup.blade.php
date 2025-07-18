@@ -28,9 +28,8 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Barang Gudang</label>
                     <div class="col-sm-9">
-                    <select class="form-select form-select-lg mb-3" v-model="result_barangs" aria-label=".form-select-lg example">
-                        <option selected>Pilih Nama Supplier</option>
-                        <option v-for="data in barangs" :value="data.kode_bg">@{{data.partname}}</option>
+                    <select class="form-select form-select-lg mb-3" v-model="result_barangs" aria-label=".form-select-lg example" id="dropdownSearch">
+                        <option v-for="data in barangs" :value="data.kode_bg"  class="dropdown-item">@{{data.partname}}</option>
                     </select>
                     </div>
                 </div>
@@ -166,6 +165,19 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const searchInput = document.getElementById("dropdownSearch");
+    const dropdownItems = document.querySelectorAll(".dropdown-item");
+
+    searchInput.addEventListener("keyup", function() {
+      const filter = this.value.toLowerCase();
+      dropdownItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(filter) ? "block" : "none";
+      });
+    });
+  </script>
 
 <script>
     // buat object kosong 

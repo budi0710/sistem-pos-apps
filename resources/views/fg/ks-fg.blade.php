@@ -23,7 +23,7 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Nama BG</th>
+                    <th>Barang Jadi</th>
                     <th>Tgl Transaksi</th>
                     <th>No Bukti</th>
                     <th>Keterangan</th>

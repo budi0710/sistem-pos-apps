@@ -251,7 +251,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Sum of Product Grouped by Year Chart',
+                text: 'Sum of STBJ Product Grouped by Year Chart',
             },
             xAxis: {
                 categories: <?= json_encode($column['categories']) ?>,

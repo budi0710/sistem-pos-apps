@@ -240,6 +240,7 @@ Route::post('/delete-brg',[BarangController::class, 'delete']);
 Route::post('/update-brg',[BarangController::class, 'update']);
 Route::post('/search-brg',[BarangController::class, 'search']);
 Route::post('/load-data-ksbg',[BarangController::class, 'loadDataks']);
+Route::post('/proses-data-ks-bg',[BarangController::class, 'prosesDataBG']);
 Route::get('/ks-bg', function () {
         return view('brg/ks-bg');
     });
@@ -251,6 +252,7 @@ Route::post('/delete-brj',[BarangJadiController::class, 'delete']);
 Route::post('/update-brj',[BarangJadiController::class, 'update']);
 Route::post('/search-brj',[BarangJadiController::class, 'search']);
 Route::post('/load-data-ksfg',[BarangJadiController::class, 'loadDataks']);
+Route::post('/proses-data-ks-fg',[BarangJadiController::class, 'prosesDataFg']);
 
 Route::get('/ks-fg', function () {
         return view('fg/ks-fg');
@@ -320,7 +322,7 @@ Route::post('/load-detail-kirim',[H_krm_Controller::class, 'loadWhere']);
 
 //Inventory Barang
 
-Route::post('/proses-data-ks-fg',[BarangJadiController::class, 'prosesDataFg']);
+
 
 Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
 Route::post('/load-hbtbg-akt',[H_btbgController::class, 'load_Akt']);

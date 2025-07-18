@@ -5,6 +5,7 @@ use App\Models\Barang;
 use App\Models\KartuStok_bg;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 
 class BarangController extends Controller
 {
@@ -113,6 +114,25 @@ public function load(){
 
     public function loadDataks(){
         return KartuStok_bg::all();
+    }
+
+    public function prosesDataBG(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        $barang = $request->barang;
+
+        if ($year!=null && $month==null && $barang==null) { 
+             $data = KartuStok_bg::where(DB::raw('YEAR(ftgl_transaksi)'), '=', $year)->get();
+        }else if ($year==null && $month!=null && $barang==null){
+             $data = KartuStok_bg::where(DB::raw('MONTH(ftgl_transaksi)'), '=', $month)->get();
+        }else if($barang!=null && $year==null && $month == null){
+            $data = KartuStok_bg::where('kode_bg',$barang)->get();
+        }else{
+             $data = KartuStok_bg::where(DB::raw('YEAR(ftgl_transaksi)'), '=', $year)
+                                ->where(DB::raw('MONTH(ftgl_transaksi)'), '=', $month)
+                                ->where('kode_bg',$barang)->get();
+        }
+        return $data;
     }
 
 }
