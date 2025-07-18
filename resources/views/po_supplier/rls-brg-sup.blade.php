@@ -18,23 +18,19 @@
                     <div class="row mb-2">
                         <label class="col-sm-3 col-form-label">Nama Supplier</label>
                         <div class="col-sm-9">
-                            <select class="form-select form-select-lg mb-3" v-model="result_supplier">
-                                <option selected disabled>Pilih Nama Supplier</option>
-                                <option v-for="data in suppliers" :key="data.kode_sup" :value="data.kode_sup">@{{data.nama_sup}}</option>
-                            </select>
-                            {{-- <v-select
-                                v-if="suppliers.length"
+                            <v-select
+                                ref="supplierSelect"
                                 :options="suppliers.map(b => ({ label: b.nama_sup, value: b.kode_sup }))"
                                 v-model="result_supplier"
-                                placeholder="Pilih atau Cari Supplier"
+                                :reduce="supplier => supplier.value"
+                                :placeholder="suppliers.length ? 'Pilih atau Cari Supplier' : 'Loading supplier...'"
                                 label="label">
-                            </v-select> --}}
+                            </v-select>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <label class="col-sm-3 col-form-label">Nama Barang Gudang</label>
                         <div class="col-sm-9">
-                            <!-- Vue Select Search -->
                             <v-select
                                 v-if="barangs.length"
                                 :options="barangs.map(b => ({ label: b.partname, value: b.kode_bg }))"
@@ -160,7 +156,9 @@ const $app = new Vue({
         },
         loadSupplier() {
             axios.post("/load-data-sup", { _token: _TOKEN_ })
-                 .then(res => { this.suppliers = res.data; });
+                .then(res => {this.suppliers = res.data || []; 
+                })
+                .catch(err => console.error("Gagal load supplier:", err));
         },
         loadBarangs() {
             axios.post("/load-data-brg", { _token: _TOKEN_ })
@@ -189,6 +187,11 @@ const $app = new Vue({
                         console.log(error);
                     });
              },
+
+                 // Tambahan: fungsi cek apakah supplier valid
+            checkSupplier() {
+                    return this.suppliers.some(s => s.kode_sup === this.result_supplier);
+                },
             deleteData: function(id, fn_brg_sup) {
                     if (id) {
                         const $this = this;
@@ -229,6 +232,20 @@ const $app = new Vue({
                     }
                 },
         save() {
+        // Validasi sebelum simpan
+            if (!this.result_supplier) {
+                alert("Supplier belum dipilih!");
+                // Fokus ke input v-select
+                this.$nextTick(() => {
+                    const input = this.$refs.supplierSelect?.$el.querySelector('input');
+                    if (input) input.focus();
+                });
+                return;
+            }
+            if (!this.checkSupplier()) {
+                alert("Kode Supplier tidak valid!");
+                return;
+            }
             axios.post("save-rls-sup", {
                 _token: _TOKEN_,
                 result_supplier: this.result_supplier,
@@ -252,7 +269,12 @@ const $app = new Vue({
         this.loadSupplier();
         this.loadBarangs();
         this.generateId();
+    },
+    computed: {
+    isSupplierValid() {
+        return this.result_supplier && this.checkSupplier();
     }
+}
 });
 </script>
 @endsection
