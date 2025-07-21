@@ -400,7 +400,7 @@ Route::get('/absensi', function () {
         return view('absen');
     });
 
-Route::get('/dashboard',[DashboardController::class, 'dashboard']);
+//Route::get('/dashboard',[DashboardController::class, 'dashboard']);
 
 Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
         $data = L_hbtbg::where('fno_btbg',$fno_btbg)->count();

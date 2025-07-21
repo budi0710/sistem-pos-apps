@@ -16,6 +16,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="row mb-2">
+                        <label class="col-sm-3 col-form-label">No RBS</label>
+                        <div class="col-sm-9">
+                            <input type="text" v-model="fno_rbs" disabled placeholder="No RBS" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
                         <label class="col-sm-3 col-form-label">Nama Supplier</label>
                         <div class="col-sm-9">
                             <v-select
@@ -32,6 +38,7 @@
                         <label class="col-sm-3 col-form-label">Nama Barang Gudang</label>
                         <div class="col-sm-9">
                             <v-select
+                                ref="barangSelect"
                                 v-if="barangs.length"
                                 :options="barangs.map(b => ({ label: b.partname, value: b.kode_bg }))"
                                 v-model="result_barangs"
@@ -44,28 +51,20 @@
                     <div class="row mb-2">
                         <label class="col-sm-3 col-form-label">Nama Barang Supplier</label>
                         <div class="col-sm-9">
-                            <input type="text" v-model="fn_brg_sup" placeholder="Nama Barang Supplier" class="form-control">
+                            <input type="text" v-model="fn_brg_sup" ref="fn_brg_sup" placeholder="Nama Barang Supplier" class="form-control">
                         </div>
                     </div>
-
-                    <div class="row mb-2">
-                        <label class="col-sm-3 col-form-label">No RBS</label>
-                        <div class="col-sm-9">
-                            <input type="text" v-model="fno_rbs" disabled placeholder="No RBS" class="form-control">
-                        </div>
-                    </div>
-
                     <div class="row mb-2">
                         <label class="col-sm-3 col-form-label">Harga Beli</label>
                         <div class="col-sm-9">
-                            <input type="number" v-model="fharga_beli" placeholder="Harga Beli" class="form-control" maxlength="10">
+                            <input type="number" v-model="fharga_beli" ref="fharga_beli" placeholder="Harga Beli" class="form-control" maxlength="10">
                         </div>
                     </div>
 
                     <div class="row mb-2">
                         <label class="col-sm-3 col-form-label">Satuan Beli</label>
                         <div class="col-sm-9">
-                            <input type="text" v-model="fsatuan_beli" placeholder="Satuan Beli" class="form-control" maxlength="10">
+                            <input type="text" v-model="fsatuan_beli" ref="fsatuan_beli" placeholder="Satuan Beli" class="form-control" maxlength="10">
                         </div>
                     </div>
                 </div>
