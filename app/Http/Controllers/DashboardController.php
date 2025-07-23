@@ -182,7 +182,10 @@ $column['series'] = array_values($seriesData);
             ->groupByRaw('fn_jns_brj, YEAR(ftgl_krm)')->get();
 
         /** PIE CHART */
-        $column_kirim = [];
+        $column_kirim = [
+            'categories' => [],
+            'series' => []
+        ];
         foreach ($rows as $row) {
             $column_kirim['categories'][$row->ftgl_krm] = $row->ftgl_krm;
             $column_kirim['series'][$row->fn_jns_brj]['name'] = $row->fn_jns_brj;
