@@ -310,7 +310,7 @@
             },
 
             xAxis: {
-                categories: <?= json_encode($line['categories']) ?>
+                categories: {!! json_encode($line['categories'] ?? []) !!}
             },
 
             legend: {
@@ -455,7 +455,7 @@
             },
 
             xAxis: {
-                categories: <?= json_encode($line_kirim['categories']) ?>
+                categories: {!! json_encode($line_kirim['categories'] ?? []) !!}
             },
 
             legend: {
