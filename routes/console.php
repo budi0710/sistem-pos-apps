@@ -20,7 +20,7 @@ Artisan::command('insert', function () {
         'latitude' => '123',
         'longitude' => '123',
         'radius' => 5,
-        'name_company'=> 'test',
+        'name_company'=> 'PT AAP',
         'logo'=> '-'
     ]);
 })->purpose('');

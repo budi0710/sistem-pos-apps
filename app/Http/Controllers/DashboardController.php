@@ -21,45 +21,99 @@ class DashboardController extends Controller
     public function getDashboardData()
     {
         /** START IE CHART */
-        $rows = BarangJadi::selectRaw('fn_jns_brj, COUNT(*) AS total')
-            ->join('jenisbrj', 'jenisbrj.fk_jns_brj', 'barangjadi.fk_jns_brj')
-            ->groupBy('fn_jns_brj')->get();
-        $pie_stbj = [];
-        foreach ($rows as $row) {
-            $pie_stbj[] = [
-                'name' =>  $row->fn_jns_brj,
-                'y' =>  $row->total,
-            ];
-        }
-        $rows = T_stbj::selectRaw('MAX(ftgl_stbj) AS ftgl_stbj, SUM(fq_stbj) AS total')
-            ->join('h_stbj', 'h_stbj.fno_stbj', 't_stbj.fno_stbj')
-            ->groupByRaw('YEAR(ftgl_stbj), MONTH(ftgl_stbj)')->get();
-        /** END PIE CHART */
+/** PIE CHART */
+$rows = BarangJadi::selectRaw('fn_jns_brj, COUNT(*) AS total')
+    ->join('jenisbrj', 'jenisbrj.fk_jns_brj', 'barangjadi.fk_jns_brj')
+    ->groupBy('fn_jns_brj')->get();
 
-        /** LINE CHART */
-        $line = [];
-        foreach ($rows as $row) {
-            $line['categories'][] = date('M-Y', strtotime($row->ftgl_stbj));
-            $line['data'][] = $row->total * 1;
-        }
-        $rows = T_stbj::selectRaw('fn_jns_brj, YEAR(ftgl_stbj) AS ftgl_stbj, SUM(fq_stbj) AS total')
-            ->join('h_stbj', 'h_stbj.fno_stbj', 't_stbj.fno_stbj')
-            ->join('barangjadi', 'barangjadi.fk_brj', 't_stbj.fk_brj')
-            ->join('jenisbrj', 'jenisbrj.fk_jns_brj', 'barangjadi.fk_jns_brj')
-            ->groupByRaw('fn_jns_brj, YEAR(ftgl_stbj)')->get();
+$pie_stbj = [];
+foreach ($rows as $row) {
+    $pie_stbj[] = [
+        'name' =>  $row->fn_jns_brj,
+        'y' =>  $row->total,
+    ];
+}
 
-        /** PIE CHART */
-        $column = [];
-        foreach ($rows as $row) {
-            $column['categories'][$row->ftgl_stbj] = $row->ftgl_stbj;
-            $column['series'][$row->fn_jns_brj]['name'] = $row->fn_jns_brj;
-            $column['series'][$row->fn_jns_brj]['data'][$row->ftgl_stbj] = $row->total * 1;
+/** LINE CHART (Bulanan) */
+$rows = T_stbj::selectRaw('MAX(ftgl_stbj) AS ftgl_stbj, SUM(fq_stbj) AS total')
+    ->join('h_stbj', 'h_stbj.fno_stbj', 't_stbj.fno_stbj')
+    ->groupByRaw('YEAR(ftgl_stbj), MONTH(ftgl_stbj)')
+    ->orderByRaw('YEAR(ftgl_stbj), MONTH(ftgl_stbj)')
+    ->get();
+
+$line = ['categories' => [], 'data' => []];
+foreach ($rows as $row) {
+    $line['categories'][] = date('M-Y', strtotime($row->ftgl_stbj));
+    $line['data'][] = $row->total * 1;
+}
+
+// Lengkapi bulan yang hilang agar tetap muncul di grafik
+if (!empty($line['categories'])) {
+    $firstDate = strtotime(reset($line['categories']));
+    $lastDate  = strtotime(end($line['categories']));
+
+    $allMonths = [];
+    while ($firstDate <= $lastDate) {
+        $allMonths[] = date('M-Y', $firstDate);
+        $firstDate = strtotime('+1 month', $firstDate);
+    }
+
+    // Pastikan semua bulan ada di categories & data
+    $filledData = [];
+    foreach ($allMonths as $month) {
+        $key = array_search($month, $line['categories']);
+        $filledData[] = ($key !== false) ? $line['data'][$key] : 0;
+    }
+
+    $line['categories'] = $allMonths;
+    $line['data'] = $filledData;
+}
+
+/** COLUMN CHART (Tahunan per Jenis) */
+$rows = T_stbj::selectRaw('fn_jns_brj, YEAR(ftgl_stbj) AS tahun, SUM(fq_stbj) AS total')
+    ->join('h_stbj', 'h_stbj.fno_stbj', 't_stbj.fno_stbj')
+    ->join('barangjadi', 'barangjadi.fk_brj', 't_stbj.fk_brj')
+    ->join('jenisbrj', 'jenisbrj.fk_jns_brj', 'barangjadi.fk_jns_brj')
+    ->groupByRaw('fn_jns_brj, YEAR(ftgl_stbj)')
+    ->orderBy('tahun')
+    ->get();
+
+$categories = [];
+$seriesData = [];
+
+// Ambil tahun min dan max
+$tahunList = $rows->pluck('tahun')->toArray();
+$minYear = min($tahunList);
+$maxYear = max($tahunList);
+
+// Buat list tahun lengkap
+for ($tahun = $minYear; $tahun <= $maxYear; $tahun++) {
+    $categories[$tahun] = $tahun;
+}
+
+// Susun data
+foreach ($rows as $row) {
+    $seriesData[$row->fn_jns_brj]['name'] = $row->fn_jns_brj;
+    $seriesData[$row->fn_jns_brj]['data'][$row->tahun] = $row->total * 1;
+}
+
+// Isi tahun kosong dengan 0
+foreach ($seriesData as $key => &$series) {
+    foreach ($categories as $tahun) {
+        if (!isset($series['data'][$tahun])) {
+            $series['data'][$tahun] = 0;
         }
-        foreach ($column['series'] as $key => $val) {
-            $column['series'][$key]['data'] = array_values($val['data']);
-        }
-        $column['categories'] = array_values($column['categories']);
-        $column['series'] = array_values($column['series']);
+    }
+    ksort($series['data']);
+    $series['data'] = array_values($series['data']);
+}
+unset($series);
+
+$column['categories'] = array_values($categories);
+$column['series'] = array_values($seriesData);
+
+// Sekarang $line dan $column aman untuk Highcharts
+
         //dd($column);
 
         /** Jumlah Data Barang */
