@@ -29,6 +29,8 @@ use App\Http\Controllers\H_btbgController;
 use App\Http\Controllers\T_btbgController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\KeuanganMiddleware;
 use App\Http\Middleware\SettingMiddleware;
 use App\Models\H_btbg; 
 use App\Models\L_hbtbg; 
@@ -64,19 +66,32 @@ Route::get('HomeController', [HomeController::class, 'index'])->name('HomeContro
 
 Route::get('/admin-logout',function(Request $request){
     $request->session()->forget('user_id');
+    $request->session()->forget('user_role');
     return redirect('/login');
+});
+
+Route::middleware([KeuanganMiddleware::class])->group(function () {
+
+   // Akses user keuangan disini
+
+});
+
+Route::middleware([AdminMiddleware::class])->group(function () {
+
+   // Akses user admin disini
+
 });
 
 Route::middleware([UserMiddleware::class])->group(function () {
     //Masukkan kesini routenya yg btuh auth session
     Route::get('/setting',function(){
-    $data = Setting::where('id',1)->first();
+        $data = Setting::where('id',1)->first();
 
-    return view('setting',$data);
+        return view('setting',$data);
     });
 
     // Route::get('/home',[DashboardController::class, 'dashboard'],[DashboardController::class, 'dashboard_kirim']);
-Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
+    Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
 
     // Route::get('/dasboard', function () {
     //     return view('layouts.dasboard');

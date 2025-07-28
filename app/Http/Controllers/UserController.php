@@ -27,13 +27,10 @@ class UserController extends Controller
 
             $role = $data['role'];
             $id = $data->id;
+            
             session(['user_role' => $role]);
             session(['user_id' => $id]);
 
-             $role = $data['role'];
-             
-             session(['user_id' => $data->id]);
-             session(['user_role'=> $role]);
 
             return response()->json(['result'=>true,'message'=>"Email or password is true"]);
         }else{
