@@ -13,6 +13,7 @@ use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\H_poc_Controller;
 use App\Http\Controllers\H_krm_Controller;
 use App\Http\Controllers\HkrmfgController;
+use App\Http\Controllers\HReturCusController;
 use App\Http\Controllers\RlsSupplierController;
 use App\Http\Controllers\H_posController;
 use App\Http\Controllers\H_BeliController;
@@ -344,6 +345,14 @@ Route::post('/proses-kirim',[HkrmfgController::class, 'saveData']);
 Route::post('/generate-id-kirim',[HkrmfgController::class,'generateNo']);
 Route::post('/load-hkrm-fg',[HkrmfgController::class, 'load']);
 Route::post('/load-detail-kirim-fg',[HkrmfgController::class, 'loadWhere']);
+
+//Retur Customer
+Route::post('/delete-retur-customer',[HReturCusController::class, 'delete']);
+Route::post('/save-retur-customer',[HReturCusController::class, 'save']);
+Route::post('/proses-retur-customer',[HReturCusController::class, 'saveData']);
+Route::post('/generate-idretur-customer',[HReturCusController::class,'generateNo']);
+Route::post('/load-hretur-customer',[HReturCusController::class, 'load']);
+Route::post('/load-detail-retur-customer',[HReturCusController::class, 'loadWhere']);
 
 //Inventory Barang
 Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
