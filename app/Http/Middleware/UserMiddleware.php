@@ -16,8 +16,8 @@ class UserMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $session = $request->session()->get('user_id');
-
-        return $session ? $next($request) : redirect('/login');
+        $role = $request->session()->get('user_role');
+        return ($session && $role) ? $next($request) : redirect('/login');
       
     }
 }

@@ -15,8 +15,8 @@ class KeuanganMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $session = $request->session()->get('user_role');
-        return  ($session==2) ?  $next($request) : redirect('dashboard');
+        $role = $request->session()->get('user_role');
+       return  ($role==2) ?  $next($request) : redirect('dashboard');
        
     }
 }

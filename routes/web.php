@@ -30,6 +30,7 @@ use App\Http\Controllers\T_btbgController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\EngineerMiddleware;
 use App\Http\Middleware\KeuanganMiddleware;
 use App\Http\Middleware\SettingMiddleware;
 use App\Models\H_btbg; 
@@ -79,6 +80,12 @@ Route::middleware([KeuanganMiddleware::class])->group(function () {
 Route::middleware([AdminMiddleware::class])->group(function () {
 
    // Akses user admin disini
+
+});
+
+Route::middleware([EngineerMiddleware::class])->group(function () {
+
+   // Akses user enginner disini
 
 });
 

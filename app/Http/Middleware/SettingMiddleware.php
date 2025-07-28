@@ -15,13 +15,10 @@ class SettingMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $session = $request->session()->get('admin');
-
-        if ($session==1){
-            return $next($request);
-        }else{
-            return redirect('/login');
-        }
-
+        $session = $request->session()->get('user_id');
+        $role = $request->session()->get('user_role');
+     
+        return  ($session==1) ?  $next($request) : redirect('/login');
+       
     }
 }
