@@ -90,8 +90,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="utilities-color.html">Relasi Barang Customer</a>
                         <a class="collapse-item" href="/po_customer">PO Customer</a>
-                        <a class="collapse-item" href="/Kirim">Pengiriman</a>
-                        <a class="collapse-item" href="utilities-other.html">Retur Customer</a>
+                        <a class="collapse-item" href="/Kirim">Pengiriman POC</a>
+                        <a class="collapse-item" href="/kirim-fg">Pengiriman</a>
+                        <a class="collapse-item" href="/retur-customer">Retur Customer</a>
                     </div>
                 </div>
             </li>

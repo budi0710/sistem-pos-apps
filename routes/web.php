@@ -12,6 +12,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BarangJadiController;
 use App\Http\Controllers\H_poc_Controller;
 use App\Http\Controllers\H_krm_Controller;
+use App\Http\Controllers\HkrmfgController;
 use App\Http\Controllers\RlsSupplierController;
 use App\Http\Controllers\H_posController;
 use App\Http\Controllers\H_BeliController;
@@ -155,6 +156,10 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
         return view('Kirim.index');
     });
 
+    Route::get('/kirim-fg', function () {
+        return view('Kirim/kirim-fg');
+    });
+
 
     Route::get('/unitkerja', function () {
         return view('hris/unitkerja');
@@ -211,6 +216,18 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
 
     Route::get('/add_kirim',function(){
             return view('Kirim/add_kirim');
+    });
+
+    Route::get('/add-kirim-fg',function(){
+        return view('Kirim/add-krm-fg');
+    });
+
+    Route::get('/print-kirim-fg',function(){
+        return view('Kirim/print-krm-fg');
+    });
+
+    Route::get('/retur-customer',function(){
+        return view('retur/retur-customer');
     });
 
     Route::get('/add-permintaan', function () {
@@ -313,23 +330,29 @@ Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
 Route::post('/load-fno-customer',[H_poc_Controller::class, 'loadWhereFnoPOC']);
 // Route::post('/load-detail-pocustomer',[H_poc_Controller::class, 'loadWhere']);
 
-
+//Kirim Barang Jadi POC
 Route::post('/delete-krm-customer',[H_krm_Controller::class, 'delete']);
 Route::post('/proses-krmcustomer',[H_krm_Controller::class, 'saveData']);
 Route::post('/generate-id-hkrm',[H_krm_Controller::class,'generateNo']);
 Route::post('/load-hkrm-customer',[H_krm_Controller::class, 'load']);
 Route::post('/load-detail-kirim',[H_krm_Controller::class, 'loadWhere']);
 
+//Kirim Barang Jadi Non POC
+Route::post('/delete-kirim',[HkrmfgController::class, 'delete']);
+Route::post('/save-kirim',[HkrmfgController::class, 'save']);
+Route::post('/proses-kirim',[HkrmfgController::class, 'saveData']);
+Route::post('/generate-id-kirim',[HkrmfgController::class,'generateNo']);
+Route::post('/load-hkrm-fg',[HkrmfgController::class, 'load']);
+Route::post('/load-detail-kirim-fg',[HkrmfgController::class, 'loadWhere']);
+
 //Inventory Barang
-
-
-
 Route::post('/load-hbtbg',[H_btbgController::class, 'load']);
 Route::post('/load-hbtbg-akt',[H_btbgController::class, 'load_Akt']);
 Route::post('/delete-hbtbg',[H_btbgController::class, 'delete']);
 Route::post('/save-hbtbg',[H_btbgController::class, 'save']);
 Route::post('/generate-id-hbtbg',[H_btbgController::class,'generateNo']);
 Route::post('/generate-kode-sbtbg',[H_btbgController::class,'generateKodeSbtbg']);
+
 // Route::post('/save-hbtbg',[H_btbgController::class,'saveData']);
 Route::post('/proses-hbtbg',[H_btbgController::class,'saveData']);
 Route::post('/proses-hbtbg-akt',[H_btbgController::class,'editBTBG']);
