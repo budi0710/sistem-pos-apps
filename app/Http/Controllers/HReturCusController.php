@@ -55,16 +55,16 @@ class HReturCusController extends Controller
     public function delete(request $request) {
         // check receive apakah sudah pernah dilakukan transaksi 
         // ambil fno_pos terlebih dahulu
-        $h_krm = h_krm_fg::select('fno_krm_fg')->where("id",$request->id)->get();
-        // ambil data index ke 0 dan key fno_pos
-        $h_krm = $h_krm_fg[0]['fno_krm_fg'];
+        $h_retur_customer = h_retur_customer::select('fno_retur_cus')->where("id",$request->id)->get();
+        // ambil data index ke 0 dan key fno_retur_cus
+        $h_retur_customer = $h_retur_customer[0]['fno_retur_cus'];
        
         // delete data di table header berdasarkan primary key id
-        $h_krm = fno_krm_fg::find($request->id);
-        $h_krm->delete();
+        $h_retur_customer = h_retur_customer::find($request->id);
+        $h_retur_customer->delete();
 
-        // delete data di table detail berdasarkan kirim
-        $t_krm = t_krm_fg::where('fno_krm_fg',$fno_krm_fg)->delete();
+        // delete data di table detail berdasarkan fno_retur_cus
+        $d_retur_customer = d_retur_customer::where('fno_retur_cus',$fno_retur_cus)->delete();
         return $detail ? response()->json(['result'=>true]) : response()->json(['result'=>false]);
     }
 }

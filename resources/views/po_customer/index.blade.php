@@ -77,7 +77,7 @@
                                 <button @click="printPage(data.fno_poc)" class="btn btn-primary btn-sm">Print</button>
                                 <button @click="DetailModal(data.fno_poc)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editData(data.id,data)" class="btn btn-primary btn-sm">Edit</button>
-                                <button @click="deleteData(data.id,data)" class="btn btn-danger btn-sm">x</button>
+                                <button @click="deleteData(data.id,data.fno_poc)" class="btn btn-danger btn-sm">x</button>
                             </td>
                         </tr>
                     </tbody>
@@ -244,12 +244,12 @@ const $app =   new Vue({
                                         console.log(error);
                                     }); 
                 },
-                deleteData: function(id, Jenis) {
+                deleteData: function(id, fno_poc) {
                     if (id) {
                         const $this = this;
                         Swal.fire({
                             title: "Are you sure?",
-                            text: "Apakah anda ingin menghapus data ini {" + Jenis + "}",
+                            text: "Apakah anda ingin menghapus data ini {" + fno_poc + "}",
                             icon: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#3085d6",
