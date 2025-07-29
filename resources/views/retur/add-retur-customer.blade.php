@@ -10,22 +10,22 @@
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Tgl Retur</label>
                     <div class="col-sm-6">
-                        <input type="date" class="form-control" ref="ftgl_krm_fg" v-model="ftgl_krm_fg" >
+                        <input type="date" class="form-control" ref="ftgl_retur_cus" v-model="ftgl_retur_cus" >
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" disabled ref="fno_krm_fg" v-model="fno_krm_fg"  placeholder="No Kirim">
+                        <input type="text" class="form-control" disabled ref="fno_retur_cus" v-model="fno_retur_cus"  placeholder="No Kirim">
                     </div>
                 </div>
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">Nama Customer</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="ftujuan" v-model="ftujuan"  placeholder="Customer / Toko">
+                        <input type="text" class="form-control" ref="fnama_customer" v-model="fnama_customer"  placeholder="Customer / Toko">
                     </div>
                 </div>
                 <div class="row mb-2">
                     <label for="colFormLabel" class="col-sm-3 col-form-label">No Surat Jalan</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" ref="falamat" v-model="falamat"  placeholder="Surat Jalan">
+                        <input type="text" class="form-control" ref="fsurat_jalan" v-model="fsurat_jalan"  placeholder="Surat Jalan">
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -77,7 +77,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <div><strong>@{{ data.fk_brj }} | @{{ data.fn_brj }}</strong></div>
-                            <strong>@{{data.fq_poc}}</strong>
+                            <strong>@{{data.fq_retur}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="ms-3"> <button  @click="hapusData" class="btn btn-primary"  >Hapus</button>
@@ -100,14 +100,14 @@
             el : "#app",
             data : {
                 customers : null,
-                ftujuan : null,
+                fnama_customer : null,
                 falamat : null,
                 barangjadi : null,
                 kode_bg : null,
                 partname : null,
-                fberat_netto : null,
-                ftgl_krm_fg : null,
-                fno_krm_fg : null,
+                fsurat_jalan : null,
+                ftgl_retur_cus : null,
+                fno_retur_cus : null,
                 fk_brj : null,
                 fn_brj : null,
                 no_po : null,
@@ -128,12 +128,11 @@
             methods: {
                 prosesPOC: function(){
                     const $this = this;
-                    axios.post("/proses-kirim", {
-                        fno_krm_fg : this.fno_krm_fg,
-                        fn_jenis_krm : this.result_jenis,
-                        ftgl_krm_fg : this.ftgl_krm_fg,
-                        ftujuan : this.ftujuan,
-                        falamat : this.falamat,
+                    axios.post("/proses-retur-customer", {
+                        fno_retur_cus : this.fno_retur_cus,
+                        ftgl_retur_cus : this.ftgl_retur_cus,
+                        fnama_customer : this.fnama_customer,
+                        fsurat_jalan : this.fsurat_jalan,
                         fket : this.fket,
                         detail_data : this.data_barangs
                     })
@@ -175,18 +174,18 @@
                 },
             enterQty: function(data,i){
                 //untuk validasi data jika tgl dan supplier kosong maka akan di arahkan sesuai request ya
-                    if (this.ftgl_krm_fg==null){
-                        alert("Isi tgl kirim dulu")
+                    if (this.ftgl_retur_cus==null){
+                        alert("Isi tgl retur dari customer dulu")
                         return
                     }
 
-                    if (this.result_jenis==null){
-                        alert("Pilih Jenis Kirim")
+                    if (this.fnama_customer==null){
+                        alert("Isi Nama Customer/Toko")
                         return;
                     }
 
-                    if (this.ftujuan==null){
-                        alert("Isi kepada / Tujuan Kirim")
+                    if (this.fsurat_jalan==null){
+                        alert("Surat Jalan Customer")
                         return;
                     }
 
@@ -205,7 +204,7 @@
                         "fk_brj": data.fk_brj,
                         "fn_brj" : data.fn_brj,
                         "fpartno": data.fpartno,
-                        "fq_krm_fg": obj,
+                        "fq_retur": obj,
                         "sub_total" : obj
                     }]
                     // console.table($data);
@@ -242,16 +241,16 @@
                 },
                 generateId() {
                     const $this = this;
-                    axios.post("/generate-id-kirim", {
+                    axios.post("/generate-idretur-customer", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             if (response.data) {
-                                if (response.data.fno_krm_fg) {
-                                    const angka = String(response.data.fno_krm_fg).slice(-3);
-                                    $this.fno_krm_fg = generateNoUrutDateMonth(angka);
+                                if (response.data.fno_retur_cus) {
+                                    const angka = String(response.data.fno_retur_cus).slice(-3);
+                                    $this.fno_retur_cus = generateNoUrutDateMonth(angka);
                                 } else {
-                                    $this.fno_krm_fg = tahun + bulan + (response.data);
+                                    $this.fno_retur_cus = tahun + bulan + (response.data);
                                 }
                             }
                         })

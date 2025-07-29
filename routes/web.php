@@ -48,6 +48,7 @@ use App\Models\BarangJadi;
 // Route::get('/register',function(Request $request){
 //    return view('register');
 // });
+
 Route::get('/',function(Request $request){
    return redirect('login');
 });
