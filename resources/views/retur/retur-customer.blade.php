@@ -12,7 +12,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Details Data Kirim</h5> 
+                    <h5 class="modal-title" id="exampleModalLabel">Details Data Retur</h5> 
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
@@ -126,7 +126,7 @@ const $app =   new Vue({
                         });
                     },
             openPage: function() {
-                    window.location.href = './add-kirim-fg';
+                    window.location.href = './add-retur-customer';
                 },
             printPage : function(fno_pos){
                     window.location.href = './print-pocustomer/'+fno_poc;

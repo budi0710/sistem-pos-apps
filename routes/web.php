@@ -231,6 +231,10 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
         return view('retur/retur-customer');
     });
 
+    Route::get('/add-retur-customer',function(){
+        return view('retur/add-retur-customer');
+    });
+
     Route::get('/add-permintaan', function () {
         return view('Pengeluaran_brg/add-permintaan');
     });
@@ -437,9 +441,7 @@ Route::get('/absensi', function () {
 Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
         $data = L_hbtbg::where('fno_btbg',$fno_btbg)->count();
         $data_detail_btbg =  L_dbtbg::where('fno_btbg',$fno_btbg)->count();
-
         if ($data){
-
              $data_header     = L_hbtbg::where('fno_btbg',$fno_btbg)->get();
              $data_header     = $data_header[0];
 
@@ -454,7 +456,6 @@ Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
             return redirect('/pengeluaran');
         }
     });
-
 Route::post('/load-years',function(){
     return date('Y');
 });
