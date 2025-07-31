@@ -51,6 +51,7 @@ use App\Models\BarangJadi;
 // Route::get('/register',function(Request $request){
 //    return view('register');
 // });
+
 Route::get('/',function(Request $request){
    return redirect('login');
 });
@@ -98,12 +99,16 @@ Route::middleware([UserMiddleware::class])->group(function () {
     });
 
     // Route::get('/home',[DashboardController::class, 'dashboard'],[DashboardController::class, 'dashboard_kirim']);
+<<<<<<< HEAD
     Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
 
     // Route::get('/dasboard', function () {
     //     return view('layouts.dasboard');
     // });
 
+=======
+Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
+>>>>>>> 1657d339d29dce4becbb8c868fb183e984c994e6
     Route::get('/about', function () {
         return view('about');
     });
@@ -112,7 +117,6 @@ Route::middleware([UserMiddleware::class])->group(function () {
         return view('contact');
     });
 
-
     Route::get('/galery', function () {
         return view('galery');
     });
@@ -120,7 +124,6 @@ Route::middleware([UserMiddleware::class])->group(function () {
     Route::get('/wip', function () {
         return view('bdp.index');
     });
-
             
     Route::get('/jenis-brj', function () {
         return view('jenis-brj.index');
@@ -251,6 +254,10 @@ Route::middleware([UserMiddleware::class])->group(function () {
 
     Route::get('/retur-customer',function(){
         return view('retur/retur-customer');
+    });
+
+    Route::get('/add-retur-customer',function(){
+        return view('retur/add-retur-customer');
     });
 
     Route::get('/add-permintaan', function () {
@@ -459,9 +466,7 @@ Route::get('/absensi', function () {
 Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
         $data = L_hbtbg::where('fno_btbg',$fno_btbg)->count();
         $data_detail_btbg =  L_dbtbg::where('fno_btbg',$fno_btbg)->count();
-
         if ($data){
-
              $data_header     = L_hbtbg::where('fno_btbg',$fno_btbg)->get();
              $data_header     = $data_header[0];
 
@@ -476,7 +481,6 @@ Route::get('/edit-btbg/{fno_btbg}',function($fno_btbg){
             return redirect('/pengeluaran');
         }
     });
-
 Route::post('/load-years',function(){
     return date('Y');
 });

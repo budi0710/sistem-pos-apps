@@ -12,7 +12,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Details Data Kirim</h5> 
+                    <h5 class="modal-title" id="exampleModalLabel">Details Data Retur</h5> 
                     {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
@@ -27,11 +27,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="data in detail_kirim_fg">
+                            <tr v-for="data in detail_retur">
                                 <th>@{{data.fk_brj}}</th>
                                 <td>@{{data.fn_brj}}</td>
                                 <td>@{{data.fpartno}}</td>
-                                <td>@{{data.fq_krm_fg}}</td>
+                                <td>@{{data.fq_retur}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -59,17 +59,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="data in h_kirim_fg" class="align-middle">
+                        <tr v-for="data in h_retur" class="align-middle">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.ftgl_krm_fg }}</td>
-                            <td>@{{ data.fno_krm_fg }}</td>
-                            <td>@{{ data.ftujuan }}</td>
+                            <td>@{{ data.ftgl_retur_cus }}</td>
+                            <td>@{{ data.fno_retur_cus }}</td>
+                            <td>@{{ data.fnama_customer }}</td>
                             <td>@{{ data.fket }}</td>
                             <td>
-                                <button @click="printPage(data.fno_krm_fg)" class="btn btn-primary btn-sm">Print</button>
-                                <button @click="DetailModal(data.fno_krm_fg)" class="btn btn-primary btn-sm">Details</button>
+                                <button @click="printPage(data.fno_retur_cus)" class="btn btn-primary btn-sm">Print</button>
+                                <button @click="DetailModal(data.fno_retur_cus)" class="btn btn-primary btn-sm">Details</button>
                                 <button @click="editData(data.id,data)" class="btn btn-primary btn-sm">Edit</button>
-                                <button @click="deleteData(data.id,data)" class="btn btn-danger btn-sm">x</button>
+                                <button @click="deleteData(data.id, data.fno_retur_cus)" class="btn btn-danger btn-sm">x</button>
+
                             </td>
                         </tr>
                     </tbody>
@@ -92,10 +93,10 @@ const _TOKEN_ = '<?= csrf_token() ?>';
 const $app =   new Vue({
         el : "#app",
         data: {
-                h_kirim_fg : null,
+                h_retur : null,
                 fk_jenis : null,
                 fk_jenis_edit : null,
-                detail_kirim_fg : null,
+                detail_retur : null,
                 alert: false,
                 jenis_edit : null,
                 links :null,
@@ -126,20 +127,20 @@ const $app =   new Vue({
                         });
                     },
             openPage: function() {
-                    window.location.href = './add-kirim-fg';
+                    window.location.href = './add-retur-customer';
                 },
             printPage : function(fno_pos){
-                    window.location.href = './print-pocustomer/'+fno_poc;
+                    window.location.href = './print-pocustomer/'+fno_retur_cus;
                 },
             loadData : function(){
               const $this = this;
-                    axios.post("/load-hkrm-fg", {
+                    axios.post("/load-hretur-customer", {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
                             $this.loading = false;
                             if (response.data) {
-                                $this.h_kirim_fg = response.data.data;
+                                $this.h_retur = response.data.data;
                                 $this.links = response.data.links;
                             }
                         })
@@ -174,17 +175,17 @@ const $app =   new Vue({
                         });
                     }
               },
-            DetailModal: function(fno_krm_fg) {
+            DetailModal: function(fno_retur_cus) {
                     modal_edit.show();
                     const $this = this;
-                    axios.post("/load-detail-kirim-fg", {
+                    axios.post("/load-detail-retur-customer", {
                         _token: _TOKEN_,
-                        fno_krm_fg : fno_krm_fg
+                        fno_retur_cus : fno_retur_cus
                     })
                     .then(function(response) {
                     
                         if (response.data) {
-                            $this.detail_kirim_fg = response.data;
+                            $this.detail_retur = response.data;
                         }
                     })
                     .catch(function(error) {
@@ -212,12 +213,12 @@ const $app =   new Vue({
                             console.log(error);
                         });
                 },
-                deleteData: function(id, Jenis) {
+                deleteData: function(id, fno_retur_cus) {
                     if (id) {
                         const $this = this;
                         Swal.fire({
                             title: "Are you sure?",
-                            text: "Apakah anda ingin menghapus data ini {" + Jenis + "}",
+                            text: "Apakah anda ingin menghapus data ini {" + fno_retur_cus + "}",
                             icon: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#3085d6",
@@ -226,7 +227,7 @@ const $app =   new Vue({
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.loading = true;
-                                axios.post("/delete-jenis-brj", {
+                                axios.post("/delete-retur-customer", {
                                         _token: _TOKEN_,
                                         id: id
                                     })

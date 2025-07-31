@@ -88,7 +88,7 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <div><strong>@{{ data.fk_brj }} | @{{ data.fn_brj }}</strong></div>
-                            <strong>@{{data.fq_poc}}</strong>
+                            <strong>@{{data.fq_krm_fg}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="ms-3"> <button  @click="hapusData" class="btn btn-primary"  >Hapus</button>

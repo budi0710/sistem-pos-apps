@@ -16,6 +16,8 @@ return new class extends Migration
             $table->char('fno_retur_cus', 9)->unique();
             $table->date('ftgl_retur_cus');
             $table->string('fnama_customer',100);
+            $table->string('fsurat_jalan',100);
+            $table->string('userid',20);
             $table->string('fket',200);
             $table->timestamps();
         });
