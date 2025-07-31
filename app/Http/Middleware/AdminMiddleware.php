@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
        $role = $request->session()->get('user_role');
-       return  ($role==1) ?  $next($request) : redirect('dashboard');
+       return  ($role==1) ?  $next($request) : redirect('404page');
         
     }
 }

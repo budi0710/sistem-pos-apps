@@ -72,23 +72,46 @@ Route::get('/admin-logout',function(Request $request){
     return redirect('/login');
 });
 
+Route::get('/brg', function () {
+
+    return view('brg.index');
+
+})->middleware([KeuanganMiddleware::class]);
+// Akses user keuangan disini
+
+
 Route::middleware([KeuanganMiddleware::class])->group(function () {
 
-   // Akses user keuangan disini
-
+   
 });
 
-Route::middleware([AdminMiddleware::class])->group(function () {
-
-   // Akses user admin disini
-
-});
+Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
+Route::get('/dashboard', [DashboardController::class, 'dashboardGabungan']);
 
 Route::middleware([EngineerMiddleware::class])->group(function () {
 
-   // Akses user enginner disini
+
 
 });
+
+Route::middleware([KeuanganMiddleware::class])->group(function () {
+
+   // Akses user admin disini
+    
+    Route::get('/po_supplier', function () {
+        return view('po_supplier.index');
+    });
+
+  
+
+
+});
+
+
+Route::get('404page',function(){
+    return view('404page');
+});
+
 
 Route::middleware([UserMiddleware::class])->group(function () {
     //Masukkan kesini routenya yg btuh auth session
@@ -98,17 +121,13 @@ Route::middleware([UserMiddleware::class])->group(function () {
         return view('setting',$data);
     });
 
+       Route::get('/about', function () {
+        return view('about');
+    });
+
+
     // Route::get('/home',[DashboardController::class, 'dashboard'],[DashboardController::class, 'dashboard_kirim']);
-<<<<<<< HEAD
-    Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
-
-    // Route::get('/dasboard', function () {
-    //     return view('layouts.dasboard');
-    // });
-
-=======
-Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
->>>>>>> 1657d339d29dce4becbb8c868fb183e984c994e6
+   
     Route::get('/about', function () {
         return view('about');
     });
@@ -129,10 +148,7 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
         return view('jenis-brj.index');
     });
 
-    Route::get('/brg', function () {
-        return view('brg.index');
-    });
-
+  
     Route::get('/fg', function () {
     return view('fg.index');
     }); 
@@ -215,10 +231,7 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
         return view('penerimaan_fg.index');
     });
 
-    Route::get('/po_supplier', function () {
-        return view('po_supplier.index');
-    });
-
+   
     Route::get('/rls-supplier', function () {
         return view('po_supplier/rls-brg-sup');
     });

@@ -32,7 +32,7 @@ class UserController extends Controller
             session(['user_id' => $id]);
 
 
-            return response()->json(['result'=>true,'message'=>"Email or password is true"]);
+            return response()->json(['result'=>true,'message'=>"Email or password is true",'data'=>$role]);
         }else{
             return response()->json(['result'=>false,'message'=>"Email or password is incorrect"]);
         }

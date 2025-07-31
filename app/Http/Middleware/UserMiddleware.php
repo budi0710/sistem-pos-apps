@@ -17,7 +17,7 @@ class UserMiddleware
     {
         $session = $request->session()->get('user_id');
         $role = $request->session()->get('user_role');
-        return ($session && $role) ? $next($request) : redirect('/login');
+        return ($session && $role) ? $next($request) : redirect('404page');
       
     }
 }

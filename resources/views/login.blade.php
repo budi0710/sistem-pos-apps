@@ -292,6 +292,7 @@ a {
                             _token: _TOKEN_
                         })
                         .then(function(response) {
+                             console.log(response.data.data)
                             // check response dari server response.data.result jika false maka menampilkan pesan
                             if (response.data.result === false) {
                                 Swal.fire({
@@ -307,7 +308,7 @@ a {
                                     text: "Login Success",
                                     footer: ''
                                 });
-                                 window.location.href = "/home"
+                                window.location.href = "/home"
                             }
                         })
                         .catch(function(error) {

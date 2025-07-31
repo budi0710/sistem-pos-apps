@@ -16,6 +16,6 @@ class EngineerMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $role = $request->session()->get('user_role');
-       return  ($role==3) ?  $next($request) : redirect('dashboard');
+       return  ($role==2) ?  $next($request) : redirect('404page');
     }
 }
