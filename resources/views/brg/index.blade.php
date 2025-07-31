@@ -176,39 +176,38 @@
     <!-- Open the modal using ID.showModal() method -->
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th style="width: 100px">Kode BG</th>
-                            <th>Part Name</th>
-                            <th>Part No</th>
-                            <th style="width: 100px">Berat</th>
-                            <th style="width: 100px">Saldo Awal</th>
-                            <th style="width: 100">Foto</th>
-                            <th style="width: 200px">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="data in barangs" class="align-middle">
-                            <td>@{{ data.id }}</td>
-                            <td>@{{ data.kode_bg }}</td>
-                            <td>@{{ data.partname }}</td>
-                            <td>@{{ data.partno }}</td>
-                            <td>@{{ data.fberat_netto }}</td>
-                            <td>@{{ data.saldo_awal }}</td>
-                            <td> 
-                                {{-- ambil data dari field fgambar_brg --}}
-                                <img :src="viewFoto(data.fgambar_brg)" alt="" width="100" height="100" srcset="">
-                            </td>
-                            <td>
-                                <button @click="detaildata(data)" class="btn btn-primary btn-sm">Details</button>
-                                <button @click="editModalNow(data)" class="btn btn-primary btn-sm">Edit</button>
-                                <button @click="deleteData(data.id,data.partname)" class="btn btn-danger btn-sm">x</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <table class="table table-hover table-striped align-middle shadow-sm">
+                <thead class="table-primary text-left">
+                    <tr>
+                        <th style="width: 50px;">No</th>
+                        <th style="width: 100px;">Kode BG</th>
+                        <th>Part Name</th>
+                        <th>Part No</th>
+                        <th class="text-right"  style="width: 150px;">Berat Netto</th>
+                        <th class="text-right"  style="width: 150px;">Saldo Awal</th>
+                        <th class="text-center"  style="width: 120px;">Foto</th>
+                        <th style="width: 250px;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(data, index) in barangs" :key="data.id">
+                        <td class="text-center">@{{ index + 1 }}</td>
+                        <td>@{{ data.kode_bg }}</td>
+                        <td>@{{ data.partname }}</td>
+                        <td>@{{ data.partno }}</td>
+                        <td class="text-end">@{{ data.fberat_netto }}</td>
+                        <td class="text-end">@{{ data.saldo_awal }}</td>
+                        <td class="text-center">
+                            <img :src="viewFoto(data.fgambar_brg)" class="img-thumbnail" style="max-width:80px;">
+                        </td>
+                        <td class="text-center">
+                            <button @click="detaildata(data)" class="btn btn-info btn-sm me-1">Details</button>
+                            <button @click="editModalNow(data)" class="btn btn-warning btn-sm me-1">Edit</button>
+                            <button @click="deleteData(data.id,data.partname)" class="btn btn-danger btn-sm">Hapus</button>
+                        </td>
+                    </tr>
+                </tbody>  
+            </table>
         </div>
         <div>
             <center>
@@ -322,39 +321,50 @@ const $app =   new Vue({
                     $app.saldo_awal_edit = data.saldo_awal;
                    // alert(data.fk_jns_brj)
                 },
-            updateData: function(){
-                     const $this = this;
-                    _upload = new Upload({
-                        // Array
-                        //el merupakan element 
-                        //file_barang dari input file pada modal
-                        el: ['file_barang_edit'],
-                        // String
-                        //url alamat route ya
-                        url: '/update-brg',
-                        // String
-                        data: {
-                            id_edit : this.id_edit,
-                            kode_bg_edit : this.kode_bg_edit,
-                            partname_edit : this.partname_edit,
-                            partno_edit : this.partno_edit,
-                            result_jenis_edit : this.result_jenis_edit,
-                            result_satuan_edit : this.result_satuan_edit,
-                            fberat_netto_edit : this.fberat_netto_edit,
-                            description_edit : this.description_edit,
-                            saldo_awal_edit : this.saldo_awal_edit
-                        },
-                        // String
-                        token: _TOKEN_
-                    }).start(($response) => {
-                        $this.loading = false;
-                        var obj = JSON.parse($response)
-                        if (obj.result) {
-                            alert("Data berhasil ditambahkan")
-                            $this.loadData()
+            updateData: function () {
+                    const $this = this;
+
+                    // Buat FormData untuk kirim file dan field lainnya
+                    let formData = new FormData();
+
+                    // Ambil file (jika ada) dari input file
+                    const fileInput = document.getElementById('file_barang_edit');
+                    if (fileInput && fileInput.files.length > 0) {
+                        formData.append('file_barang_edit', fileInput.files[0]);
+                    }
+
+                    // Tambahkan semua data lainnya
+                    formData.append('id_edit', this.id_edit);
+                    formData.append('kode_bg_edit', this.kode_bg_edit);
+                    formData.append('partname_edit', this.partname_edit);
+                    formData.append('partno_edit', this.partno_edit);
+                    formData.append('result_jenis_edit', this.result_jenis_edit);
+                    formData.append('result_satuan_edit', this.result_satuan_edit);
+                    formData.append('fberat_netto_edit', this.fberat_netto_edit);
+                    formData.append('description_edit', this.description_edit);
+                    formData.append('saldo_awal_edit', this.saldo_awal_edit);
+
+                    // CSRF Token
+                    formData.append('_token', _TOKEN_);
+
+                    // Kirim ke server
+                    axios.post('/update-brg', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
                         }
+                    }).then(res => {
+                        const obj = res.data;
+                        if (obj.result) {
+                            alert("Data berhasil diupdate");
+                            $this.loadData();
+                        } else {
+                            alert("Gagal update: " + (obj.message || 'Unknown error'));
+                        }
+                    }).catch(err => {
+                        console.error("Error saat update:", err);
+                        alert("Terjadi kesalahan saat update data.");
                     });
-              },
+                },
             searchData: function() {
                     if (this.search == null) {
                         this.$refs.search.focus()
@@ -489,12 +499,12 @@ const $app =   new Vue({
                     });
  
                 },
-                deleteData: function(id, Jenis) {
+                deleteData: function(id, partname) {
                     if (id) {
                         const $this = this;
                         Swal.fire({
                             title: "Are you sure?",
-                            text: "Apakah anda ingin menghapus data ini {" + Jenis + "}",
+                            text: "Apakah anda ingin menghapus data ini {" + partname + "}",
                             icon: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#3085d6",
@@ -503,7 +513,7 @@ const $app =   new Vue({
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.loading = true;
-                                axios.post("/delete-rls-sup", {
+                                axios.post("/delete-brg", {
                                         _token: _TOKEN_,
                                         id: id
                                     })

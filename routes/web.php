@@ -78,11 +78,6 @@ Route::middleware([UserMiddleware::class])->group(function () {
 
     // Route::get('/home',[DashboardController::class, 'dashboard'],[DashboardController::class, 'dashboard_kirim']);
 Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
-
-    // Route::get('/dasboard', function () {
-    //     return view('layouts.dasboard');
-    // });
-
     Route::get('/about', function () {
         return view('about');
     });
@@ -91,7 +86,6 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
         return view('contact');
     });
 
-
     Route::get('/galery', function () {
         return view('galery');
     });
@@ -99,7 +93,6 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
     Route::get('/wip', function () {
         return view('bdp.index');
     });
-
             
     Route::get('/jenis-brj', function () {
         return view('jenis-brj.index');
