@@ -285,13 +285,14 @@ a {
 
                     const $this = this;
                     // membuat request ke server dengan method POST ke route login
-                    axios.post("/user-login", {
-                            // mengirimkan data email dan password ke server
-                            email: this.email,
-                            password: this.password,
-                            _token: _TOKEN_
-                        })
-                        .then(function(response) {
+                   axios.post("/user-login", {
+                                    email: this.email,
+                                    password: this.password,
+                                    _token: _TOKEN_
+                                }, {
+                                    withCredentials: true // <-- WAJIB AGAR SESSION TERSIMPAN
+                                })
+                            .then(function(response) {
                             // check response dari server response.data.result jika false maka menampilkan pesan
                             if (response.data.result === false) {
                                 Swal.fire({
@@ -302,8 +303,8 @@ a {
                                 });
                             } else {
                                 Swal.fire({
-                                    icon: "success",
-                                    title: "Mantap",
+                                    icon: "Success",
+                                    title: "Mantap Luar Biasa Sekali",
                                     text: "Login Success",
                                     footer: ''
                                 });

@@ -28,11 +28,9 @@ class LoginController extends Controller
         if ($users){
             
             $data = User::where('email', $email)->where('password',md5($password))->first();
-
             $role = $data['role'];
 
             $role = '';
-            
             session(['user' => $role]);
             return response()->json(['result'=>true,'message'=>"Email or password is true"]);
         }else{
@@ -50,7 +48,7 @@ class LoginController extends Controller
         if (Auth::Attempt($data)) {
             return redirect('layouts.home');
         }else{
-            Session::flash('error', 'Email atau Password Salah');
+            Session::flash('error', 'Email atau Password Salah Silahkan dicek kembali');
             return redirect('/');
         }
     }

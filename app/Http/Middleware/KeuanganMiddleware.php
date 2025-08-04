@@ -4,19 +4,18 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class KeuanganMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         $role = $request->session()->get('user_role');
-       return  ($role==2) ?  $next($request) : redirect('dashboard');
-       
+
+        // Izinkan jika role adalah 1 atau 2
+        if (in_array($role, [1, 2])) {
+            return $next($request);
+        }
+
+        return redirect('404page');
     }
 }

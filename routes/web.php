@@ -29,16 +29,17 @@ use App\Http\Controllers\H_btbgController;
 use App\Http\Controllers\T_btbgController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\EngineerMiddleware;
 use App\Http\Middleware\KeuanganMiddleware;
 use App\Http\Middleware\SettingMiddleware;
+use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\H_btbg; 
 use App\Models\L_hbtbg; 
 use App\Models\L_dbtbg;
 use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\Http\Middleware\UserMiddleware;
 use App\Models\BarangJadi;
 
 //REGISTER
@@ -51,6 +52,9 @@ use App\Models\BarangJadi;
 // Route::get('/register',function(Request $request){
 //    return view('register');
 // });
+Route::get('/dashboard', function () {
+    return 'Kamu tidak punya akses ke halaman ini.';
+});
 
 Route::get('/',function(Request $request){
    return redirect('login');
@@ -72,60 +76,24 @@ Route::get('/admin-logout',function(Request $request){
     return redirect('/login');
 });
 
+
 Route::middleware([KeuanganMiddleware::class])->group(function () {
+    
+    Route::get('/po_supplier', function () {
+        return view('po_supplier.index');
+    });
 
-   // Akses user keuangan disini
-
+    Route::get('/rls-supplier', function () {
+        return view('po_supplier/rls-brg-sup');
+    });
 });
 
 Route::middleware([AdminMiddleware::class])->group(function () {
-
-   // Akses user admin disini
-
-});
-
-Route::middleware([EngineerMiddleware::class])->group(function () {
-
-   // Akses user enginner disini
-
-});
-
-Route::middleware([UserMiddleware::class])->group(function () {
-    //Masukkan kesini routenya yg btuh auth session
-    Route::get('/setting',function(){
-        $data = Setting::where('id',1)->first();
-
-        return view('setting',$data);
+    Route::get('/po_supplier', function () {
+        return view('po_supplier.index');
     });
 
-    // Route::get('/home',[DashboardController::class, 'dashboard'],[DashboardController::class, 'dashboard_kirim']);
-<<<<<<< HEAD
-    Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
-
-    // Route::get('/dasboard', function () {
-    //     return view('layouts.dasboard');
-    // });
-
-=======
-Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
->>>>>>> 1657d339d29dce4becbb8c868fb183e984c994e6
-    Route::get('/about', function () {
-        return view('about');
-    });
-
-    Route::get('/contact', function () {
-        return view('contact');
-    });
-
-    Route::get('/galery', function () {
-        return view('galery');
-    });
-
-    Route::get('/wip', function () {
-        return view('bdp.index');
-    });
-            
-    Route::get('/jenis-brj', function () {
+   Route::get('/jenis-brj', function () {
         return view('jenis-brj.index');
     });
 
@@ -168,7 +136,6 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
     Route::get('/wip', function () {
         return view('bdp.index');
     });
-
 
     Route::get('/brk', function () {
         return view('brk.index');
@@ -213,10 +180,6 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
 
     Route::get('/penerimaan_fg', function () {
         return view('penerimaan_fg.index');
-    });
-
-    Route::get('/po_supplier', function () {
-        return view('po_supplier.index');
     });
 
     Route::get('/rls-supplier', function () {
@@ -267,6 +230,47 @@ Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
     Route::get('/add-stbj',function(){
             return view('penerimaan_fg/add-stbj');
     });
+
+});
+
+Route::middleware([EngineerMiddleware::class])->group(function () {
+
+   // Akses user enginner disini
+
+});
+
+Route::middleware([UserMiddleware::class])->group(function () {
+    //Masukkan kesini routenya yg btuh auth session
+    Route::get('/setting',function(){
+        $data = Setting::where('id',1)->first();
+
+        return view('setting',$data);
+    });
+
+    // Route::get('/home',[DashboardController::class, 'dashboard'],[DashboardController::class, 'dashboard_kirim']);
+    Route::get('/home', [DashboardController::class, 'dashboardGabungan']);
+
+    // Route::get('/dasboard', function () {
+    //     return view('layouts.dasboard');
+    // });
+
+    Route::get('/about', function () {
+        return view('about');
+    });
+
+    Route::get('/contact', function () {
+        return view('contact');
+    });
+
+    Route::get('/galery', function () {
+        return view('galery');
+    });
+
+    Route::get('/wip', function () {
+        return view('bdp.index');
+    });
+            
+    
 });
 
 Route::middleware([SettingMiddleware::class])->group(function () {
