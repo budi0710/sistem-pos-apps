@@ -31,6 +31,25 @@ class UserController extends Controller
             session(['user_role' => $role]);
             session(['user_id' => $id]);
 
+            switch ($role) {
+                case 1:
+                    $user_detail = 'Admin';
+                    break;
+                 case 2:
+                    $user_detail = 'Engineer';
+                    break;
+                case 3:
+                    $user_detail = 'Keuangan';
+                    break;
+                case 4:
+                    $user_detail = 'Karyawan';
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            session(['user_detail'=>$user_detail]);
 
             return response()->json(['result'=>true,'message'=>"Email or password is true",'data'=>$role]);
         }else{

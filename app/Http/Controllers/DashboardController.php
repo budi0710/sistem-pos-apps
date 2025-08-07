@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function getDashboardData()
+    public function getDashboardData(Request $request)
     {
         /** START IE CHART */
 /** PIE CHART */
@@ -143,11 +143,13 @@ $column['series'] = array_values($seriesData);
         /** Jumlah Data PO Customer */
         $jumlah_poc = DB::table('h_poc')->count('fno_poc') ?? 0;
 
+         $user_detail = $request->session()->get('user_detail');
+
         return compact(
         'pie_stbj', 'line', 'column',
         'jumlah_barangs', 'jumlah_FG', 'jumlah_karyawan',
         'jumlah_supplier', 'jumlah_customer', 'jumlah_permintaan',
-        'jumlah_stbj', 'jumlah_krm', 'jumlah_poc'
+        'jumlah_stbj', 'jumlah_krm', 'jumlah_poc','user_detail'
         );
     }
 
@@ -200,10 +202,12 @@ $column['series'] = array_values($seriesData);
         return compact('pie_kirim', 'line_kirim', 'column_kirim');
     }
 
-    public function dashboardGabungan()
+    public function dashboardGabungan(Request $request)
     {
-        $dashboard = $this->getDashboardData();
+        $dashboard = $this->getDashboardData($request);
         $dashboardKirim = $this->getDashboardKirimData();
+
+       
 
         return view('dashboard', array_merge($dashboard, $dashboardKirim));
     }

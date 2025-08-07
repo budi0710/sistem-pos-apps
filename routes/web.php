@@ -29,6 +29,7 @@ use App\Http\Controllers\H_btbgController;
 use App\Http\Controllers\T_btbgController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\AdminKeuanganMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\EngineerMiddleware;
 use App\Http\Middleware\KeuanganMiddleware;
@@ -94,7 +95,7 @@ Route::middleware([EngineerMiddleware::class])->group(function () {
 
 });
 
-Route::middleware([KeuanganMiddleware::class])->group(function () {
+Route::middleware([AdminKeuanganMiddleware::class])->group(function () {
 
    // Akses user admin disini
     
@@ -215,8 +216,9 @@ Route::middleware([UserMiddleware::class])->group(function () {
         return view('hris/karyawan');
     });
 
-    Route::get('/absensi', function () {
-        return view('hris/absen');
+    Route::get('/absensi', function (Request $request) {
+        $user_detail = $request->session()->get('user_detail');
+        return view('hris/absen',$user_detail);
     });
 
     Route::get('/permintaan', function () {
