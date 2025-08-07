@@ -23,13 +23,9 @@ class UserController extends Controller
        
         if ($users){
             $data = User::where('email', $email)->where('password',md5($password))->first();
-             
-
-            $role = $data['role'];
-            $id = $data->id;
-            
-            session(['user_role' => $role]);
-            session(['user_id' => $id]);
+            $role = $data->role;
+            session(['user_role' => $data->role]);
+            session(['user_id' => $data->id]);
 
             switch ($role) {
                 case 1:
@@ -54,7 +50,8 @@ class UserController extends Controller
             return response()->json(['result'=>true,'message'=>"Email or password is true",'data'=>$role]);
         }else{
             return response()->json(['result'=>false,'message'=>"Email or password is incorrect"]);
-        }
 
+
+        }
     }
 }
